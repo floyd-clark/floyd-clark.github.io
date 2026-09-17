@@ -1,0 +1,15 @@
+V2.1 SOURCE NOTES
+
+Portfolio content currently incorporates:
+- User-supplied headshot.
+- Five images pulled from the user's Gmail messages sent to themselves on Sep 17, 2026.
+- The user's DCEAM team-overview deck, which the user stated has been declassified for portfolio use.
+- Publicly indexed LinkedIn content from the user's profile and public posts/reshares/comments.
+
+LinkedIn themes added:
+- "Discipline compounds" / Ironman + Oracle story.
+- Roadmap previews as tools for customer alignment and milestone planning.
+- AMD Salute / Hiring Our Heroes / VetsInTech / Tech4Troops community work.
+- Continued connection to Army wet-gap bridging and physical-world engineering.
+
+Note: public web indexing does not expose a guaranteed complete LinkedIn activity archive.

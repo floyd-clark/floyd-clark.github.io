@@ -1,106 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Floyd S. Clark II | Technical Program Manager</title>
-
-  <meta
-    name="description"
-    content="Floyd S. Clark II — Technical Program Manager focused on AI infrastructure, data centers, hardware, silicon, automation, and technical operations."
-  >
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #0b0f14;
-      color: #ffffff;
-      line-height: 1.6;
-    }
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-    }
-
-    .hero-content {
-      max-width: 900px;
-    }
-
-    .eyebrow {
-      font-size: 14px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: #8ea0b5;
-      margin-bottom: 18px;
-    }
-
-    h1 {
-      font-size: clamp(48px, 8vw, 92px);
-      line-height: 1;
-      margin-bottom: 24px;
-    }
-
-    h2 {
-      font-size: clamp(22px, 3vw, 36px);
-      font-weight: 400;
-      color: #b8c2cf;
-      margin-bottom: 28px;
-    }
-
-    p {
-      font-size: 18px;
-      max-width: 760px;
-      color: #d5dce5;
-    }
-
-    .status {
-      margin-top: 40px;
-      font-size: 14px;
-      color: #7f8b99;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Floyd S. Clark II | Principal Technical Program Manager</title>
+<meta name="description" content="Principal Technical Program Manager spanning AI infrastructure, data center hardware integration, GPU/HBM readiness, analytics, automation, and technical operations." />
+<style>
+:root{
+  --bg:#081018; --bg2:#0c151f; --card:#101b27; --card2:#0d1721;
+  --text:#f5f8fc; --muted:#a9b5c4; --quiet:#728195; --line:rgba(255,255,255,.09);
+  --accent:#8bd0ff; --accent2:#c6e7ff; --max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  color:var(--text);line-height:1.6;background:
+  radial-gradient(circle at 80% 0,rgba(57,143,207,.11),transparent 34rem),
+  linear-gradient(180deg,#071019 0,#09131d 54%,#071019 100%);}
+a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
+.container{width:min(calc(100% - 42px),var(--max));margin:auto}
+nav{position:sticky;top:0;z-index:20;background:rgba(8,16,24,.80);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.navin{height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.navlinks{display:flex;gap:22px;color:var(--muted);font-size:13px}.navlinks a:hover{color:white}
+.hero{min-height:calc(100vh - 68px);display:grid;align-items:center;padding:74px 0 66px}
+.hero-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:70px;align-items:center}
+.eyebrow,.kicker{color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.17em;text-transform:uppercase}
+h1{font-size:clamp(3.8rem,7.5vw,7rem);line-height:.91;letter-spacing:-.055em;margin:16px 0 24px}
+.hero h2{font-size:clamp(1.35rem,2.6vw,2.15rem);line-height:1.2;color:#c7d3df;font-weight:520;margin:0 0 24px;letter-spacing:-.025em}
+.lede{font-size:1.07rem;color:var(--muted);max-width:760px}
+.location{font-size:13px;color:var(--quiet);margin-top:18px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;border:1px solid var(--line);
+  min-height:46px;padding:0 17px;font-weight:750;font-size:13px;background:rgba(255,255,255,.025)}
+.btn.primary{background:#f6f9fd;color:#071019;border-color:#f6f9fd}
+.headshot{aspect-ratio:1/1;overflow:hidden;border-radius:30px;border:1px solid var(--line);
+  background:var(--card);box-shadow:0 25px 80px rgba(0,0,0,.32)}
+.headshot img{width:100%;height:100%;object-fit:cover}
+.headcap{text-align:center;color:var(--quiet);font-size:12px;margin-top:12px}
+section{padding:96px 0;border-top:1px solid var(--line)}
+.title{font-size:clamp(2.25rem,4.4vw,4.25rem);line-height:1.03;letter-spacing:-.045em;margin:12px 0 20px;max-width:920px}
+.intro{max-width:800px;color:var(--muted);font-size:1.04rem}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:42px}
+.metric{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));border:1px solid var(--line);border-radius:22px;padding:25px;min-height:180px}
+.num{font-size:clamp(2.15rem,4vw,3.8rem);font-weight:850;line-height:1;letter-spacing:-.05em;margin-bottom:16px}
+.mlabel{color:var(--muted);font-size:13px}
+.oci-shell{margin-top:42px;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:linear-gradient(145deg,#0f1a26,#0b141e)}
+.oci-top{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;padding:34px;border-bottom:1px solid var(--line)}
+.oci-top h3{font-size:2rem;line-height:1.08;letter-spacing:-.035em;margin:8px 0 12px}
+.oci-top p{color:var(--muted);margin:0}
+.rolebox{background:rgba(139,208,255,.055);border:1px solid rgba(139,208,255,.17);border-radius:20px;padding:22px}
+.rolebox strong{display:block;color:var(--accent2);margin-bottom:8px;font-size:14px}
+.rolebox span{color:var(--muted);font-size:14px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.flowcard{padding:27px;border-right:1px solid var(--line);min-height:210px}.flowcard:last-child{border-right:0}
+.flowcard small{color:var(--accent);font-size:10px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.flowcard h4{font-size:1.15rem;margin:25px 0 9px;letter-spacing:-.02em}.flowcard p{color:var(--muted);font-size:13px;margin:0}
+.valuechain{padding:27px 34px;border-top:1px solid var(--line)}
+.chain{display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+.chain span{border:1px solid var(--line);border-radius:999px;padding:8px 11px;font-size:12px;color:#c4d0dc;background:rgba(255,255,255,.02)}
+.shifts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:32px}
+.shift{padding:22px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.018)}
+.shift strong{display:block;font-size:14px;margin-bottom:9px}.shift span{color:var(--muted);font-size:12px}
+.workgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:42px}
+.card{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:var(--card2)}
+.cardimg{height:290px;overflow:hidden;background:#0f1924}.cardimg img{width:100%;height:100%;object-fit:cover}
+.cardbody{padding:27px}.tag{color:var(--accent);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:850}
+.cardbody h3{font-size:1.55rem;line-height:1.18;letter-spacing:-.03em;margin:10px 0 12px}.cardbody p{font-size:14px;color:var(--muted)}
+.result{border-top:1px solid var(--line);padding-top:18px;margin-top:18px;font-size:13px;color:#d8e5f1}
+.gallery{display:grid;grid-template-columns:1.25fr .75fr .75fr;grid-template-rows:260px 260px;gap:14px;margin-top:42px}
+.photo{border:1px solid var(--line);border-radius:22px;overflow:hidden;position:relative;background:#101a25}
+.photo img{width:100%;height:100%;object-fit:cover}
+.photo:first-child{grid-row:span 2}
+.caption{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(transparent,rgba(0,0,0,.78));font-size:12px;color:#e9f3fb}
+.timeline{margin-top:40px;border-top:1px solid var(--line)}
+.trow{display:grid;grid-template-columns:175px 1fr;gap:30px;padding:28px 0;border-bottom:1px solid var(--line)}
+.date{color:var(--quiet);font-size:13px}.trow h3{margin:0 0 4px;font-size:1.2rem}.org{color:var(--accent2);font-size:13px;margin-bottom:8px}.trow p{margin:0;color:var(--muted);font-size:14px;max-width:780px}
+.story{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:40px}
+.storycard{border:1px solid var(--line);border-radius:24px;background:var(--card2);padding:30px;min-height:330px}.storycard h3{font-size:1.7rem;margin:0 0 14px}.storycard p{color:var(--muted)}
+.contact{text-align:center;padding:115px 0}.contact .title,.contact .intro{margin-left:auto;margin-right:auto}.contact .cta{justify-content:center}
+footer{border-top:1px solid var(--line);padding:28px 0 38px;color:var(--quiet);font-size:11px}
+@media(max-width:900px){.hero-grid,.oci-top,.story{grid-template-columns:1fr}.headshot{max-width:320px}.metrics,.shifts{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(2,1fr)}.flowcard:nth-child(2){border-right:0}.flowcard{border-bottom:1px solid var(--line)}.workgrid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr;grid-template-rows:300px 220px 220px}.photo:first-child{grid-column:span 2;grid-row:auto}}
+@media(max-width:650px){.container{width:min(calc(100% - 28px),var(--max))}.navlinks a:not(:last-child){display:none}.metrics,.shifts,.flow,.gallery{grid-template-columns:1fr}.flowcard{border-right:0}.gallery{grid-template-rows:260px 220px 220px 220px}.photo:first-child{grid-column:auto}.trow{grid-template-columns:1fr;gap:7px}section{padding:75px 0}}
+</style>
 </head>
-
 <body>
+<nav><div class="container navin"><a class="brand" href="#top">Floyd S. Clark II</a><div class="navlinks"><a href="#impact">Impact</a><a href="#oci">OCI</a><a href="#work">Work</a><a href="#story">Story</a><a href="#signal">Signal</a><a href="#contact">Contact</a></div></div></nav>
 
-  <main class="hero">
-    <div class="hero-content">
-
-      <div class="eyebrow">
-        Technical Program Leadership
-      </div>
-
-      <h1>
-        Floyd S. Clark II
-      </h1>
-
-      <h2>
-        AI Infrastructure • Data Centers • Hardware • Technical Operations
-      </h2>
-
-      <p>
-        I lead complex technical programs where infrastructure, hardware,
-        data, engineering, and operations intersect — turning ambiguity into
-        executable systems, measurable outcomes, and scalable operating models.
-      </p>
-
-      <div class="status">
-        Portfolio under development — full experience and selected work coming soon.
-      </div>
-
+<main id="top">
+<section class="hero" style="border-top:0">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">Principal Technical Program Manager · M.Eng. · PMP</div>
+      <h1>Floyd S.<br>Clark II</h1>
+      <h2>AI Infrastructure · Data Centers · GPU / HBM Platforms · Technical Operations</h2>
+      <p class="lede">I lead complex technical programs where hardware, infrastructure, data, engineering, and operations intersect — turning ambiguity into executable systems, measurable outcomes, and scalable operating models.</p>
+      <p class="location">Austin, Texas · Open to California / Bay Area relocation</p>
+      <div class="cta"><a class="btn primary" href="#work">See selected work</a><a class="btn" href="https://www.linkedin.com/in/floyd-clark-meng-pmp-558619215" target="_blank">LinkedIn</a><a class="btn" href="mailto:floyd.clark.usma@gmail.com">Email</a></div>
     </div>
-  </main>
+    <div><div class="headshot"><img src="images/headshot.jpg" alt="Floyd S. Clark II headshot"></div><div class="headcap">Technical program leadership across physical + digital systems</div></div>
+  </div>
+</section>
 
+<section id="impact">
+<div class="container">
+  <div class="kicker">Impact at a glance</div>
+  <h2 class="title">Technical programs get better when the operating system gets better.</h2>
+  <p class="intro">Across GPU validation, HBM readiness, data-center integration, Army engineering, and technical operations, my focus has been consistent: improve the system around the work so engineers can see risk earlier, make decisions faster, and close with evidence.</p>
+  <div class="metrics">
+    <div class="metric"><div class="num">20%+</div><div class="mlabel">Reduction in issue / debug cycle time through stronger ownership, escalation, closure criteria, and daily operating cadence.</div></div>
+    <div class="metric"><div class="num">~95%</div><div class="mlabel">Validation-automation metadata accuracy after cross-functional data realignment and governance improvements.</div></div>
+    <div class="metric"><div class="num">1+ mo.</div><div class="mlabel">Schedule acceleration on a nine-month GPU program through critical-path analysis and dependency management.</div></div>
+    <div class="metric"><div class="num">67</div><div class="mlabel">Soldiers directly led as an Army platoon leader, with accountability for people, readiness, logistics, and major equipment.</div></div>
+  </div>
+</div>
+</section>
+
+<section id="oci">
+<div class="container">
+  <div class="kicker">Most recent role · Oracle Cloud Infrastructure</div>
+  <h2 class="title">Supporting the full hardware-interface + infrastructure-analytics operating surface.</h2>
+  <p class="intro">My last role was broader than a single hardware-readiness lane. As the hardware integration TPM, I supported a multidisciplinary team spanning physical integration, planning values, telemetry/data products, program execution, and adoption — helping turn hardware facts into deployable infrastructure decisions. The broader mission was to improve infrastructure efficiency, reduce avoidable power and capacity waste, strengthen standards, and help increasingly dense AI platforms land predictably at global scale.</p>
+
+  <div class="oci-shell">
+    <div class="oci-top">
+      <div>
+        <div class="tag">Hardware Interface & Analytics</div>
+        <h3>From hardware roadmap signal to scalable deployment.</h3>
+        <p>The team connected platform requirements, characterization, planning assumptions, telemetry, data products, dashboards, design/capacity decisions, and deployment readiness rather than handing those questions across disconnected queues.</p>
+      </div>
+      <div class="rolebox">
+        <strong>My operating role</strong>
+        <span>Hardware integration TPM across L10/L11 governance, MI455 / high-density platform readiness, PAPD characterization-data processing, Jira operating rhythm, executive-ready synthesis, and vendor / site coordination — while supporting dependencies across the team's broader hardware, analytics, data-product, and adoption charter.</span>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flowcard"><small>01 · Physical integration</small><h4>Hardware interface & standards</h4><p>Power, thermal, mechanical, rack dimensions, weight, liquid cooling, leak detection, serviceability, and readiness gates.</p></div>
+      <div class="flowcard"><small>02 · Analytics</small><h4>Planning values</h4><p>Power and airflow methodology, actual-vs-plan analysis, telemetry, characterization inputs, and capacity-facing decision support.</p></div>
+      <div class="flowcard"><small>03 · Data products</small><h4>Platforms & pipelines</h4><p>Hardware characteristics, data-quality checks, reusable pipelines, dashboard enablement, and more durable self-service data products.</p></div>
+      <div class="flowcard"><small>04 · Execution</small><h4>Program + adoption</h4><p>Jira operating model, readiness governance, cross-org sequencing, executive synthesis, stakeholder education, and business-rhythm integration.</p></div>
+    </div>
+
+    <div class="valuechain">
+      <div class="tag">The decision chain I helped connect</div>
+      <div class="chain">
+        <span>Hardware roadmap signal</span><span>L10 / L11 interface requirements</span><span>Characterization methodology</span><span>Planning values</span><span>Telemetry + trusted datasets</span><span>Dashboards + metrics</span><span>Design & capacity decisions</span><span>Scalable deployment</span>
+      </div>
+      <div class="shifts">
+        <div class="shift"><strong>Standardized readiness</strong><span>Checklists, interface governance, cataloging, tracking, and early visibility.</span></div>
+        <div class="shift"><strong>Instrumented power + airflow</strong><span>Moved planning conversations closer to real observed behavior and repeatable analytics.</span></div>
+        <div class="shift"><strong>Automated data products</strong><span>Helped reduce manual handling of inconsistent engineering PDFs / spreadsheets through a PAPD processor.</span></div>
+        <div class="shift"><strong>Operationalized execution</strong><span>Recurring Jira / Confluence rhythms, dashboards, reviews, escalation, and executive-ready synthesis.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="work">
+<div class="container">
+  <div class="kicker">Selected work</div>
+  <h2 class="title">Hardware, infrastructure, and people — in the real world.</h2>
+  <p class="intro">A visual portfolio is more useful when the photos show the operating environments behind the résumé: technical bring-up rooms, field engineering, large-team leadership, and the systems that have to work outside a slide deck.</p>
+
+  <div class="workgrid">
+    <article class="card">
+      <div class="cardimg"><img src="images/amd-bringup.jpg" alt="Technical bring-up and validation working session"></div>
+      <div class="cardbody"><div class="tag">AMD Instinct · GPU / HBM readiness</div><h3>Bring-up, debug, and cross-functional recovery</h3><p>Led program execution around GPU validation and HBM readiness across silicon, firmware, software, platform, suppliers, and validation teams. Daily technical operating rhythms helped turn fast-changing failure data into ownership, escalation, and closure.</p><div class="result"><strong>Outcome:</strong> 20%+ faster issue / debug cycles, stronger validation tracking adoption, and better automation-data quality.</div></div>
+    </article>
+
+    <article class="card">
+      <div class="cardimg"><img src="images/army-bridge.jpg" alt="Army bridging and field engineering operations"></div>
+      <div class="cardbody"><div class="tag">U.S. Army · Engineer Officer</div><h3>Engineering leadership under real constraints</h3><p>Led teams responsible for bridging, equipment, logistics, readiness, facilities, and large-scale operations — an early foundation for how I manage risk, ownership, sequencing, and execution today.</p><div class="result"><strong>Operating principle:</strong> the plan matters, but so do the people, equipment, terrain, dependencies, and changing facts around it.</div></div>
+    </article>
+  </div>
+
+  <div class="gallery">
+    <div class="photo"><img src="images/army-team.jpg" alt="Army engineering team"><div class="caption">People leadership · team readiness · accountability</div></div>
+    <div class="photo"><img src="images/army-cbrn.jpg" alt="Army training environment"><div class="caption">Training + readiness in high-consequence environments</div></div>
+    <div class="photo"><img src="images/westpoint.jpg" alt="West Point military academy graduation setting"><div class="caption">West Point foundation · mechanical engineering + leadership</div></div>
+    <div class="photo"><img src="images/amd-bringup-raw.jpg" alt="Technical working session"><div class="caption">Technical teams in the room · cross-functional problem solving</div></div>
+  </div>
+</div>
+</section>
+
+<section id="journey">
+<div class="container">
+  <div class="kicker">Career journey</div>
+  <h2 class="title">Increasing technical complexity. Same operating discipline.</h2>
+  <div class="timeline">
+    <div class="trow"><div class="date">Mar 2026 – Sep 2026</div><div><h3>Principal Technical Program Manager</h3><div class="org">Oracle Cloud Infrastructure</div><p>Hardware integration, AI infrastructure readiness, L10/L11 governance, characterization-data processing, program operating systems, executive synthesis, and hardware-to-facility deployment risk.</p></div></div>
+    <div class="trow"><div class="date">2022 – Feb 2026</div><div><h3>Senior Technical Program Manager / Program Manager</h3><div class="org">AMD</div><p>Instinct GPU validation and debug, HBM readiness, platform programs, supplier coordination, scarce-hardware allocation, technical triage, analytics, and executive reporting.</p></div></div>
+    <div class="trow"><div class="date">2016 – 2022</div><div><h3>Engineer Officer / Operations & Program Leader</h3><div class="org">U.S. Army</div><p>Engineering operations, platoon leadership, logistics, facilities, acquisition testing, readiness, and large-scale mission execution.</p></div></div>
+  </div>
+</div>
+</section>
+
+<section id="story">
+<div class="container">
+  <div class="kicker">Beyond the résumé</div>
+  <h2 class="title">I like work where plans meet reality.</h2>
+  <div class="story">
+    <div class="storycard"><h3>Ambiguity is an operating condition.</h3><p>My background has moved from military engineering to semiconductor validation to hyperscale data-center integration, but the pattern is similar: facts change, constraints collide, and the TPM's job is to preserve clarity without pretending the environment is static.</p><p>That means building a rhythm people trust, surfacing the right evidence, clarifying ownership, and keeping the organization moving toward the objective.</p></div>
+    <div class="storycard"><h3>Technical credibility without pretending to be every SME.</h3><p>B.S. Mechanical Engineering · West Point<br>M.Eng. Engineering Management · University of Louisville<br>PMP · Project Management Institute</p><p>I work comfortably across power, cooling, mechanical integration, GPU/HBM, firmware/RAS, validation, suppliers, data products, analytics, and infrastructure operations — while relying on deep specialists for deep specialist judgment.</p></div>
+  </div>
+</div>
+</section>
+
+
+<section id="signal">
+<div class="container">
+  <div class="kicker">Public signal · what I consistently talk about</div>
+  <h2 class="title">The portfolio should sound like the same person recruiters already see on LinkedIn.</h2>
+  <p class="intro">My public posts and reshares reinforce the same themes that show up in the work: disciplined execution, customer-aligned planning, service, technical curiosity, and staying useful when conditions change.</p>
+
+  <div class="workgrid">
+    <article class="card">
+      <div class="cardbody">
+        <div class="tag">Execution under pressure</div>
+        <h3>Discipline compounds.</h3>
+        <p>My first Galveston 70.3 included two bike flats. The takeaway I shared publicly was not about the race time; it was about preparation, stress management, and continuing to execute when the original plan stops being available.</p>
+        <div class="result"><strong>How that shows up at work:</strong> operating cadence, risk visibility, calm triage, and the ability to pivot without losing the objective.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="cardbody">
+        <div class="tag">Customer + roadmap thinking</div>
+        <h3>Roadmaps are alignment tools, not presentation artifacts.</h3>
+        <p>I have repeatedly emphasized the value of roadmap visibility for customer alignment and milestone planning. That same instinct drives how I build readiness gates, dependency models, and executive decision views.</p>
+        <div class="result"><strong>How that shows up at work:</strong> turn future-state intent into owners, milestones, evidence, tradeoffs, and decisions teams can actually execute against.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="cardbody">
+        <div class="tag">Service + community</div>
+        <h3>Leadership should create opportunity for other people.</h3>
+        <p>At AMD, I contributed to Salute veteran initiatives connected to Hiring Our Heroes, VetsInTech, and Tech4Troops — work aimed at helping veterans and military spouses transition into technology careers and build community after service.</p>
+        <div class="result"><strong>How that shows up at work:</strong> mentoring, creating repeatable onboarding mechanisms, and building teams where experience can transfer instead of staying trapped in one person's head.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="cardbody">
+        <div class="tag">Physical-world engineering</div>
+        <h3>I still care about the machine, the site, and the people using it.</h3>
+        <p>My public engagement around Army wet-gap bridging and modern infrastructure reflects a through-line from mechanical engineering to GPU systems to data centers: technology eventually has to work in a physical environment with real constraints.</p>
+        <div class="result"><strong>How that shows up at work:</strong> I naturally ask what a requirement means for power, cooling, pathway, serviceability, readiness, operations, and the people who must execute it.</div>
+      </div>
+    </article>
+  </div>
+</div>
+</section>
+
+<section id="contact" class="contact">
+<div class="container">
+  <div class="kicker">Let’s connect</div>
+  <h2 class="title">Building complex AI infrastructure, hardware, or technical operations?</h2>
+  <p class="intro">I’m exploring Senior / Principal TPM opportunities where complex engineering needs strong cross-functional execution, grounded technical judgment, and scalable operating systems.</p>
+  <div class="cta"><a class="btn primary" href="mailto:floyd.clark.usma@gmail.com">Email me</a><a class="btn" href="https://www.linkedin.com/in/floyd-clark-meng-pmp-558619215" target="_blank">LinkedIn</a></div>
+</div>
+</section>
+</main>
+
+<footer><div class="container">© 2026 Floyd S. Clark II · Portfolio preview V2.1</div></footer>
 </body>
 </html>
