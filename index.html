@@ -4,7 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Floyd S. Clark II | Principal Technical Program Manager</title>
-<meta name="description" content="Principal Technical Program Manager spanning AI infrastructure, data center hardware integration, GPU/HBM readiness, analytics, automation, and technical operations." />
+<meta name="description" content="Principal Technical Program Manager spanning AI infrastructure, data center hardware integration, GPU/HBM validation and debug, analytics, automation, capacity planning, service delivery, and technical operations." />
+
+<meta name="keywords" content="Principal Technical Program Manager, Senior Technical Program Manager, AI infrastructure, data center infrastructure, technical program management, hardware integration, cloud infrastructure, validation and debug, GPU validation, HBM, server platforms, capacity planning, program governance, NPI, product operations, service delivery, engineering operations, supplier management, cross-functional leadership, technical operations, hardware readiness, data products, analytics, executive reporting" />
+
 <style>
 :root{
   --bg:#081018; --bg2:#0c151f; --card:#101b27; --card2:#0d1721;
@@ -82,10 +85,22 @@ section{padding:96px 0;border-top:1px solid var(--line)}
 footer{border-top:1px solid var(--line);padding:28px 0 38px;color:var(--quiet);font-size:11px}
 @media(max-width:900px){.hero-grid,.oci-top,.story{grid-template-columns:1fr}.headshot{max-width:320px}.metrics,.shifts{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(2,1fr)}.flowcard:nth-child(2){border-right:0}.flowcard{border-bottom:1px solid var(--line)}.workgrid{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr;grid-template-rows:300px 220px 220px}.photo:first-child{grid-column:span 2;grid-row:auto}}
 @media(max-width:650px){.container{width:min(calc(100% - 28px),var(--max))}.navlinks a:not(:last-child){display:none}.metrics,.shifts,.flow,.gallery{grid-template-columns:1fr}.flowcard{border-right:0}.gallery{grid-template-rows:260px 220px 220px 220px}.photo:first-child{grid-column:auto}.trow{grid-template-columns:1fr;gap:7px}section{padding:75px 0}}
+
+    .story-visual{display:grid;grid-template-columns:.95fr 1.05fr;gap:18px;align-items:stretch;margin-top:18px}
+    .story-visual .storycard{min-height:420px}
+    .story-photo{border:1px solid var(--line);border-radius:24px;overflow:hidden;background:#101a25}
+    .story-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+    .chipgrid{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .chip{border:1px solid var(--line);border-radius:999px;padding:8px 11px;font-size:12px;color:#c4d0dc;background:rgba(255,255,255,.02)}
+    .amdgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:42px}
+    .amdrow{display:grid;grid-template-columns:.9fr 1.1fr;gap:18px;align-items:stretch}
+    .fitgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:38px}
+    @media(max-width:900px){.story-visual,.amdrow,.amdgrid,.fitgrid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
-<nav><div class="container navin"><a class="brand" href="#top">Floyd S. Clark II</a><div class="navlinks"><a href="#impact">Impact</a><a href="#oci">OCI</a><a href="#work">Work</a><a href="#story">Story</a><a href="#signal">Signal</a><a href="#contact">Contact</a></div></div></nav>
+<nav><div class="container navin"><a class="brand" href="#top">Floyd S. Clark II</a><div class="navlinks"><a href="#impact">Impact</a><a href="#oci">OCI</a><a href="#work">Work</a><a href="#amd">AMD</a><a href="#story">Story</a><a href="#fit">Fit</a><a href="#contact">Contact</a></div></div></nav>
 
 <main id="top">
 <section class="hero" style="border-top:0">
@@ -111,7 +126,7 @@ footer{border-top:1px solid var(--line);padding:28px 0 38px;color:var(--quiet);f
     <div class="metric"><div class="num">20%+</div><div class="mlabel">Reduction in issue / debug cycle time through stronger ownership, escalation, closure criteria, and daily operating cadence.</div></div>
     <div class="metric"><div class="num">~95%</div><div class="mlabel">Validation-automation metadata accuracy after cross-functional data realignment and governance improvements.</div></div>
     <div class="metric"><div class="num">1+ mo.</div><div class="mlabel">Schedule acceleration on a nine-month GPU program through critical-path analysis and dependency management.</div></div>
-    <div class="metric"><div class="num">67</div><div class="mlabel">Soldiers directly led as an Army platoon leader, with accountability for people, readiness, logistics, and major equipment.</div></div>
+    <div class="metric"><div class="num">67</div><div class="mlabel">Soldiers directly led, with 6+ years of direct people-management experience and a track record of adapting leadership style, understanding motivators, and maximizing collaborative performance.</div></div>
   </div>
 </div>
 </section>
@@ -179,8 +194,69 @@ footer{border-top:1px solid var(--line);padding:28px 0 38px;color:var(--quiet);f
   <div class="gallery">
     <div class="photo"><img src="images/army-team.jpg" alt="Army engineering team"><div class="caption">People leadership · team readiness · accountability</div></div>
     <div class="photo"><img src="images/army-cbrn.jpg" alt="Army training environment"><div class="caption">Training + readiness in high-consequence environments</div></div>
-    <div class="photo"><img src="images/westpoint.jpg" alt="West Point military academy graduation setting"><div class="caption">West Point foundation · mechanical engineering + leadership</div></div>
+    <div class="photo"><img src="images/westpoint-focused.jpg" alt="West Point military academy graduation setting"><div class="caption">West Point foundation · mechanical engineering + leadership</div></div>
     <div class="photo"><img src="images/amd-bringup-raw.jpg" alt="Technical working session"><div class="caption">Technical teams in the room · cross-functional problem solving</div></div>
+  </div>
+</div>
+</section>
+
+
+<section id="amd">
+<div class="container">
+  <div class="kicker">AMD · Validation & Debug</div>
+  <h2 class="title">A dedicated operating system for technical triage, validation readiness, and cross-functional debug.</h2>
+  <p class="intro">At AMD, I supported server and GPU programs where validation, firmware, software, hardware, suppliers, and customer-facing teams all needed faster signal, clearer ownership, and a repeatable way to move issues to closure. My role went well beyond status tracking — it was about creating a working system for technical execution.</p>
+
+  <div class="amdrow">
+    <article class="card">
+      <div class="cardimg"><img src="images/amd-bringup.jpg" alt="AMD technical working session for validation and debug"></div>
+      <div class="cardbody">
+        <div class="tag">Operating cadence</div>
+        <h3>Validation & debug leadership</h3>
+        <p>Ran daily triage, debug-steering rhythms, P1 huddles, taskforces, and executive-ready updates that connected issue data to ownership, prioritization, and risk. Built mechanisms in Jira, Qtest, Power BI, Confluence, and SharePoint to make the technical picture visible and actionable.</p>
+        <div class="result"><strong>Highlights:</strong> 20%+ faster issue / debug cycle time · 90%+ tracking adoption · ~95% automation-metadata accuracy.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="cardimg"><img src="images/amd-instinct-official.jpg" alt="AMD Instinct platform image"></div>
+      <div class="cardbody">
+        <div class="tag">Platform scope</div>
+        <h3>Instinct GPU + HBM readiness</h3>
+        <p>Led program execution across Instinct GPU platforms and Micron HBM readiness, coordinating silicon, firmware, software, validation, supplier coverage, yield learning, and customer-readiness signal. This included scarce system allocation, failure triage, and aligning stakeholders around what mattered most next.</p>
+        <div class="result"><strong>Programs:</strong> MI300X / MI308X / MI325X / MI350X / MI355X · HBM readiness · validation & debug · sustaining support.</div>
+      </div>
+    </article>
+  </div>
+
+  <div class="amdgrid">
+    <article class="card">
+      <div class="cardbody">
+        <div class="tag">What I built</div>
+        <h3>Program operating mechanisms</h3>
+        <p>Improved the system around the work: structured closure criteria, stronger issue categorization, reusable dashboards, better metadata, and more consistent change control across teams that otherwise would have stayed fragmented.</p>
+        <div class="chipgrid">
+          <span class="chip">Debug Steering Forum</span>
+          <span class="chip">Daily triage</span>
+          <span class="chip">P1 huddles</span>
+          <span class="chip">Executive reporting</span>
+          <span class="chip">Jira / JQL</span>
+          <span class="chip">Qtest</span>
+          <span class="chip">Power BI</span>
+          <span class="chip">Confluence</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="cardimg"><img src="images/amd-hoh.jpg" alt="AMD veteran community and Hiring Our Heroes group photo"></div>
+      <div class="cardbody">
+        <div class="tag">Humanitarian / talent impact</div>
+        <h3>Veteran transition & community building</h3>
+        <p>Outside the immediate program lane, I helped build AMD’s military-community and Hiring Our Heroes ecosystem through Salute ERG initiatives and partner engagement — work designed to create opportunity, mentorship, and access for veterans and military spouses entering tech. The program continued beyond my tenure, which is exactly the point.</p>
+        <div class="result"><strong>Organizations / initiatives:</strong> Hiring Our Heroes · VetsInTech · Tech4Troops · veteran and military-spouse outreach.</div>
+      </div>
+    </article>
   </div>
 </div>
 </section>
@@ -197,58 +273,72 @@ footer{border-top:1px solid var(--line);padding:28px 0 38px;color:var(--quiet);f
 </div>
 </section>
 
+
 <section id="story">
 <div class="container">
   <div class="kicker">Beyond the résumé</div>
   <h2 class="title">I like work where plans meet reality.</h2>
-  <div class="story">
-    <div class="storycard"><h3>Ambiguity is an operating condition.</h3><p>My background has moved from military engineering to semiconductor validation to hyperscale data-center integration, but the pattern is similar: facts change, constraints collide, and the TPM's job is to preserve clarity without pretending the environment is static.</p><p>That means building a rhythm people trust, surfacing the right evidence, clarifying ownership, and keeping the organization moving toward the objective.</p></div>
-    <div class="storycard"><h3>Technical credibility without pretending to be every SME.</h3><p>B.S. Mechanical Engineering · West Point<br>M.Eng. Engineering Management · University of Louisville<br>PMP · Project Management Institute</p><p>I work comfortably across power, cooling, mechanical integration, GPU/HBM, firmware/RAS, validation, suppliers, data products, analytics, and infrastructure operations — while relying on deep specialists for deep specialist judgment.</p></div>
+  <div class="story-visual">
+    <div class="story-photo"><img src="images/ironman.jpg" alt="Floyd Clark during Ironman 70.3 run segment"></div>
+    <div class="storycard">
+      <h3>Discipline compounds.</h3>
+      <p>My first Ironman 70.3 in Galveston included two bike flats and a race day that did not follow the script. That is exactly why I wanted this photo here: the point is not endurance sports for its own sake — it is a visible example of how I operate when the environment changes.</p>
+      <p>The same pattern applies at work. Prepare deeply. Build the rhythm. Stay composed when facts change. Re-prioritize without losing the objective. Keep the broader system moving, even when the original plan is no longer available.</p>
+      <div class="result"><strong>Why it belongs on this site:</strong> it is the same execution style that shows up in validation triage, data-center readiness, supplier coordination, and high-ambiguity program leadership.</div>
+    </div>
+  </div>
+
+  <div class="story" style="margin-top:22px;">
+    <div class="storycard">
+      <h3>Leadership is adaptive.</h3>
+      <p>I bring 6+ years of direct people-management experience and a background that spans Army engineering, semiconductor programs, and hyperscale infrastructure. That means navigating different leadership styles, personalities, and motivators — and understanding how to align them toward shared execution instead of hoping collaboration happens automatically.</p>
+      <p>My best work tends to happen when the environment is complex, the stakes are real, and the organization needs both technical credibility and emotional steadiness.</p>
+    </div>
+    <div class="storycard">
+      <h3>Technical credibility without pretending to be every SME.</h3>
+      <p>B.S. Mechanical Engineering · West Point<br>M.Eng. Engineering Management · University of Louisville<br>PMP · Project Management Institute</p>
+      <p>I work comfortably across AI infrastructure, data-center delivery, hardware integration, capacity planning, GPU/HBM, validation and debug, firmware/RAS, analytics, data products, and technical operations — while relying on deep specialists for deep specialist judgment.</p>
+    </div>
   </div>
 </div>
 </section>
 
-
-<section id="signal">
+<section id="fit">
 <div class="container">
-  <div class="kicker">Public signal · what I consistently talk about</div>
-  <h2 class="title">The portfolio should sound like the same person recruiters already see on LinkedIn.</h2>
-  <p class="intro">My public posts and reshares reinforce the same themes that show up in the work: disciplined execution, customer-aligned planning, service, technical curiosity, and staying useful when conditions change.</p>
+  <div class="kicker">Where I fit best</div>
+  <h2 class="title">Structured to be readable by both people and semantic matchers.</h2>
+  <p class="intro">The right roles for me typically live at the intersection of technical program management, infrastructure delivery, hardware platform execution, engineering operations, and service readiness. This section is intentionally structured to make that fit explicit.</p>
 
-  <div class="workgrid">
+  <div class="fitgrid">
     <article class="card">
       <div class="cardbody">
-        <div class="tag">Execution under pressure</div>
-        <h3>Discipline compounds.</h3>
-        <p>My first Galveston 70.3 included two bike flats. The takeaway I shared publicly was not about the race time; it was about preparation, stress management, and continuing to execute when the original plan stops being available.</p>
-        <div class="result"><strong>How that shows up at work:</strong> operating cadence, risk visibility, calm triage, and the ability to pivot without losing the objective.</div>
+        <div class="tag">Role alignment</div>
+        <h3>Titles I map to</h3>
+        <p>Principal Technical Program Manager · Senior Technical Program Manager · Infrastructure Program Manager · Hardware Program Manager · Data Center Program Manager · AI Infrastructure TPM · Engineering Operations Program Manager · Product Operations / NPI Program Manager.</p>
       </div>
     </article>
 
     <article class="card">
       <div class="cardbody">
-        <div class="tag">Customer + roadmap thinking</div>
-        <h3>Roadmaps are alignment tools, not presentation artifacts.</h3>
-        <p>I have repeatedly emphasized the value of roadmap visibility for customer alignment and milestone planning. That same instinct drives how I build readiness gates, dependency models, and executive decision views.</p>
-        <div class="result"><strong>How that shows up at work:</strong> turn future-state intent into owners, milestones, evidence, tradeoffs, and decisions teams can actually execute against.</div>
+        <div class="tag">Delivery scope</div>
+        <h3>Program types I support</h3>
+        <p>AI infrastructure · data center infrastructure · cloud infrastructure · hardware integration · new product introduction · service delivery · capacity planning · readiness governance · validation and debug · supplier coordination · technical operations · executive reporting.</p>
       </div>
     </article>
 
     <article class="card">
       <div class="cardbody">
-        <div class="tag">Service + community</div>
-        <h3>Leadership should create opportunity for other people.</h3>
-        <p>At AMD, I contributed to Salute veteran initiatives connected to Hiring Our Heroes, VetsInTech, and Tech4Troops — work aimed at helping veterans and military spouses transition into technology careers and build community after service.</p>
-        <div class="result"><strong>How that shows up at work:</strong> mentoring, creating repeatable onboarding mechanisms, and building teams where experience can transfer instead of staying trapped in one person's head.</div>
+        <div class="tag">Technical taxonomy</div>
+        <h3>Domains & systems</h3>
+        <p>GPU platforms · HBM · server platforms · rack integration · power · cooling · mechanical integration · thermal · liquid cooling · firmware · RAS · telemetry · data products · dashboards · characterization data · analytics pipelines.</p>
       </div>
     </article>
 
     <article class="card">
       <div class="cardbody">
-        <div class="tag">Physical-world engineering</div>
-        <h3>I still care about the machine, the site, and the people using it.</h3>
-        <p>My public engagement around Army wet-gap bridging and modern infrastructure reflects a through-line from mechanical engineering to GPU systems to data centers: technology eventually has to work in a physical environment with real constraints.</p>
-        <div class="result"><strong>How that shows up at work:</strong> I naturally ask what a requirement means for power, cooling, pathway, serviceability, readiness, operations, and the people who must execute it.</div>
+        <div class="tag">Operating mechanisms</div>
+        <h3>How I create signal</h3>
+        <p>Cross-functional leadership · issue triage · dependency management · milestone planning · risk burn-down · governance cadence · Jira / Confluence / Qtest / Power BI · requirements traceability · stakeholder management · vendor management · customer alignment.</p>
       </div>
     </article>
   </div>
@@ -259,12 +349,12 @@ footer{border-top:1px solid var(--line);padding:28px 0 38px;color:var(--quiet);f
 <div class="container">
   <div class="kicker">Let’s connect</div>
   <h2 class="title">Building complex AI infrastructure, hardware, or technical operations?</h2>
-  <p class="intro">I’m exploring Senior / Principal TPM opportunities where complex engineering needs strong cross-functional execution, grounded technical judgment, and scalable operating systems.</p>
+  <p class="intro">I’m exploring Senior / Principal TPM opportunities where complex engineering, AI infrastructure, hardware platforms, service delivery, or technical operations need strong cross-functional execution, grounded technical judgment, and scalable operating systems.</p>
   <div class="cta"><a class="btn primary" href="mailto:floyd.clark.usma@gmail.com">Email me</a><a class="btn" href="https://www.linkedin.com/in/floyd-clark-meng-pmp-558619215" target="_blank">LinkedIn</a></div>
 </div>
 </section>
 </main>
 
-<footer><div class="container">© 2026 Floyd S. Clark II · Portfolio preview V2.1</div></footer>
+<footer><div class="container">© 2026 Floyd S. Clark II · Portfolio preview V3</div></footer>
 </body>
 </html>
