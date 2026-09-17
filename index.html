@@ -27,9 +27,12 @@
       --muted: #acb8c6;
       --quiet: #738297;
       --line: rgba(255,255,255,.09);
-      --accent: #86d0ff;
+      --accent: #5cc8ff;
       --accent-2: #c9e9ff;
-      --good: #8fe0bd;
+      --good: #79e0ae;
+      --violet: #b8a1ff;
+      --amber: #ffcc73;
+      --coral: #ff8f7c;
       --max: 1180px;
       --shadow: 0 22px 80px rgba(0,0,0,.28);
     }
@@ -115,7 +118,7 @@
     }
     .intro { max-width: 820px; color: var(--muted); font-size: 1.04rem; }
 
-    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 42px; }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 28px; }
     .metric {
       min-height: 192px; padding: 25px; border: 1px solid var(--line); border-radius: 22px;
       background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
@@ -130,11 +133,26 @@
 
     .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 42px; }
     .story-card {
-      display: grid; grid-template-rows: 270px 1fr; min-height: 560px;
+      display: grid; grid-template-rows: 350px 1fr; min-height: 650px;
       border: 1px solid var(--line); border-radius: 24px; overflow: hidden; background: var(--panel);
     }
-    .story-card .media { overflow: hidden; background: #0b1620; }
-    .story-card .media img { width: 100%; height: 100%; object-fit: cover; }
+    .story-card .media {
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 50% 45%, rgba(92,200,255,.12), transparent 45%),
+        #08131d;
+      padding: 10px;
+    }
+    .story-card .media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 14px;
+    }
     .story-card .body { padding: 28px; }
     .story-card h3 { font-size: 1.55rem; line-height: 1.18; letter-spacing: -.03em; margin: 11px 0 12px; }
     .story-card p { color: var(--muted); font-size: 14px; }
@@ -146,6 +164,62 @@
     .card h3 { font-size: 1.55rem; line-height: 1.18; letter-spacing: -.03em; margin: 11px 0 12px; }
     .card p { color: var(--muted); font-size: 14px; }
     .result { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); color: #dce9f3; font-size: 13px; }
+    .result strong { color: var(--good); }
+    .accent-cyan { color: var(--accent); }
+    .accent-green { color: var(--good); }
+    .accent-violet { color: var(--violet); }
+    .accent-amber { color: var(--amber); }
+
+    .sab {
+      display: grid;
+      gap: 9px;
+      margin-top: 18px;
+      padding-top: 17px;
+      border-top: 1px solid var(--line);
+    }
+    .sab-row {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 10px;
+      align-items: start;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .sab-label {
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+    }
+    .sab-label.scope { color: var(--accent); }
+    .sab-label.action { color: var(--violet); }
+    .sab-label.outcome { color: var(--good); }
+
+    .impact-subhead {
+      margin-top: 34px;
+      color: var(--accent-2);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .metrics.dc .metric {
+      background:
+        linear-gradient(180deg, rgba(92,200,255,.055), rgba(255,255,255,.012));
+    }
+    .metrics .metric:nth-child(4n+1) .num { color: var(--accent); }
+    .metrics .metric:nth-child(4n+2) .num { color: var(--good); }
+    .metrics .metric:nth-child(4n+3) .num { color: var(--amber); }
+    .metrics .metric:nth-child(4n+4) .num { color: var(--violet); }
+
+    .journey-card::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--violet), var(--good));
+      opacity: .85;
+    }
 
     .mock-wrap { position: relative; background: #f5f7fb; padding: 14px; }
     .mock-wrap img { height: 300px; object-fit: contain; background: white; border-radius: 15px; }
@@ -286,7 +360,7 @@
   <section class="hero">
     <div class="container hero-grid">
       <div>
-        <div class="eyebrow">Principal-Level Technical Program Manager · M.Eng. · PMP</div>
+        <div class="eyebrow">Principal / Senior Technical Program Manager · M.Eng. · PMP</div>
         <h1>Floyd S.<br>Clark II</h1>
         <h2>AI Infrastructure · Data Centers · GPU / HBM · Hardware Integration · Technical Operations</h2>
         <p class="lede">I lead complex technical programs where hardware, infrastructure, data, engineering, and operations intersect — turning ambiguity into executable systems, measurable outcomes, and scalable operating models.</p>
@@ -307,14 +381,47 @@
   <section id="impact">
     <div class="container">
       <div class="kicker">Impact at a glance</div>
-      <h2 class="title">Better operating systems create better technical outcomes.</h2>
+      <h2 class="title">Better operating systems create <span class="accent-cyan">better technical outcomes.</span></h2>
       <p class="intro">My work is usually the connective tissue between engineering depth and organizational execution: readiness, schedule, data quality, risk, suppliers, customer commitments, and executive decision-making.</p>
 
+      <div class="impact-subhead">GPU / validation / leadership impact</div>
       <div class="metrics">
-        <article class="metric"><div class="num">20%+</div><p>Reduction in issue / debug cycle time through stronger ownership, closure criteria, escalation, and daily technical operating cadence.</p></article>
-        <article class="metric"><div class="num">~95%</div><p>Validation-automation metadata accuracy after data realignment, governance improvements, and better integration between program and lab teams.</p></article>
-        <article class="metric"><div class="num">1+ mo.</div><p>Schedule acceleration on a nine-month GPU program through critical-path analysis, dependency management, and risk burn-down.</p></article>
-        <article class="metric"><div class="num">67</div><p>Soldiers directly led, backed by 6+ years of direct people-management experience and an adaptive leadership approach built around personalities, motivators, and collaborative performance.</p></article>
+        <article class="metric">
+          <div class="num">20%+</div>
+          <p><strong class="accent-green">Business outcome:</strong> faster issue / debug cycles after standardizing ownership, closure criteria, escalation paths, and daily technical operating cadence.</p>
+        </article>
+        <article class="metric">
+          <div class="num">~95%</div>
+          <p><strong class="accent-green">Business outcome:</strong> validation-automation metadata accuracy after data realignment, governance improvements, and stronger program / lab integration.</p>
+        </article>
+        <article class="metric">
+          <div class="num">1+ mo.</div>
+          <p><strong class="accent-green">Business outcome:</strong> schedule acceleration on a nine-month GPU program using critical-path analysis, dependency management, and risk burn-down.</p>
+        </article>
+        <article class="metric">
+          <div class="num">67</div>
+          <p><strong class="accent-green">Leadership scope:</strong> soldiers directly led, backed by 6+ years of direct people management and an adaptive approach to personalities, motivators, and performance.</p>
+        </article>
+      </div>
+
+      <div class="impact-subhead">Data center / infrastructure impact</div>
+      <div class="metrics dc">
+        <article class="metric">
+          <div class="num">37</div>
+          <p><strong class="accent-green">Scope:</strong> concurrent hardware-to-data-center readiness workstreams coordinated across architecture, NPI, capacity, engineering, operations, and deployment.</p>
+        </article>
+        <article class="metric">
+          <div class="num">29 / 74</div>
+          <p><strong class="accent-green">Action:</strong> governed a 29-platform Rack Catalogue across 74 engineering attributes connecting hardware facts to facility decisions.</p>
+        </article>
+        <article class="metric">
+          <div class="num">~258 kW</div>
+          <p><strong class="accent-green">Scope:</strong> supported readiness for high-density AI rack platforms approaching this power envelope across power, cooling, structure, routing, and serviceability.</p>
+        </article>
+        <article class="metric">
+          <div class="num">80–100 kW</div>
+          <p><strong class="accent-green">Business outcome:</strong> caught a per-rack planning discrepancy before downstream capacity assumptions — approximately a 30%–38% overstatement.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -330,9 +437,12 @@
           <div class="media"><img src="images/ironman.jpg" alt="Floyd Clark at Ironman 70.3" /></div>
           <div class="body">
             <div class="tag">Discipline compounds</div>
-            <h3>Prepare deeply. Adapt quickly. Keep moving.</h3>
-            <p>My first Ironman 70.3 included two bike flats and a race day that stopped following the script. That is why this belongs here: it is a visible example of how I operate when the environment changes.</p>
-            <div class="result"><strong>At work:</strong> calm triage, risk visibility, reprioritization, and forward motion even when the original plan is no longer available.</div>
+            <h3><span class="accent-cyan">Prepare deeply.</span> Adapt quickly. Keep moving.</h3>
+            <div class="sab">
+              <div class="sab-row"><div class="sab-label scope">Scope</div><div>First Ironman 70.3; two bike flats turned race day into an unplanned recovery exercise.</div></div>
+              <div class="sab-row"><div class="sab-label action">Action</div><div>Stay composed, re-prioritize in motion, protect the objective, and continue executing despite a broken plan.</div></div>
+              <div class="sab-row"><div class="sab-label outcome">Outcome</div><div>The same operating behavior I bring to technical triage: risk visibility, calm decision-making, and forward motion under ambiguity.</div></div>
+            </div>
           </div>
         </article>
 
@@ -340,9 +450,12 @@
           <div class="media"><img src="images/army-team.jpg" alt="Floyd Clark with Army engineering team" /></div>
           <div class="body">
             <div class="tag">Leadership is adaptive</div>
-            <h3>Different people need different leadership.</h3>
-            <p>Across 6+ years of direct people management, I learned to navigate competing personalities, leadership styles, and motivators — then align the team around a shared mission without assuming collaboration happens automatically.</p>
-            <div class="result"><strong>At work:</strong> understand the person, clarify the standard, create ownership, and build the environment where collaborative performance is easier.</div>
+            <h3>Different people need <span class="accent-green">different leadership.</span></h3>
+            <div class="sab">
+              <div class="sab-row"><div class="sab-label scope">Scope</div><div>67-person engineering platoon, major equipment accountability, varied personalities, experience levels, and mission requirements.</div></div>
+              <div class="sab-row"><div class="sab-label action">Action</div><div>Adapt leadership style, understand individual motivators, clarify standards, develop ownership, and align the team around one mission.</div></div>
+              <div class="sab-row"><div class="sab-label outcome">Outcome</div><div>6+ years of direct people-management experience built around collaboration, readiness, accountability, and sustained team performance.</div></div>
+            </div>
           </div>
         </article>
 
@@ -350,9 +463,12 @@
           <div class="media"><img src="images/amd-server-build.jpg" alt="Server hardware build with AMD EPYC processors" /></div>
           <div class="body">
             <div class="tag">Technical credibility</div>
-            <h3>Close enough to the hardware to ask better questions.</h3>
-            <p>Mechanical engineering, server platforms, GPU/HBM, firmware/RAS, power, cooling, facilities, validation, and infrastructure integration give me enough technical context to challenge assumptions without pretending to replace the SME.</p>
-            <div class="result"><strong>At work:</strong> translate specialist detail into schedule, risk, resource, customer, and executive decisions.</div>
+            <h3>Close enough to the hardware to <span class="accent-amber">ask better questions.</span></h3>
+            <div class="sab">
+              <div class="sab-row"><div class="sab-label scope">Scope</div><div>Server platforms, GPU/HBM, firmware/RAS, power, cooling, validation, and infrastructure integration.</div></div>
+              <div class="sab-row"><div class="sab-label action">Action</div><div>Challenge assumptions, connect specialist detail across functions, and translate technical signal into program-level decisions.</div></div>
+              <div class="sab-row"><div class="sab-label outcome">Outcome</div><div>Earlier risk signal and clearer decisions across schedule, resources, customer readiness, deployment, and executive escalation.</div></div>
+            </div>
           </div>
         </article>
 
@@ -360,9 +476,12 @@
           <div class="media"><img src="images/westpoint.jpg" alt="West Point leadership foundation" /></div>
           <div class="body">
             <div class="tag">Foundation</div>
-            <h3>Engineer by training. Operator by experience.</h3>
-            <p>B.S. Mechanical Engineering from West Point, M.Eng. Engineering Management, PMP, and years of mission-critical execution shaped an operating style built around evidence, accountability, and action.</p>
-            <div class="result"><strong>My lane:</strong> programs where technical depth, operating discipline, people leadership, and executive clarity have to coexist.</div>
+            <h3>Engineer by training. <span class="accent-violet">Operator by experience.</span></h3>
+            <div class="sab">
+              <div class="sab-row"><div class="sab-label scope">Scope</div><div>B.S. Mechanical Engineering, M.Eng. Engineering Management, PMP, military engineering, semiconductor programs, and hyperscale infrastructure.</div></div>
+              <div class="sab-row"><div class="sab-label action">Action</div><div>Combine evidence-based engineering with program governance, people leadership, and executive communication.</div></div>
+              <div class="sab-row"><div class="sab-label outcome">Outcome</div><div>A repeatable operating style for programs where technical depth, execution discipline, and organizational clarity must coexist.</div></div>
+            </div>
           </div>
         </article>
       </div>
@@ -372,8 +491,8 @@
   <section id="amd">
     <div class="container">
       <div class="kicker">AMD · Validation & Debug</div>
-      <h2 class="title">Technical triage, validation readiness, and GPU / HBM execution at scale.</h2>
-      <p class="intro">At AMD, I built and ran operating mechanisms around complex GPU and server programs where silicon, firmware, software, hardware, validation, suppliers, labs, and customer-readiness teams all needed a faster path from failure signal to decision and closure.</p>
+      <h2 class="title">Technical triage, validation readiness, and <span class="accent-violet">GPU / HBM execution at scale.</span></h2>
+      <p class="intro">At AMD, I built and ran operating mechanisms around complex GPU and server programs where silicon, firmware, software, hardware, validation, suppliers, labs, and customer-readiness teams needed a faster path from failure signal to decision and closure.</p>
 
       <div class="amd-grid">
         <article class="card">
@@ -381,8 +500,11 @@
           <div class="card-body">
             <div class="tag">Validation & Debug</div>
             <h3>Daily operating rhythm for high-attention technical issues</h3>
-            <p>Served as Chief of Staff / program lead for Debug Steering: daily triage, Debug Steering Forums, P1 huddles, taskforces, recovery planning, ownership assignment, and executive escalation across multi-site engineering teams.</p>
-            <div class="result"><strong>Results:</strong> 20%+ faster issue / debug cycle time · stronger ownership · repeatable closure criteria · faster escalation signal.</div>
+            <div class="sab">
+              <div class="sab-row"><div class="sab-label scope">Scope</div><div>Multi-site GPU validation and debug across silicon, firmware, software, hardware, labs, suppliers, and customer-readiness teams.</div></div>
+              <div class="sab-row"><div class="sab-label action">Action</div><div>Led Debug Steering: daily triage, DSFs, P1 huddles, taskforces, recovery planning, ownership assignment, and executive escalation.</div></div>
+              <div class="sab-row"><div class="sab-label outcome">Outcome</div><div><strong class="accent-green">20%+ faster issue / debug cycle time</strong> with stronger ownership, repeatable closure criteria, and faster escalation signal.</div></div>
+            </div>
           </div>
         </article>
 
@@ -391,8 +513,11 @@
           <div class="card-body">
             <div class="tag">GPU / HBM readiness</div>
             <h3>Instinct platforms, HBM3E, and constrained hardware decisions</h3>
-            <p>Led cross-functional execution across MI300X, MI308X, MI325X, MI350X / MI355X and associated HBM programs, including supplier coverage, yield learning, RAS workflows, system allocation, root-cause routing, validation, and customer readiness.</p>
-            <div class="result"><strong>Scale:</strong> $35M+ HBM3E readiness program · scarce GPU allocation · hyperscaler delivery alignment · L3 sustaining / escalation support.</div>
+            <div class="sab">
+              <div class="sab-row"><div class="sab-label scope">Scope</div><div>MI300X, MI308X, MI325X, MI350X / MI355X, associated HBM programs, scarce systems, supplier coverage, and customer readiness.</div></div>
+              <div class="sab-row"><div class="sab-label action">Action</div><div>Coordinated yield learning, RAS workflows, system allocation, root-cause routing, validation, supplier actions, and readiness decisions.</div></div>
+              <div class="sab-row"><div class="sab-label outcome">Outcome</div><div><strong class="accent-green">$35M+ HBM3E readiness program</strong>, hyperscaler delivery alignment, and stronger prioritization of constrained engineering hardware.</div></div>
+            </div>
           </div>
         </article>
 
@@ -404,11 +529,11 @@
           <div class="card-body">
             <div class="tag">What I built</div>
             <h3>Program operating mechanisms</h3>
-            <p>Structured closure criteria, stronger issue categorization, reusable dashboards, readiness tracking, better metadata, and more consistent change control across programs that otherwise risked fragmenting across tools and teams.</p>
-            <div class="chips">
-              <span class="chip">Debug Steering Forum</span><span class="chip">Daily triage</span><span class="chip">P1 huddles</span><span class="chip">Executive reporting</span><span class="chip">Jira / JQL</span><span class="chip">Qtest</span><span class="chip">Power BI</span><span class="chip">Confluence</span>
+            <div class="sab">
+              <div class="sab-row"><div class="sab-label scope">Scope</div><div>Fragmented readiness, issue, metadata, dashboard, and ownership signal across multiple teams and tools.</div></div>
+              <div class="sab-row"><div class="sab-label action">Action</div><div>Standardized closure criteria, issue categorization, dashboards, tracking, metadata, and change control across Jira, Qtest, Power BI, Confluence, and SharePoint.</div></div>
+              <div class="sab-row"><div class="sab-label outcome">Outcome</div><div><strong class="accent-green">90%+ validation tracking adoption</strong> and <strong class="accent-green">~95% automation-metadata accuracy</strong>, with stronger data hygiene and repeatability.</div></div>
             </div>
-            <div class="result"><strong>Results:</strong> 90%+ validation tracking adoption · ~95% automation-metadata accuracy · stronger data hygiene and repeatability.</div>
           </div>
         </article>
 
@@ -417,8 +542,11 @@
           <div class="card-body">
             <div class="tag">Humanitarian / talent impact</div>
             <h3>Built community mechanisms designed to outlive my tenure</h3>
-            <p>Through AMD’s Salute community, I helped connect veterans and military spouses to technology careers through Hiring Our Heroes and partner initiatives, while mentoring transitioning service members and building repeatable pathways instead of one-off introductions.</p>
-            <div class="result"><strong>Impact:</strong> supported five transitioning service members, with four hires, and contributed to veteran-focused partnerships including Hiring Our Heroes, VetsInTech, and Tech4Troops.</div>
+            <div class="sab">
+              <div class="sab-row"><div class="sab-label scope">Scope</div><div>Veterans and military spouses transitioning into technology careers and seeking mentorship, access, and community.</div></div>
+              <div class="sab-row"><div class="sab-label action">Action</div><div>Helped build AMD Salute pathways with Hiring Our Heroes and partner initiatives while mentoring transitioning service members.</div></div>
+              <div class="sab-row"><div class="sab-label outcome">Outcome</div><div>Supported <strong class="accent-green">five transitioning service members, with four hires</strong>, plus durable veteran-focused partnerships including Hiring Our Heroes, VetsInTech, and Tech4Troops.</div></div>
+            </div>
           </div>
         </article>
       </div>
@@ -429,7 +557,7 @@
     <div class="container">
       <div class="kicker">Oracle Cloud Infrastructure · Hardware Interface & Analytics</div>
       <h2 class="title">Turning hardware facts into deployable infrastructure decisions.</h2>
-      <p class="intro">My most recent role operated across the full hardware-interface and infrastructure-analytics surface: physical integration, planning values, telemetry, data products, program execution, and adoption. I supported a broad OCI rack/platform portfolio spanning current and forward-looking deployments across AMD, NVIDIA, Google, and other accelerator ecosystems.</p>
+      <p class="intro"><span class="accent-cyan"><strong>Scope:</strong></span> a broad OCI rack/platform portfolio spanning current and forward-looking deployments across AMD, NVIDIA, Google, and other accelerator ecosystems. <span class="accent-violet"><strong>Action:</strong></span> connect physical integration, planning values, telemetry, data products, governance, and deployment execution. <span class="accent-green"><strong>Business outcome:</strong></span> earlier infrastructure risk visibility, stronger technical decision confidence, and repeatable readiness mechanisms for increasingly dense AI platforms.</p>
 
       <div class="oracle-shell">
         <div class="oracle-head">
@@ -471,26 +599,32 @@
 
   <section id="journey">
     <div class="container">
-      <div class="kicker">Career journey · semantic context</div>
-      <h2 class="title">Increasing technical complexity. Same execution discipline.</h2>
-      <p class="intro">This section is intentionally structured with the language recruiters, ATS systems, and semantic matchers typically use to describe adjacent role families — while keeping every term tied to real experience.</p>
+      <div class="kicker">Career journey · scope → action → outcome</div>
+      <h2 class="title">Increasing technical complexity. <span class="accent-cyan">Same execution discipline.</span></h2>
+      <p class="intro">A career built across AI infrastructure, GPU / HBM validation, server platforms, engineering operations, people leadership, and mission-critical execution — with each role increasing the scale of systems, dependencies, and decisions.</p>
 
       <div class="journey-grid">
         <article class="journey-card">
           <div class="journey-date">Mar 2026 – Sep 2026</div>
           <h3>Principal Technical Program Manager</h3>
           <div class="journey-org">Oracle Cloud Infrastructure</div>
-          <p>AI infrastructure readiness, hardware integration, rack-platform delivery, infrastructure analytics, capacity planning inputs, serviceability, design constraints, data governance, executive reporting, cross-functional dependency management, and enterprise service delivery.</p>
-          <div class="semantic-label">Semantic relevance</div>
-          <div class="chips"><span class="chip">AI Infrastructure TPM</span><span class="chip">Data Center Delivery</span><span class="chip">Hardware Integration</span><span class="chip">Capacity Planning</span><span class="chip">Infrastructure Analytics</span><span class="chip">Service Delivery</span></div>
+          <div class="sab">
+            <div class="sab-row"><div class="sab-label scope">Scope</div><div>37 hardware-to-data-center readiness workstreams, 29-platform Rack Catalogue, high-density AI infrastructure, planning values, serviceability, and cross-org deployment dependencies.</div></div>
+            <div class="sab-row"><div class="sab-label action">Action</div><div>Built governance, source-of-truth controls, readiness screening, executive synthesis, dependency tracking, capacity-facing signal, and hardware-to-facility decision mechanisms.</div></div>
+            <div class="sab-row"><div class="sab-label outcome">Outcome</div><div>Earlier risk detection, stronger infrastructure decisions, reduced manual reconciliation, avoided downstream planning error, and an estimated <strong class="accent-green">$400K–$800K+ annualized organizational value</strong>.</div></div>
+          </div>
+          <div class="chips"><span class="chip">AI Infrastructure TPM</span><span class="chip">Data Center Delivery</span><span class="chip">Hardware Integration</span><span class="chip">Capacity Planning</span><span class="chip">Infrastructure Analytics</span><span class="chip">Enterprise Service Delivery</span></div>
         </article>
 
         <article class="journey-card">
           <div class="journey-date">Jun 2022 – Feb 2026</div>
           <h3>Senior Technical Program Manager</h3>
           <div class="journey-org">AMD · Instinct / Data Center Validation & Debug</div>
-          <p>GPU validation and debug, HBM readiness, firmware / hardware / software integration, technical triage, root cause / corrective action, supplier management, customer readiness, issue lifecycle management, program governance, and technical operations.</p>
-          <div class="semantic-label">Semantic relevance</div>
+          <div class="sab">
+            <div class="sab-row"><div class="sab-label scope">Scope</div><div>Instinct GPU validation, HBM readiness, firmware / software / hardware integration, supplier coverage, customer readiness, technical triage, and sustaining escalations.</div></div>
+            <div class="sab-row"><div class="sab-label action">Action</div><div>Ran Debug Steering, P1 huddles, taskforces, dashboards, metadata governance, hardware allocation, supplier coordination, and root-cause / corrective-action operating rhythms.</div></div>
+            <div class="sab-row"><div class="sab-label outcome">Outcome</div><div><strong class="accent-green">20%+ faster debug cycles</strong>, <strong class="accent-green">90%+ tracking adoption</strong>, <strong class="accent-green">~95% automation-data accuracy</strong>, and >1 month schedule acceleration on a nine-month GPU plan.</div></div>
+          </div>
           <div class="chips"><span class="chip">GPU TPM</span><span class="chip">Validation & Debug</span><span class="chip">HBM</span><span class="chip">Reliability</span><span class="chip">Customer Readiness</span><span class="chip">Engineering Operations</span></div>
         </article>
 
@@ -498,17 +632,23 @@
           <div class="journey-date">Jan 2022 – Jun 2022</div>
           <h3>Program Manager · Platform Engineering</h3>
           <div class="journey-org">AMD · Server Programs</div>
-          <p>Server platform execution, $20M+ memory procurement / allocation, NPI readiness, supplier coordination, inventory / demand alignment, sustaining support, validation planning, feature repositories, and portfolio-level program communication.</p>
-          <div class="semantic-label">Semantic relevance</div>
-          <div class="chips"><span class="chip">NPI</span><span class="chip">Supply Chain</span><span class="chip">Server Platforms</span><span class="chip">Resource Allocation</span><span class="chip">Program Management</span><span class="chip">Product Operations</span></div>
+          <div class="sab">
+            <div class="sab-row"><div class="sab-label scope">Scope</div><div>Server platform execution and approximately <strong>$20M in RDIMM spend</strong> across demand, supplier availability, inventory, validation, and sustaining needs.</div></div>
+            <div class="sab-row"><div class="sab-label action">Action</div><div>Coordinated procurement, allocation, manufacturing, supplier, platform, and validation readiness while surfacing schedule, material, resource, and integration risk.</div></div>
+            <div class="sab-row"><div class="sab-label outcome">Outcome</div><div>Prior documented results include <strong class="accent-green">40% procurement lead-time reduction</strong> and <strong class="accent-green">8% capital-expenditure reduction</strong> through better demand, inventory, and allocation decisions.</div></div>
+          </div>
+          <div class="chips"><span class="chip">NPI</span><span class="chip">Supply Chain</span><span class="chip">Server Platforms</span><span class="chip">Resource Allocation</span><span class="chip">Product Operations</span><span class="chip">Portfolio Management</span></div>
         </article>
 
         <article class="journey-card">
           <div class="journey-date">2016 – 2022</div>
           <h3>Engineer Officer / Operations & Program Leader</h3>
           <div class="journey-org">U.S. Army</div>
-          <p>Direct people leadership, engineering operations, logistics, facilities, maintenance, readiness, acquisition testing, large-scale field execution, asset accountability, risk management, training, senior-leader decision support, and mission-critical operations.</p>
-          <div class="semantic-label">Semantic relevance</div>
+          <div class="sab">
+            <div class="sab-row"><div class="sab-label scope">Scope</div><div>67-person bridge platoon, approximately $26M in equipment, eight facilities valued above $260M, and large-scale operations supporting ~4,000 personnel / 350+ pieces of equipment.</div></div>
+            <div class="sab-row"><div class="sab-label action">Action</div><div>Led people, logistics, maintenance, readiness, facilities, risk management, training, acquisition testing, and senior-leader decision support in high-consequence environments.</div></div>
+            <div class="sab-row"><div class="sab-label outcome">Outcome</div><div>Maintained equipment accountability with no loss to the organization while building the adaptive people-leadership foundation used throughout later technical-program roles.</div></div>
+          </div>
           <div class="chips"><span class="chip">People Leadership</span><span class="chip">Engineering Operations</span><span class="chip">Logistics</span><span class="chip">Facilities</span><span class="chip">Mission Readiness</span><span class="chip">Operational Excellence</span></div>
         </article>
       </div>
@@ -518,8 +658,8 @@
   <section id="fit">
     <div class="container">
       <div class="kicker">Where I fit best</div>
-      <h2 class="title">Readable by people. Structurally explicit for semantic matchers.</h2>
-      <p class="intro">The best-fit roles sit at the intersection of technical program management, infrastructure delivery, hardware platform execution, engineering operations, service readiness, and cross-functional leadership.</p>
+      <h2 class="title">Built for <span class="accent-cyan">complex infrastructure and hardware programs.</span></h2>
+      <p class="intro">The strongest role fit sits at the intersection of technical program management, AI / data-center infrastructure delivery, hardware platform execution, engineering operations, service readiness, and cross-functional leadership.</p>
 
       <div class="fit-grid">
         <article class="fit-card">
