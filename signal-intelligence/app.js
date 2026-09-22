@@ -1,6 +1,6 @@
-const DATA_URL = "data/lab-data.json?v=7";
-const ACCESS_CONSENT_KEY = "signal-intelligence-access-v5";
-const ACCESS_REQUEST_KEY = "signal-intelligence-request-v2";
+const DATA_URL = "data/lab-data.json?v=8";
+const ACCESS_CONSENT_KEY = "signal-intelligence-access-v6";
+const ACCESS_REQUEST_KEY = "signal-intelligence-request-v3";
 const REVIEW_EVENT_KEY = "signal-intelligence-consented-events";
 const APPROVAL_SERVICE_URL = "https://script.google.com/macros/s/AKfycbxz_SbPkuy73LM4TT7R96oDyduZgen2YK6HQr_JbHYywqYxpDRNSKmgbCuQG_O4c_ph3A/exec";
 const APPROVAL_POLL_INTERVAL_MS = 8000;
@@ -52,7 +52,7 @@ function safeLink(url, label) {
 function hasAccessConsent() {
   try {
     const consent = JSON.parse(sessionStorage.getItem(ACCESS_CONSENT_KEY) || "null");
-    return consent?.version === "v5" && consent?.owner_approval_confirmed === true;
+    return consent?.version === "v6" && consent?.owner_approval_confirmed === true;
   } catch {
     return false;
   }
@@ -161,15 +161,14 @@ function captureConsentedEvent(eventName, detail = {}) {
 function wireAccessGate() {
   const dialog = document.querySelector("#access-dialog");
   const checkbox = document.querySelector("#access-consent");
-  const enterButton = document.querySelector("#enter-review");
   const status = document.querySelector("#analytics-status");
   const approvalStatus = document.querySelector("#approval-status");
   const reviewerField = document.querySelector("#reviewer-identity");
   const requestApprovalButton = document.querySelector("#request-approval");
-  const checkApprovalButton = document.querySelector("#check-approval");
   let requestState = null;
   let isSending = false;
   let isChecking = false;
+  let isGranting = false;
   let pollTimer = null;
 
   try {
@@ -177,6 +176,7 @@ function wireAccessGate() {
     requestState = JSON.parse(sessionStorage.getItem(ACCESS_REQUEST_KEY) || "null");
     if (requestState?.reviewer_email) reviewerField.value = requestState.reviewer_email;
     else if (priorConsent?.reviewer_email) reviewerField.value = priorConsent.reviewer_email;
+    checkbox.checked = requestState?.terms_accepted === true;
   } catch {
     // Ignore malformed or unavailable session state.
   }
@@ -187,24 +187,47 @@ function wireAccessGate() {
 
   const requestMatches = (email) => requestState?.reviewer_email?.toLowerCase() === email.toLowerCase();
 
+  const grantApprovedAccess = () => {
+    if (isGranting || !checkbox.checked || !requestState || requestState.status !== "approved") return;
+    const reviewerEmail = reviewerField.value.trim();
+    if (!requestMatches(reviewerEmail)) return;
+    isGranting = true;
+    approvalStatus.textContent = `Approved by Floyd · ${requestState.request_id}. Opening your review…`;
+    try {
+      sessionStorage.setItem(ACCESS_CONSENT_KEY, JSON.stringify({
+        accepted_at: new Date().toISOString(),
+        version: "v6",
+        reviewer_email: reviewerEmail,
+        request_id: requestState.request_id,
+        requested_at: requestState.requested_at,
+        decided_at: requestState.decided_at,
+        owner_approval_confirmed: true,
+        terms_accepted: true
+      }));
+    } catch {
+      // The active page still opens after the recorded decision in this tab.
+    }
+    if (dialog.open) dialog.close();
+    captureConsentedEvent("access_granted", { analytics_enabled: ANALYTICS_CONFIG.enabled });
+  };
+
   const updateAccessState = () => {
     const reviewerEmail = reviewerField.value.trim();
     const validEmail = reviewerField.validity.valid && reviewerEmail !== "";
     const matchedRequest = validEmail && requestMatches(reviewerEmail);
     const approved = matchedRequest && requestState?.status === "approved";
-    checkbox.disabled = !approved;
-    if (!approved) checkbox.checked = false;
-    requestApprovalButton.disabled = !validEmail || isSending || matchedRequest;
-    requestApprovalButton.textContent = matchedRequest ? "Request sent" : (isSending ? "Sending request…" : "Request access");
-    checkApprovalButton.hidden = !matchedRequest || approved;
-    checkApprovalButton.disabled = isChecking;
-    checkApprovalButton.textContent = isChecking ? "Checking…" : "Check approval";
-    enterButton.disabled = !(approved && checkbox.checked);
+    checkbox.disabled = matchedRequest;
+    reviewerField.disabled = matchedRequest;
+    requestApprovalButton.disabled = !validEmail || !checkbox.checked || isSending || matchedRequest;
+    requestApprovalButton.textContent = matchedRequest ? (isChecking ? "Checking approval…" : "Waiting for Floyd…") : (isSending ? "Sending request…" : "Request access");
     if (!approvalServiceReady()) approvalStatus.textContent = "Owner approval service configuration is pending.";
     else if (!validEmail) approvalStatus.textContent = "Enter your email to request access.";
-    else if (approved) approvalStatus.textContent = `Approved by Floyd · ${requestState.request_id}. Accept the terms to continue.`;
+    else if (!checkbox.checked && !matchedRequest) approvalStatus.textContent = "Accept the sharing and privacy terms to request access.";
+    else if (approved) approvalStatus.textContent = `Approved by Floyd · ${requestState.request_id}. Opening your review…`;
+    else if (matchedRequest && requestState.status === "denied") approvalStatus.textContent = "Floyd did not approve this request. Contact him directly if you believe this was an error.";
     else if (matchedRequest) approvalStatus.textContent = `Request ${requestState.request_id} is ${requestState.status || "pending"}. This page checks automatically after Floyd decides.`;
     else approvalStatus.textContent = "Floyd will receive your email address and an Approve button.";
+    if (approved) grantApprovedAccess();
   };
 
   reviewerField.addEventListener("input", updateAccessState);
@@ -213,6 +236,10 @@ function wireAccessGate() {
   requestApprovalButton.addEventListener("click", async () => {
     if (!reviewerField.reportValidity()) {
       approvalStatus.textContent = "A valid email is required before requesting access.";
+      return;
+    }
+    if (!checkbox.checked) {
+      approvalStatus.textContent = "Accept the sharing and privacy terms before requesting access.";
       return;
     }
     isSending = true;
@@ -230,7 +257,8 @@ function wireAccessGate() {
         reviewer_email: reviewerEmail,
         requested_at: requestedAt,
         client_secret: clientSecret,
-        status: "pending"
+        status: "pending",
+        terms_accepted: true
       };
       try {
         sessionStorage.setItem(ACCESS_REQUEST_KEY, JSON.stringify(requestState));
@@ -255,7 +283,6 @@ function wireAccessGate() {
       requestState.status = result.status;
       requestState.decided_at = result.decidedAt || "";
       sessionStorage.setItem(ACCESS_REQUEST_KEY, JSON.stringify(requestState));
-      if (result.status === "denied") approvalStatus.textContent = "Floyd did not approve this request. Contact him directly if you believe this was an error.";
     } catch (error) {
       approvalStatus.textContent = `Approval check failed (${error.message}). You can retry.`;
     } finally {
@@ -264,39 +291,10 @@ function wireAccessGate() {
     }
   };
 
-  checkApprovalButton.addEventListener("click", refreshApproval);
   pollTimer = window.setInterval(refreshApproval, APPROVAL_POLL_INTERVAL_MS);
   dialog.addEventListener("close", () => window.clearInterval(pollTimer), { once: true });
 
   dialog.addEventListener("cancel", (event) => event.preventDefault());
-
-  enterButton.addEventListener("click", () => {
-    if (!checkbox.checked) return;
-    if (!reviewerField.reportValidity()) return;
-    const reviewerEmail = reviewerField.value.trim();
-    const ownerApproved = requestMatches(reviewerEmail) && requestState?.status === "approved";
-    if (!ownerApproved) {
-      approvalStatus.textContent = "Floyd’s recorded approval is required before access can continue.";
-      updateAccessState();
-      return;
-    }
-    try {
-      sessionStorage.setItem(ACCESS_CONSENT_KEY, JSON.stringify({
-        accepted_at: new Date().toISOString(),
-        version: "v5",
-        reviewer_email: reviewerEmail,
-        request_id: requestState.request_id,
-        requested_at: requestState.requested_at,
-        decided_at: requestState.decided_at,
-        owner_approval_confirmed: true,
-        terms_accepted: true
-      }));
-    } catch {
-      // The dialog can still communicate terms if session storage is unavailable.
-    }
-    dialog.close();
-    captureConsentedEvent("access_granted", { analytics_enabled: ANALYTICS_CONFIG.enabled });
-  });
 
   updateAccessState();
   if (!hasAccessConsent()) dialog.showModal();
