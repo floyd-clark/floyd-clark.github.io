@@ -1,0 +1,418 @@
+{
+  "meta": {
+    "title": "Signal Intelligence Lab",
+    "version": "review-v1",
+    "as_of": "2026-09-22",
+    "mode": "review",
+    "disclaimer": "This is a small-scale operating-model demonstration built from personal, public, and user-owned data. It demonstrates methodology—not production-service scale or statistical certainty."
+  },
+  "taxonomy": {
+    "evidence_states": ["observed", "derived", "forecast", "hypothesis"],
+    "health_states": ["healthy", "watch", "at_risk", "unknown"],
+    "action_types": ["act", "monitor", "investigate", "escalate", "close", "recalibrate"]
+  },
+  "sources": [
+    {
+      "source_id": "SRC-001",
+      "source_name": "Signal Intelligence build packet",
+      "source_type": "user_owned_document",
+      "confidentiality": "private",
+      "safe_to_render": true,
+      "status": "connected",
+      "notes": "Product, data-model, privacy, and acceptance criteria supplied by the site owner."
+    },
+    {
+      "source_id": "SRC-002",
+      "source_name": "Floyd Clark portfolio V4",
+      "source_type": "repository",
+      "confidentiality": "public",
+      "safe_to_render": true,
+      "status": "connected",
+      "notes": "Public-safe AMD and OCI operating-mechanism evidence already present in the portfolio."
+    },
+    {
+      "source_id": "SRC-003",
+      "source_name": "Zscaler Service Health role description",
+      "source_type": "public_web",
+      "confidentiality": "public",
+      "safe_to_render": true,
+      "status": "registered",
+      "notes": "Public role-language reference supplied in the build packet; not used as personal experience evidence."
+    },
+    {
+      "source_id": "SRC-004",
+      "source_name": "Personal signal event store",
+      "source_type": "structured_data",
+      "confidentiality": "private",
+      "safe_to_render": false,
+      "status": "awaiting_source",
+      "notes": "No private recruiter, email, calendar, or job-search records were ingested for this review build."
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EVD-001",
+      "title": "Signal Intelligence product and data-model specification",
+      "source_id": "SRC-001",
+      "source_type": "user_owned_document",
+      "source_date": "2026-09-22",
+      "path_or_url": "",
+      "confidentiality": "private",
+      "safe_to_render": true,
+      "description_public": "Defines the operating loop, evidence states, schemas, privacy rules, and review criteria used by this page.",
+      "related_ids": ["SYS-001", "MODEL-v0.1"]
+    },
+    {
+      "evidence_id": "EVD-002",
+      "title": "AMD operating mechanisms — portfolio evidence",
+      "source_id": "SRC-002",
+      "source_type": "repository",
+      "source_date": "2026-09-22",
+      "path_or_url": "../#amd",
+      "confidentiality": "public",
+      "safe_to_render": true,
+      "description_public": "Public portfolio content describes structured triage, Debug Steering and P1 cadences, Jira/Qtest/Power BI controls, root-cause work, corrective action, and verification-oriented program rhythms.",
+      "related_ids": ["DOM-AMD"]
+    },
+    {
+      "evidence_id": "EVD-003",
+      "title": "OCI source-of-truth and readiness mechanisms — portfolio evidence",
+      "source_id": "SRC-002",
+      "source_type": "repository",
+      "source_date": "2026-09-22",
+      "path_or_url": "../#oci",
+      "confidentiality": "public",
+      "safe_to_render": true,
+      "description_public": "Public portfolio content describes governed hardware facts, evidence provenance, readiness controls, data-quality checks, infrastructure constraints, and cross-functional decision mechanisms.",
+      "related_ids": ["DOM-OCI"]
+    },
+    {
+      "evidence_id": "EVD-004",
+      "title": "Zscaler Sr. Staff TPM — Service Health role concepts",
+      "source_id": "SRC-003",
+      "source_type": "public_web",
+      "source_date": "2026-09-22",
+      "path_or_url": "https://job-boards.greenhouse.io/zscaler/jobs/5223327007",
+      "confidentiality": "public",
+      "safe_to_render": true,
+      "description_public": "Public role reference for Service Health, CUJ, Lighthouse signal, SLI/SLO, continuous measurement, incident, RCA, preventive-action, and operating-cadence mechanisms.",
+      "related_ids": ["SYS-001"]
+    }
+  ],
+  "system_stages": [
+    {
+      "stage_id": "STG-01",
+      "number": "01",
+      "name": "Signals",
+      "short": "Capture",
+      "input": "Public, personal, and user-owned observations",
+      "transformation": "Timestamp, classify, and preserve source context",
+      "output": "Candidate event records",
+      "evidence_type": "Observed or explicitly model-generated",
+      "concepts": ["telemetry", "instrumentation", "intake"]
+    },
+    {
+      "stage_id": "STG-02",
+      "number": "02",
+      "name": "Source of Truth",
+      "short": "Normalize",
+      "input": "Candidate event records",
+      "transformation": "Resolve entities, validate fields, link evidence, apply privacy controls",
+      "output": "Governed events, journeys, and evidence objects",
+      "evidence_type": "Observed",
+      "concepts": ["source of truth", "lineage", "data quality"]
+    },
+    {
+      "stage_id": "STG-03",
+      "number": "03",
+      "name": "Health",
+      "short": "Measure",
+      "input": "Governed records and thresholds",
+      "transformation": "Calculate freshness, latency, completeness, and contradictions",
+      "output": "SLI-inspired indicators with explicit unknown states",
+      "evidence_type": "Derived",
+      "concepts": ["SLIs", "SLO-like targets", "error-budget logic"]
+    },
+    {
+      "stage_id": "STG-04",
+      "number": "04",
+      "name": "Intelligence",
+      "short": "Forecast",
+      "input": "Health state plus supporting and contradicting signals",
+      "transformation": "Weight evidence, expose uncertainty, freeze a falsifiable forecast",
+      "output": "Forecast window, confidence band, and change conditions",
+      "evidence_type": "Forecast",
+      "concepts": ["Lighthouse signals", "scenario ranges", "calibration"]
+    },
+    {
+      "stage_id": "STG-05",
+      "number": "05",
+      "name": "Decision",
+      "short": "Act",
+      "input": "Evidence-backed health and forecast state",
+      "transformation": "Frame tradeoffs, owner, rationale, and next action",
+      "output": "Act, monitor, investigate, escalate, close, or recalibrate",
+      "evidence_type": "Observed decision + rationale",
+      "concepts": ["prioritization", "tradeoff framing", "ownership"]
+    },
+    {
+      "stage_id": "STG-06",
+      "number": "06",
+      "name": "Verification",
+      "short": "Learn",
+      "input": "Decision, forecast, and observed outcome",
+      "transformation": "Score the miss or hit, test explanations, update a new model version",
+      "output": "Outcome record, calibration note, and preventive action",
+      "evidence_type": "Observed + Derived",
+      "concepts": ["post-delivery verification", "RCA", "durable improvement"]
+    }
+  ],
+  "journeys": [],
+  "events": [],
+  "signals": [],
+  "forecasts": [],
+  "forecast_outcomes": [],
+  "anomalies": [],
+  "actions": [],
+  "model_versions": [
+    {
+      "model_version": "v0.1",
+      "created_at": "2026-09-22",
+      "description": "Transparent review model; no scoring is produced until observed event data exists.",
+      "features": ["stage", "recency", "source reliability", "signal strength", "contradictions", "data completeness"],
+      "weight_changes": "Initial assumptions only",
+      "evaluation_notes": "Insufficient verified forecasts"
+    }
+  ],
+  "indicators": [
+    {
+      "metric_id": "MET-001",
+      "name": "Evidence freshness",
+      "definition": "Days since the most recent observed, public-safe event for an active journey.",
+      "target": "≤ 5 days",
+      "current": null,
+      "unit": "days",
+      "health": "unknown",
+      "evidence_ids": [],
+      "decision_rule": "If older than five days, review for a missing signal before changing journey health."
+    },
+    {
+      "metric_id": "MET-002",
+      "name": "Signal-to-action latency",
+      "definition": "Elapsed time between a qualifying observed signal and a recorded decision.",
+      "target": "≤ 2 business days",
+      "current": null,
+      "unit": "business days",
+      "health": "unknown",
+      "evidence_ids": [],
+      "decision_rule": "Investigate stalled decision ownership when the threshold is exceeded."
+    },
+    {
+      "metric_id": "MET-003",
+      "name": "Evidence completeness",
+      "definition": "Share of required evidence fields populated for the current journey state.",
+      "target": "≥ 90%",
+      "current": null,
+      "unit": "%",
+      "health": "unknown",
+      "evidence_ids": [],
+      "decision_rule": "Do not create a forecast when required lineage fields are missing."
+    },
+    {
+      "metric_id": "MET-004",
+      "name": "Contradiction rate",
+      "definition": "Share of active assessments with unresolved evidence conflicts.",
+      "target": "0 unresolved > 3 days",
+      "current": null,
+      "unit": "%",
+      "health": "unknown",
+      "evidence_ids": [],
+      "decision_rule": "Move to investigate; preserve both claims until stronger evidence resolves the conflict."
+    },
+    {
+      "metric_id": "MET-005",
+      "name": "Forecast calibration",
+      "definition": "Agreement between frozen forecast confidence and later observed outcomes.",
+      "target": "Calibrate after a meaningful verified sample",
+      "current": null,
+      "unit": "score",
+      "health": "unknown",
+      "evidence_ids": [],
+      "decision_rule": "Show no calibration score until enough forecasts have observed outcomes."
+    }
+  ],
+  "lighthouse_candidates": [
+    {
+      "name": "Confirmed stage advancement",
+      "state": "hypothesis",
+      "why": "Direct evidence that the journey state changed; materially changes the next expected event.",
+      "reliability": "Source-dependent",
+      "decision": "Update journey stage and refresh the forecast only after evidence is linked."
+    },
+    {
+      "name": "Direct scheduling event",
+      "state": "hypothesis",
+      "why": "A dated commitment is more decision-relevant than general interest or sentiment.",
+      "reliability": "High when tied to a calendar or direct message",
+      "decision": "Act on preparation and freeze a time-window forecast."
+    },
+    {
+      "name": "Public role-status change",
+      "state": "hypothesis",
+      "why": "A verifiable external change can challenge an internal assumption about journey health.",
+      "reliability": "Moderate; requires corroboration",
+      "decision": "Investigate before closing or escalating the journey."
+    }
+  ],
+  "synthetic_checks": [
+    {
+      "check_id": "CHK-001",
+      "name": "Public role URL reachable",
+      "status": "awaiting observation",
+      "last_run": null,
+      "meaning": "Tests whether a registered public role page still responds; it does not prove hiring status."
+    },
+    {
+      "check_id": "CHK-002",
+      "name": "Journey exceeds expected window",
+      "status": "awaiting source",
+      "last_run": null,
+      "meaning": "Flags an active journey whose last observed event is older than its configured threshold."
+    },
+    {
+      "check_id": "CHK-003",
+      "name": "Evidence sources disagree",
+      "status": "awaiting source",
+      "last_run": null,
+      "meaning": "Surfaces conflicting claims without automatically selecting a winner."
+    },
+    {
+      "check_id": "CHK-004",
+      "name": "Forecast past due",
+      "status": "awaiting source",
+      "last_run": null,
+      "meaning": "Finds forecasts whose verification window passed without an observed outcome."
+    }
+  ],
+  "domain_patterns": [
+    {
+      "domain": "Signal Intelligence Lab",
+      "evidence_state": "observed",
+      "observe": "Structured source registry and evidence objects",
+      "normalize": "Typed events, lineage, confidence, and privacy flags",
+      "prioritize": "Lighthouse-class signal criteria and thresholds",
+      "execute": "Explicit decision records and owners",
+      "measure": "Freshness, latency, completeness, and contradiction indicators",
+      "verify": "Forecast outcomes and calibration notes",
+      "improve": "Versioned model and preventive-action changes",
+      "evidence_ids": ["EVD-001"]
+    },
+    {
+      "domain": "AMD",
+      "evidence_state": "observed",
+      "observe": "Validation, defect, readiness, and escalation signals",
+      "normalize": "Jira/Qtest structures, metadata, and dashboards",
+      "prioritize": "Debug Steering, P1 huddles, and structured triage",
+      "execute": "Cross-functional taskforces and corrective action",
+      "measure": "Tracking adoption, cycle-time, and data-quality signals",
+      "verify": "Validation closure and customer/readiness confirmation",
+      "improve": "Repeatable debug and governance mechanisms",
+      "evidence_ids": ["EVD-002"]
+    },
+    {
+      "domain": "OCI",
+      "evidence_state": "observed",
+      "observe": "Hardware facts, facility constraints, and readiness risks",
+      "normalize": "Governed catalogue, evidence register, and data-quality controls",
+      "prioritize": "Readiness gates, risk/dependency review, and executive synthesis",
+      "execute": "Cross-functional owner and milestone coordination",
+      "measure": "Source coverage, planning variance, and readiness state",
+      "verify": "Deployment-readiness evidence and constraint resolution",
+      "improve": "Reusable governance and infrastructure-data pipelines",
+      "evidence_ids": ["EVD-003"]
+    }
+  ],
+  "cadence": [
+    {
+      "frequency": "Event-driven",
+      "activity": "Ingest and classify a new observation",
+      "control": "Preserve source, timestamp, evidence state, and privacy before use"
+    },
+    {
+      "frequency": "Daily",
+      "activity": "Signal hygiene and stale-source review",
+      "control": "Resolve missing fields; never infer an observed event from silence"
+    },
+    {
+      "frequency": "Weekly",
+      "activity": "Health, anomaly, and model review",
+      "control": "Examine threshold breaches, contradictions, and open decisions"
+    },
+    {
+      "frequency": "Post-outcome",
+      "activity": "Forecast verification and RCA",
+      "control": "Freeze the original forecast; write the outcome separately"
+    },
+    {
+      "frequency": "Periodic",
+      "activity": "Recalibrate rules and weights",
+      "control": "Create a new model version with a documented reason"
+    }
+  ],
+  "human_ai_loop": [
+    {
+      "step": "Source data",
+      "control": "Retain the original evidence object and confidentiality flag"
+    },
+    {
+      "step": "Structured extraction",
+      "control": "Record model version, task class, source IDs, and created time"
+    },
+    {
+      "step": "Evidence grounding",
+      "control": "Reject unsupported claims and preserve contradictions"
+    },
+    {
+      "step": "Synthesis",
+      "control": "Label model-produced output as derived or hypothesis"
+    },
+    {
+      "step": "Human review",
+      "control": "Approve, revise, or reject before a decision is recorded"
+    },
+    {
+      "step": "Decision → outcome → learning",
+      "control": "Verify against an observed result and update only a new model version"
+    }
+  ],
+  "limitations": [
+    "The current review build contains no private recruiter, interview, email, calendar, or application-event data.",
+    "This is personal/process data, not production-service telemetry; CUJ, SLI, SLO, error-budget, and synthetic-monitoring concepts are used as careful analogies.",
+    "Forecasts are decision-support hypotheses, not guarantees. No calibration score is shown without a meaningful set of verified outcomes.",
+    "Correlation does not establish causation; competing explanations remain visible when evidence cannot resolve them.",
+    "LLM output cannot become observed fact without source evidence and human validation.",
+    "Portfolio mechanisms are user-provided, public-safe evidence; they are not independently audited by this page."
+  ],
+  "missing_data": [
+    {
+      "priority": "Highest",
+      "item": "Public-safe journey and event records",
+      "value": "Enables real freshness, stage velocity, and signal-to-action metrics."
+    },
+    {
+      "priority": "High",
+      "item": "Frozen forecasts created before outcomes",
+      "value": "Enables honest verification, error analysis, and later calibration."
+    },
+    {
+      "priority": "High",
+      "item": "Evidence links or redacted evidence objects",
+      "value": "Strengthens claim lineage without exposing private communications."
+    },
+    {
+      "priority": "Medium",
+      "item": "Observed decisions and follow-up outcomes",
+      "value": "Demonstrates whether the operating loop changes action and improves learning."
+    }
+  ]
+}
