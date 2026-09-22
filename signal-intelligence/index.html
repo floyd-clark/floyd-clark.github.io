@@ -20,7 +20,9 @@
       <a class="brand" href="#top">Signal Intelligence Lab</a>
       <div class="nav-links">
         <a href="#system">System</a>
+        <a href="#market">Market</a>
         <a href="#health">Health</a>
+        <a href="#heuristics">Heuristics</a>
         <a href="#forecasting">Forecasts</a>
         <a href="#evidence">Evidence</a>
         <a class="back-link" href="../">← Portfolio</a>
@@ -45,13 +47,14 @@
           </div>
         </div>
         <aside class="review-card" aria-label="Review build status">
-          <div class="micro-label">Review build · not published</div>
-          <h2>Method installed. Private signals intentionally absent.</h2>
-          <p>The architecture, data contracts, health rules, and evidence controls are ready. Operational metrics remain unknown until public-safe records are connected.</p>
+          <div class="micro-label">Review build · anonymized data</div>
+          <h2>52 active journeys. Private identifiers removed.</h2>
+          <p>The public layer now uses the user-owned tracker for aggregate health, aliased journeys, evidence-quality flags, and decisions—without exposing names, requisition IDs, contacts, notes, or private links.</p>
           <dl class="review-list">
             <div class="review-item"><dt>Mode</dt><dd>Review v1</dd></div>
-            <div class="review-item"><dt>Data</dt><dd>Build specification + public portfolio evidence</dd></div>
-            <div class="review-item"><dt>Guardrail</dt><dd>Unknown is rendered instead of invented</dd></div>
+            <div class="review-item"><dt>Data</dt><dd>Anonymized tracker + official Zscaler sources</dd></div>
+            <div class="review-item"><dt>Forecast</dt><dd id="forecast-freeze">Loading…</dd></div>
+            <div class="review-item"><dt>Guardrail</dt><dd>Observed facts remain separate from replayed forecasts</dd></div>
             <div class="review-item"><dt>Updated</dt><dd id="as-of">Loading…</dd></div>
           </dl>
         </aside>
@@ -72,22 +75,41 @@
       </div>
     </section>
 
+    <section id="market" aria-labelledby="market-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">02 · Market signal snapshot</div>
+            <h2 class="title" id="market-title">Attention peaked. The pipeline shows where it converted—and where it did not.</h2>
+          </div>
+          <p class="intro">The forecast is frozen at the strongest verified LinkedIn signal: Sep 19, 2026 at 16:38 UTC. Later tracker events are outcomes or post-freeze evidence, never inputs rewritten into the forecast.</p>
+        </div>
+        <div class="market-layout">
+          <div class="market-peak" id="market-snapshot"></div>
+          <div class="panel pipeline-panel">
+            <div class="panel-head"><h3>Active market portfolio</h3><p>52 anonymized records · Sep 22 snapshot</p></div>
+            <div id="pipeline-graphic"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="health" aria-labelledby="health-title">
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">02 · Current health</div>
+            <div class="kicker">03 · Current health</div>
             <h2 class="title" id="health-title">The dashboard says exactly what the evidence supports.</h2>
           </div>
-          <p class="intro">No private event data has been ingested for this review, so operational health is intentionally unknown. That is a system behavior, not a missing-design state.</p>
+          <p class="intro">Health is derived from a read-only tracker snapshot. The public view uses aggregates and stable aliases while keeping private people, companies, requisitions, notes, and links out of the page.</p>
         </div>
         <div class="status-strip">
-          <span class="badge unknown">Review mode</span>
-          <p>Schema and controls are active. Live journey metrics remain gated on public-safe observations.</p>
+          <span class="badge derived">Observed + derived</span>
+          <p>52 active records · 23 anonymized organizations · 45 direct evidence links · 44 warm/referral paths · 52 defined next actions.</p>
         </div>
         <div class="metrics-grid" id="summary-metrics" aria-label="Health summary metrics"></div>
 
-        <div class="two-col" style="margin-top: 18px;">
+        <div class="stacked-panels" style="margin-top: 18px;">
           <div class="panel">
             <div class="panel-head"><h3>Critical journey matrix</h3><p>Small-scale CUJ analogy</p></div>
             <div id="journey-matrix"></div>
@@ -100,14 +122,44 @@
       </div>
     </section>
 
+    <section id="heuristics" aria-labelledby="heuristics-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">04 · Conclusion heuristics</div>
+            <h2 class="title" id="heuristics-title">How the system moves from evidence to a decision.</h2>
+          </div>
+          <p class="intro">The model is intentionally qualitative. It exposes the rules that raise, cap, or withhold confidence instead of hiding them behind an unsupported precision score.</p>
+        </div>
+        <div class="heuristic-formula" aria-label="Qualitative confidence heuristic">
+          <span>Stage prior</span><b>+</b><span>Source reliability</span><b>+</b><span>Recency</span><b>+</b><span>Signal strength</span><b>+</b><span>Evidence coverage</span><b>−</b><span>Contradiction penalty</span><b>→</b><span>Decision band</span>
+        </div>
+        <div class="heuristics-grid" id="heuristics-grid"></div>
+      </div>
+    </section>
+
+    <section id="zero-trust" aria-labelledby="zero-trust-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">05 · Zero Trust grounding</div>
+            <h2 class="title" id="zero-trust-title">A decision model inspired by the Zero Trust Exchange—not a claim of Zscaler telemetry.</h2>
+          </div>
+          <p class="intro">The analogy uses Zscaler’s official operating sequence and ZDX’s end-to-end observability model: verify context, understand the destination, assess risk, enforce policy, observe the full path, and learn from anomalies.</p>
+        </div>
+        <div class="zte-flow" id="zero-trust-flow"></div>
+        <p class="section-note">Architecture reference only. This lab has no access to Zscaler customer, service-edge, device, network, application, or production incident data.</p>
+      </div>
+    </section>
+
     <section id="lighthouse" aria-labelledby="lighthouse-title">
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">03 · Lighthouse signals</div>
+            <div class="kicker">06 · Lighthouse signals</div>
             <h2 class="title" id="lighthouse-title">High-information signals earn influence.</h2>
           </div>
-          <p class="intro">These are candidate rules, not observed signals. A Lighthouse-class signal must materially change a decision and retain source reliability and evidence lineage.</p>
+          <p class="intro">Each card is labeled as observed or derived. A Lighthouse-class signal must materially change a decision and retain source reliability and evidence lineage.</p>
         </div>
         <div class="cards-3" id="lighthouse-grid"></div>
       </div>
@@ -117,7 +169,7 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">04 · SLI-inspired model</div>
+            <div class="kicker">07 · SLI-inspired model</div>
             <h2 class="title" id="scorecard-title">Thresholds exist to change action.</h2>
           </div>
           <p class="intro">These indicators borrow service-health discipline without pretending a personal process is production telemetry. The target, current state, evidence, and decision rule stay visible together.</p>
@@ -136,31 +188,32 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">05 · Forecasting + calibration</div>
+            <div class="kicker">08 · Forecasting + calibration</div>
             <h2 class="title" id="forecasting-title">A forecast is a timestamped hypothesis, not a vibe.</h2>
           </div>
           <p class="intro">The original forecast is frozen before the outcome is known. Supporting and contradicting signals remain inspectable; misses become calibration input.</p>
         </div>
-        <div class="two-col">
+        <div class="freeze-callout">
+          <div><span class="micro-label">Frozen input boundary</span><strong id="forecast-freeze-full">Loading…</strong></div>
+          <p>Retrospective replay: useful for showing the mechanism, but not presented as a forecast prospectively recorded on Sep 19.</p>
+        </div>
+        <div class="forecast-grid" id="forecast-cards"></div>
+        <div class="two-col" style="margin-top: 18px;">
           <article class="info-card">
-            <span class="badge forecast">Forecast contract</span>
-            <h3>Transparent, falsifiable, versioned</h3>
-            <p>A valid record needs a target event, time window, confidence band, model version, supporting and contradicting signals, rationale, and the evidence that would change the view.</p>
-            <div class="key-value">
-              <div><dt>Status</dt><dd>Awaiting observed records</dd></div>
-              <div><dt>Model</dt><dd class="mono">v0.1 · assumptions only</dd></div>
-              <div><dt>Precision</dt><dd>Time windows preferred over exact dates</dd></div>
-            </div>
-          </article>
-          <article class="info-card">
-            <span class="badge unknown">Calibration</span>
-            <h3>Insufficient verified forecasts</h3>
-            <p>No Brier score, date-window hit rate, or accuracy claim is displayed. Those measures become credible only after forecasts are frozen, outcomes are observed, and the sample is meaningful.</p>
+            <span class="badge derived">Verification</span>
+            <h3 id="forecast-outcome-title">Outcome loading…</h3>
+            <p id="forecast-outcome-copy"></p>
             <div class="key-value">
               <div><dt>Open</dt><dd id="forecast-open">0</dd></div>
               <div><dt>Verified</dt><dd id="forecast-verified">0</dd></div>
-              <div><dt>Rule</dt><dd>Weight changes require a new model version</dd></div>
+              <div><dt>Calibration</dt><dd>Not yet statistically scoreable</dd></div>
             </div>
+          </article>
+          <article class="info-card">
+            <span class="badge forecast">Forecast contract</span>
+            <h3>Transparent, falsifiable, versioned</h3>
+            <p>Every forecast retains its freeze time, target, window, confidence band, supporting and contradicting signals, change condition, model version, and outcome record.</p>
+            <div class="key-value"><div><dt>Model</dt><dd class="mono">v0.3-peak-replay</dd></div><div><dt>Precision</dt><dd>Time windows, not fake exact dates</dd></div></div>
           </article>
         </div>
       </div>
@@ -170,7 +223,7 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">06 · Synthetic-check demonstration</div>
+            <div class="kicker">09 · Synthetic-check demonstration</div>
             <h2 class="title" id="synthetic-title">Checks challenge assumptions. They do not manufacture certainty.</h2>
           </div>
           <p class="intro">Safe analog checks monitor staleness, conflicting sources, public status, and overdue forecasts. They are not production synthetic service monitoring.</p>
@@ -183,18 +236,12 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">07 · Anomaly → RCA → prevention</div>
+            <div class="kicker">10 · Anomaly → RCA → prevention</div>
             <h2 class="title" id="rca-title">Uncertainty survives the incident review.</h2>
           </div>
           <p class="intro">When a signal breaks an expectation, the system separates impact, evidence, immediate action, competing explanations, most-supported cause, preventive action, and verification.</p>
         </div>
-        <div class="panel">
-          <div class="panel-head"><h3>Anomaly register</h3><p>Evidence-gated</p></div>
-          <div class="empty-state">
-            <strong>No observed anomalies</strong>
-            <p>An empty register is not proof of health. It means no public-safe anomaly event has been recorded in this review dataset.</p>
-          </div>
-        </div>
+        <div class="anomaly-grid" id="anomaly-grid"></div>
       </div>
     </section>
 
@@ -202,7 +249,7 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">08 · Evidence library</div>
+            <div class="kicker">11 · Evidence library</div>
             <h2 class="title" id="evidence-title">Every major claim gets a traceable object.</h2>
           </div>
           <p class="intro">The public layer exposes only safe metadata and descriptions. Private source content remains excluded even when its existence is registered.</p>
@@ -221,7 +268,7 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">09 · Operating cadence</div>
+            <div class="kicker">12 · Operating cadence</div>
             <h2 class="title" id="cadence-title">Measurement becomes useful when it has a rhythm.</h2>
           </div>
           <p class="intro">Cadence turns records into an operating mechanism: ingest, hygiene, review, verification, and recalibration.</p>
@@ -240,7 +287,7 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">10 · Human + AI evidence loop</div>
+            <div class="kicker">13 · Human + AI evidence loop</div>
             <h2 class="title" id="human-ai-title">The model accelerates work. Evidence remains the control plane.</h2>
           </div>
           <p class="intro">Model outputs preserve model version, source objects, task class, human-validation status, confidence, and creation time. They cannot silently become observed facts.</p>
@@ -253,7 +300,7 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">11 · Operating pattern across domains</div>
+            <div class="kicker">14 · Operating pattern across domains</div>
             <h2 class="title" id="patterns-title">Different systems. The same operating DNA.</h2>
           </div>
           <p class="intro">The comparison uses only public-safe mechanisms already represented in this portfolio. It does not add confidential architecture, internal names, or unsupported outcomes.</p>
@@ -266,7 +313,7 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">12 · Methodology + limitations</div>
+            <div class="kicker">15 · Methodology + limitations</div>
             <h2 class="title" id="methodology-title">Credibility starts where the claim stops.</h2>
           </div>
           <p class="intro">Small data, personal-process context, source privacy, and model uncertainty are visible constraints—not footnotes.</p>
@@ -288,7 +335,7 @@
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="kicker">13 · Data-quality controls</div>
+            <div class="kicker">16 · Data-quality controls</div>
             <h2 class="title" id="quality-title">The page tests its own evidence contracts.</h2>
           </div>
           <p class="intro">Client-side checks validate taxonomy, evidence references, public-safe rendering, required IDs, and forecast lifecycle rules each time the dataset loads.</p>
@@ -311,14 +358,14 @@
       <button class="icon-btn" id="close-tour" type="button" aria-label="Close tour">×</button>
     </div>
     <ol class="tour-list">
-      <li>I started with fragmented signals and preserved their source context.</li>
-      <li>I normalized them into a governed event and evidence model.</li>
-      <li>I defined health indicators and thresholds that change decisions.</li>
-      <li>I separated observed facts, derived metrics, forecasts, and hypotheses.</li>
-      <li>I used AI to accelerate extraction and synthesis without promoting model output to fact.</li>
-      <li>I froze forecasts before outcomes, then verified them against what actually happened.</li>
-      <li>Misses become inputs to the next model or process version.</li>
-      <li>The scale here is small; the operating pattern is the same one I use to establish truth, expose risk, facilitate decisions, and verify outcomes in complex technical programs.</li>
+      <li>I normalized 52 active market journeys across 23 anonymized organizations without publishing names, requisitions, contacts, or private evidence.</li>
+      <li>I separated observed tracker facts, derived health metrics, forecasts, and hypotheses.</li>
+      <li>I froze the forecast replay at the maximum LinkedIn signal peak: Sep 19, 2026 at 16:38 UTC.</li>
+      <li>I used visible heuristics—stage, source reliability, recency, signal strength, coverage, and contradiction penalty—to derive decisions.</li>
+      <li>I grounded the operating sequence in Zero Trust Exchange and ZDX concepts without implying access to production telemetry.</li>
+      <li>I converted thresholds into actions: 18 follow-ups due, seven stale journeys, and one status contradiction to investigate.</li>
+      <li>I recorded later events as outcomes; one replay forecast hit its window, while calibration remains statistically immature.</li>
+      <li>The scale is personal, but the operating pattern is durable: establish truth, expose risk, facilitate decisions, verify outcomes, and improve the next version.</li>
     </ol>
   </dialog>
 

@@ -84,22 +84,49 @@ function renderFlow(stages) {
   showStage(0);
 }
 
+function renderMarket(data) {
+  const snapshot = data.market_snapshot;
+  const primary = snapshot.metrics.find((metric) => metric.label === "Weekly profile-view bucket");
+  const supporting = snapshot.metrics.filter((metric) => metric.label !== "Weekly profile-view bucket").slice(0, 4);
+  document.querySelector("#market-snapshot").innerHTML = `
+    <div class="micro-label">${escapeHtml(snapshot.title)}</div>
+    <h3>${escapeHtml(snapshot.period)}</h3>
+    <div class="peak-time mono">${escapeHtml(data.meta.forecast_freeze_label)}</div>
+    <div class="peak-stat">${escapeHtml(primary.display)}</div>
+    <div class="peak-stat-label">${escapeHtml(primary.label)}</div>
+    <div class="peak-mini-grid">
+      ${supporting.map((metric) => `<div class="peak-mini"><strong>${escapeHtml(metric.display)}</strong><span>${escapeHtml(metric.label)}</span></div>`).join("")}
+    </div>
+  `;
+
+  const colorValues = { accent: "#5cc8ff", violet: "#b8a1ff", good: "#79e0ae", amber: "#ffcc73", coral: "#ff8f7c" };
+  document.querySelector("#pipeline-graphic").innerHTML = `
+    <div class="pipeline-graphic">
+      <div class="stacked-bar" aria-label="Market pipeline mix">
+        ${data.pipeline_mix.map((item) => `<span class="${escapeHtml(item.color)}" style="--share:${escapeHtml(item.percent)}" title="${escapeHtml(item.label)}: ${escapeHtml(item.count)}"></span>`).join("")}
+      </div>
+      <div class="pipeline-legend">
+        ${data.pipeline_mix.map((item) => `<div class="pipeline-item"><i class="pipeline-dot" style="--dot:${colorValues[item.color]}"></i><span>${escapeHtml(item.label)}</span><strong>${escapeHtml(item.count)}</strong></div>`).join("")}
+      </div>
+      <p class="pipeline-note">${escapeHtml(snapshot.interpretation)} Freeze evidence: <span class="mono">${escapeHtml(snapshot.evidence_id)}</span>.</p>
+    </div>
+  `;
+}
+
 function renderSummary(data) {
-  const activeJourneys = data.journeys.filter((journey) => journey.state === "active").length;
-  const safeEvidence = data.evidence.filter((item) => item.safe_to_render).length;
-  const connectedSources = data.sources.filter((source) => source.status === "connected").length;
+  const summary = data.portfolio_summary;
   const verifiedForecasts = data.forecast_outcomes.filter((outcome) => outcome.outcome !== "pending").length;
   const openForecasts = data.forecasts.filter((forecast) => forecast.status === "open").length;
 
   const metrics = [
-    { value: data.events.length, label: "Observed events", definition: "Public-safe event records in this review dataset" },
-    { value: activeJourneys, label: "Active journeys", definition: "CUJ-like journeys backed by observed events" },
-    { value: safeEvidence, label: "Evidence objects", definition: "Safe summaries with source lineage" },
-    { value: `${connectedSources}/${data.sources.length}`, label: "Sources connected", definition: "Specification and portfolio sources; private signals excluded" },
-    { value: openForecasts, label: "Forecasts pending", definition: "Frozen forecasts awaiting observable resolution" },
-    { value: verifiedForecasts, label: "Forecasts verified", definition: "Forecasts with separately recorded outcomes" },
-    { value: "Unknown", label: "Evidence freshness", definition: "Needs an active journey with observed evidence" },
-    { value: "Unknown", label: "Signal-to-action latency", definition: "Needs a qualifying signal and a recorded decision" }
+    { value: summary.active_records, label: "Active opportunities", definition: "Anonymized records in the Sep 22 tracker snapshot" },
+    { value: summary.anonymized_organizations, label: "Organizations", definition: "Distinct companies represented by stable aliases" },
+    { value: `${summary.direct_evidence_links}/52`, label: "Direct evidence linked", definition: "Records with a populated evidence-link field" },
+    { value: `${summary.warm_paths}/52`, label: "Warm or referral paths", definition: "Context signal; does not itself advance a stage" },
+    { value: `${summary.fresh_within_7_days}/52`, label: "Fresh within 7 days", definition: "86.5% of active records" },
+    { value: summary.followups_due_or_overdue, label: "Follow-ups due", definition: "Dated action queue due on or before the snapshot" },
+    { value: summary.direct_engagement_journeys, label: "Direct engagement", definition: "Recruiter outreach, direct team outreach, or interviewing" },
+    { value: `${verifiedForecasts}/${data.forecasts.length}`, label: "Forecasts verified", definition: `${openForecasts} remain open; replay calibration is not yet scoreable` }
   ];
 
   document.querySelector("#summary-metrics").innerHTML = metrics.map((metric) => `
@@ -122,8 +149,17 @@ function renderEmptyOrJourneyTable(journeys) {
     return;
   }
 
-  target.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Journey</th><th>Stage</th><th>Last signal</th><th>Health</th><th>Evidence</th></tr></thead><tbody>${journeys.map((journey) => `
-    <tr><td>${escapeHtml(journey.label)}</td><td>${escapeHtml(titleCase(journey.current_stage))}</td><td>${escapeHtml(journey.last_observed_at || "Unknown")}</td><td>${badge(journey.health || "unknown")}</td><td>${escapeHtml(journey.evidence_count || 0)}</td></tr>
+  target.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Journey</th><th>Stage</th><th>Last signal</th><th>Confidence</th><th>Health</th><th>Next expected event</th><th>Evidence</th><th>Decision</th></tr></thead><tbody>${journeys.map((journey) => `
+    <tr>
+      <td><span class="cell-strong">${escapeHtml(journey.label)}</span><br /><span class="cell-muted">${escapeHtml(journey.organization_alias)} · ${escapeHtml(journey.role_family)}</span></td>
+      <td>${escapeHtml(journey.current_stage)}</td>
+      <td>${escapeHtml(journey.last_observed_at)}<br /><span class="cell-muted">${escapeHtml(journey.age_days)} day(s) ago</span></td>
+      <td>${badge(journey.confidence_band, journey.confidence_band === "High" ? "observed" : "watch")}</td>
+      <td>${badge(journey.health)}</td>
+      <td>${escapeHtml(journey.next_expected_event)}<br /><span class="cell-muted">${escapeHtml(journey.forecast_range)}</span></td>
+      <td>${escapeHtml(journey.evidence_count)} channel(s)</td>
+      <td>${badge(journey.action, journey.action === "Investigate" ? "at_risk" : "derived")}<br /><span class="cell-muted">${escapeHtml(journey.blocker)}</span></td>
+    </tr>
   `).join("")}</tbody></table></div>`;
 }
 
@@ -134,9 +170,22 @@ function renderEmptyOrTimeline(events) {
     return;
   }
 
-  target.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Time</th><th>Event</th><th>State</th><th>Source</th></tr></thead><tbody>${events.map((event) => `
-    <tr><td>${escapeHtml(event.timestamp)}</td><td>${escapeHtml(event.summary_public)}</td><td>${badge(event.evidence_state)}</td><td>${escapeHtml(event.source_type)}</td></tr>
+  const sorted = [...events].sort((a, b) => String(b.timestamp).localeCompare(String(a.timestamp)));
+  target.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Time</th><th>Journey</th><th>Observed event</th><th>State</th><th>Reliability</th><th>Evidence</th></tr></thead><tbody>${sorted.map((event) => `
+    <tr><td class="mono">${escapeHtml(event.timestamp)}</td><td>${escapeHtml(event.journey_id)}</td><td>${escapeHtml(event.summary_public)}</td><td>${badge(event.evidence_state)}</td><td>${Math.round(event.source_reliability * 100)}%</td><td class="mono">${escapeHtml(event.source_id)}</td></tr>
   `).join("")}</tbody></table></div>`;
+}
+
+function renderHeuristics(items) {
+  document.querySelector("#heuristics-grid").innerHTML = items.map((item) => `
+    <article class="heuristic-card"><span class="step">${escapeHtml(item.order)}</span><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.rule)}</p><p class="heuristic-effect">${escapeHtml(item.effect)}</p></article>
+  `).join("");
+}
+
+function renderZeroTrust(items) {
+  document.querySelector("#zero-trust-flow").innerHTML = items.map((item) => `
+    <article class="zte-card"><div class="zte-source">${escapeHtml(item.zte)}</div><h3>${escapeHtml(item.lab)}</h3><p>${escapeHtml(item.mechanism)}</p><span class="mono">${escapeHtml(item.evidence_id)}</span></article>
+  `).join("");
 }
 
 function renderLighthouse(items) {
@@ -171,8 +220,47 @@ function renderSyntheticChecks(checks) {
   document.querySelector("#synthetic-checks").innerHTML = checks.map((check) => `
     <article class="check-row">
       <strong>${escapeHtml(check.name)}</strong>
-      <div>${badge(check.status, "awaiting")}</div>
+      <div>${badge(check.status, check.health)}</div>
       <p>${escapeHtml(check.meaning)}</p>
+    </article>
+  `).join("");
+}
+
+function renderForecasts(data) {
+  document.querySelector("#forecast-cards").innerHTML = data.forecasts.map((forecast) => `
+    <article class="forecast-card">
+      ${badge(forecast.status, forecast.status === "verified" ? "healthy" : "forecast")}
+      <h3>${escapeHtml(forecast.target_event)}</h3>
+      <p>${escapeHtml(forecast.rationale)}</p>
+      <div class="forecast-window"><span>Forecast window</span><strong>${escapeHtml(forecast.window_start)} → ${escapeHtml(forecast.window_end)}</strong></div>
+      <dl class="key-value">
+        <div><dt>Confidence</dt><dd>${escapeHtml(forecast.confidence_band)}</dd></div>
+        <div><dt>Change condition</dt><dd>${escapeHtml(forecast.change_condition)}</dd></div>
+        <div><dt>Model</dt><dd class="mono">${escapeHtml(forecast.model_version)}</dd></div>
+      </dl>
+    </article>
+  `).join("");
+
+  const outcome = data.forecast_outcomes[0];
+  document.querySelector("#forecast-outcome-title").textContent = outcome ? "One forecast hit inside its frozen window" : "No forecast outcomes recorded";
+  document.querySelector("#forecast-outcome-copy").textContent = outcome
+    ? `${outcome.observed_at}: ${outcome.calibration_note}`
+    : "Outcome verification begins when an observed event resolves a frozen target.";
+}
+
+function renderAnomalies(items) {
+  document.querySelector("#anomaly-grid").innerHTML = items.map((item) => `
+    <article class="anomaly-card">
+      ${badge(item.severity, item.severity === "high" ? "at_risk" : "watch")}
+      <h3>${escapeHtml(titleCase(item.anomaly_type))}</h3>
+      <p>${escapeHtml(item.description)}</p>
+      <dl class="anomaly-detail">
+        <div><dt>Immediate action</dt><dd>${escapeHtml(item.immediate_action)}</dd></div>
+        <div><dt>Most-supported explanation</dt><dd>${escapeHtml(item.most_supported_explanation)}</dd></div>
+        <div><dt>Competing explanation</dt><dd>${escapeHtml(item.competing_explanations)}</dd></div>
+        <div><dt>Preventive action</dt><dd>${escapeHtml(item.preventive_action)}</dd></div>
+        <div><dt>Verification</dt><dd>${escapeHtml(item.verification)}</dd></div>
+      </dl>
     </article>
   `).join("");
 }
@@ -271,11 +359,15 @@ function qualityChecks(data) {
   const orphanOutcomes = data.forecast_outcomes.filter((outcome) => !forecastIds.has(outcome.forecast_id));
   results.push({ name: "Forecast lifecycle", pass: orphanOutcomes.length === 0, detail: orphanOutcomes.length ? "An outcome does not reference a forecast." : "No orphan forecast outcomes detected." });
 
+  const freezeMismatch = data.forecasts.filter((forecast) => forecast.created_at !== data.meta.forecast_freeze_at);
+  results.push({ name: "Forecast freeze boundary", pass: freezeMismatch.length === 0, detail: freezeMismatch.length ? "A forecast uses post-freeze input time." : "All forecast inputs are frozen at the LinkedIn signal peak." });
+
   const hiddenPrivateSources = data.sources.filter((source) => source.safe_to_render === false).length;
   results.push({ name: "Privacy gate", pass: true, detail: `${hiddenPrivateSources} source record(s) are registered but excluded from public content.` });
 
-  const noFabricatedOperationalData = data.events.length === 0 && data.journeys.length === 0 && data.forecasts.length === 0;
-  results.push({ name: "Review-data discipline", pass: noFabricatedOperationalData, detail: noFabricatedOperationalData ? "Template rows were not promoted to operational facts." : "Operational records are present; verify their evidence before publishing." });
+  const anonymizedJourneys = data.journeys.every((journey) => /^Organization \d{2}$/.test(journey.organization_alias) && !journey.req_id && !journey.contact && !journey.url);
+  const safeEvents = data.events.every((event) => event.safe_to_render && event.source_id && event.summary_public);
+  results.push({ name: "Anonymized tracker layer", pass: anonymizedJourneys && safeEvents, detail: anonymizedJourneys && safeEvents ? "Public journeys use stable aliases and public-safe event summaries." : "A public journey or event needs privacy review." });
 
   return results;
 }
@@ -308,13 +400,20 @@ async function init() {
     const data = await response.json();
 
     document.querySelector("#as-of").textContent = data.meta.as_of;
+    document.querySelector("#forecast-freeze").textContent = data.meta.forecast_freeze_label;
+    document.querySelector("#forecast-freeze-full").textContent = data.meta.forecast_freeze_label;
     renderFlow(data.system_stages);
+    renderMarket(data);
     renderSummary(data);
     renderEmptyOrJourneyTable(data.journeys);
     renderEmptyOrTimeline(data.events);
+    renderHeuristics(data.heuristics);
+    renderZeroTrust(data.zero_trust_translation);
     renderLighthouse(data.lighthouse_candidates);
     renderIndicators(data.indicators);
+    renderForecasts(data);
     renderSyntheticChecks(data.synthetic_checks);
+    renderAnomalies(data.anomalies);
     renderEvidence(data.evidence, data.sources);
     renderCadence(data.cadence);
     renderHumanAi(data.human_ai_loop);
@@ -324,7 +423,7 @@ async function init() {
   } catch (error) {
     console.error(error);
     const message = `<div class="empty-state"><strong>Local data could not be loaded.</strong><p>Serve this directory through a local web server or GitHub Pages; browsers block JSON fetches from file URLs.</p></div>`;
-    document.querySelectorAll("#summary-metrics, #flow-grid, #flow-detail, #journey-matrix, #signal-timeline").forEach((element) => {
+    document.querySelectorAll("#summary-metrics, #flow-grid, #flow-detail, #market-snapshot, #pipeline-graphic, #journey-matrix, #signal-timeline, #heuristics-grid, #zero-trust-flow").forEach((element) => {
       element.innerHTML = message;
     });
     document.querySelector("#as-of").textContent = "Unavailable";

@@ -16,9 +16,11 @@ Do not open `index.html` directly from the filesystem; browsers block the page f
 
 ## Data ownership
 
-All visible content is loaded from `data/lab-data.json`. UI code does not contain operational claims. The review dataset intentionally contains no private recruiter messages, contact details, interview content, email/calendar records, or fabricated journey events.
+All visible content is loaded from `data/lab-data.json`. UI code does not contain operational claims. The source tracker is private; the checked-in review dataset contains only aggregates, stable organization aliases, generic role families, stage dates, evidence-quality flags, public-safe event summaries, and explicit forecast assumptions. It contains no private recruiter messages, contact details, requisition IDs, company names, notes, email/calendar bodies, or private URLs.
 
 The starter CSV rows from the build packet were treated as schema examples only. They were not imported as facts.
+
+Forecast replay inputs are frozen at `2026-09-19T16:38:00Z`, the maximum LinkedIn visibility snapshot in the tracker. Later events may appear only as outcomes or post-freeze evidence. Because this replay was constructed afterward, it must remain labeled retrospective and must not be presented as a prospectively recorded prediction.
 
 ## Add records safely
 

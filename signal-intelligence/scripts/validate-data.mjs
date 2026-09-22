@@ -65,6 +65,26 @@ for (const outcome of data.forecast_outcomes) {
   if (!forecastIds.has(outcome.forecast_id)) errors.push(`Outcome references missing forecast ${outcome.forecast_id}`);
 }
 
+for (const forecast of data.forecasts) {
+  if (forecast.created_at !== data.meta.forecast_freeze_at) {
+    errors.push(`${forecast.forecast_id} is not frozen at ${data.meta.forecast_freeze_at}`);
+  }
+}
+
+for (const journey of data.journeys) {
+  if (!/^Organization \d{2}$/.test(journey.organization_alias || "")) {
+    errors.push(`${journey.journey_id} does not use a stable organization alias`);
+  }
+  for (const forbidden of ["company", "req_id", "contact", "url", "notes"]) {
+    if (Object.hasOwn(journey, forbidden)) errors.push(`${journey.journey_id} exposes forbidden field ${forbidden}`);
+  }
+}
+
+for (const event of data.events) {
+  if (!event.safe_to_render || !event.summary_public) errors.push(`${event.event_id} is missing a public-safe event summary`);
+  if (!evidenceIds.has(event.source_id)) errors.push(`${event.event_id} references missing evidence ${event.source_id}`);
+}
+
 if (errors.length) {
   console.error(`Data validation failed with ${errors.length} issue(s):`);
   for (const error of errors) console.error(`- ${error}`);
@@ -72,4 +92,3 @@ if (errors.length) {
 }
 
 console.log(`Data validation passed: ${data.evidence.length} evidence objects, ${data.events.length} observed events, ${data.forecasts.length} forecasts.`);
-

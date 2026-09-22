@@ -3,6 +3,8 @@
     "title": "Signal Intelligence Lab",
     "version": "review-v1",
     "as_of": "2026-09-22",
+    "forecast_freeze_at": "2026-09-19T16:38:00Z",
+    "forecast_freeze_label": "LinkedIn signal peak · Sep 19, 2026 · 16:38 UTC",
     "mode": "review",
     "disclaimer": "This is a small-scale operating-model demonstration built from personal, public, and user-owned data. It demonstrates methodology—not production-service scale or statistical certainty."
   },
@@ -36,17 +38,35 @@
       "source_type": "public_web",
       "confidentiality": "public",
       "safe_to_render": true,
-      "status": "registered",
+      "status": "connected",
       "notes": "Public role-language reference supplied in the build packet; not used as personal experience evidence."
     },
     {
       "source_id": "SRC-004",
-      "source_name": "Personal signal event store",
-      "source_type": "structured_data",
+      "source_name": "Anonymized job application tracker snapshot",
+      "source_type": "google_sheet",
       "confidentiality": "private",
       "safe_to_render": false,
-      "status": "awaiting_source",
-      "notes": "No private recruiter, email, calendar, or job-search records were ingested for this review build."
+      "status": "connected",
+      "notes": "Read-only snapshot as of 2026-09-22. Company names, requisition IDs, contacts, URLs, and notes are excluded from the public layer."
+    },
+    {
+      "source_id": "SRC-005",
+      "source_name": "Zscaler Zero Trust Exchange and ZDX documentation",
+      "source_type": "public_web",
+      "confidentiality": "public",
+      "safe_to_render": true,
+      "status": "connected",
+      "notes": "Official architecture and digital-experience sources used to ground the analogy; no Zscaler production telemetry is used."
+    },
+    {
+      "source_id": "SRC-006",
+      "source_name": "LinkedIn analytics peak snapshot",
+      "source_type": "user_owned_analytics",
+      "confidentiality": "private",
+      "safe_to_render": false,
+      "status": "connected",
+      "notes": "Private analytics snapshot summarized into public-safe aggregate metrics; profile identities and underlying analytics links are excluded."
     }
   ],
   "evidence": [
@@ -97,6 +117,78 @@
       "safe_to_render": true,
       "description_public": "Public role reference for Service Health, CUJ, Lighthouse signal, SLI/SLO, continuous measurement, incident, RCA, preventive-action, and operating-cadence mechanisms.",
       "related_ids": ["SYS-001"]
+    },
+    {
+      "evidence_id": "EVD-005",
+      "title": "Anonymized application-tracker snapshot",
+      "source_id": "SRC-004",
+      "source_type": "google_sheet",
+      "source_date": "2026-09-22",
+      "path_or_url": "",
+      "confidentiality": "private",
+      "safe_to_render": true,
+      "description_public": "A read-only, 52-row active-pipeline snapshot. Public rendering retains aggregate counts, generic role families, dates, stages, and evidence-quality flags while removing names, requisition IDs, contacts, notes, and private links.",
+      "related_ids": ["MET-001", "MET-002", "MET-003", "MET-004", "JRN-A", "JRN-B", "JRN-C", "JRN-D", "JRN-E", "JRN-F", "JRN-G", "JRN-H"]
+    },
+    {
+      "evidence_id": "EVD-006",
+      "title": "Zscaler Zero Trust Exchange operating sequence",
+      "source_id": "SRC-005",
+      "source_type": "public_web",
+      "source_date": "2026-09-22",
+      "path_or_url": "https://www.zscaler.com/products-and-solutions/zero-trust-exchange-zte",
+      "confidentiality": "public",
+      "safe_to_render": true,
+      "description_public": "Official Zscaler platform overview describes a sequence of verifying identity, determining destination, assessing risk from context, and enforcing policy per session.",
+      "related_ids": ["ZTE-01", "MODEL-v0.2-zte"]
+    },
+    {
+      "evidence_id": "EVD-007",
+      "title": "Zscaler Digital Experience — end-to-end telemetry",
+      "source_id": "SRC-005",
+      "source_type": "public_web",
+      "source_date": "2026-09-22",
+      "path_or_url": "https://www.zscaler.com/products-and-solutions/zscaler-digital-experience-zdx",
+      "confidentiality": "public",
+      "safe_to_render": true,
+      "description_public": "Official ZDX overview describes end-to-end visibility across device health, network path, applications, synthetic monitoring, real-user journeys, anomaly detection, and root-cause analysis.",
+      "related_ids": ["ZTE-02", "SYS-001"]
+    },
+    {
+      "evidence_id": "EVD-008",
+      "title": "ZDX alert thresholds and operational response",
+      "source_id": "SRC-005",
+      "source_type": "public_web",
+      "source_date": "2026-09-22",
+      "path_or_url": "https://help.zscaler.com/zdx/about-alerts",
+      "confidentiality": "public",
+      "safe_to_render": true,
+      "description_public": "Official ZDX help documents configurable alert rules triggered by preset thresholds for device, application, network-performance, and experience-score events.",
+      "related_ids": ["ZTE-03", "MET-001", "MET-004"]
+    },
+    {
+      "evidence_id": "EVD-009",
+      "title": "ZDX Network Intelligence anomaly model",
+      "source_id": "SRC-005",
+      "source_type": "public_web",
+      "source_date": "2026-09-22",
+      "path_or_url": "https://help.zscaler.com/zdx/monitoring-network-intelligence-dashboard",
+      "confidentiality": "public",
+      "safe_to_render": true,
+      "description_public": "Official ZDX help describes baselining latency and packet loss, detecting anomalies, assessing impact, and investigating root causes across the path from ISP through Zero Trust Exchange to applications.",
+      "related_ids": ["ZTE-04", "ANO-001", "ANO-002"]
+    },
+    {
+      "evidence_id": "EVD-010",
+      "title": "LinkedIn market-signal peak snapshot",
+      "source_id": "SRC-006",
+      "source_type": "user_owned_analytics",
+      "source_date": "2026-09-19T16:38:00Z",
+      "path_or_url": "",
+      "confidentiality": "private",
+      "safe_to_render": true,
+      "description_public": "Public-safe aggregate snapshot: 21,136 impressions, 11,810 members reached, 83% out-of-network impressions, 143 social engagements, 95 new followers, and a 997-view weekly profile bucket. This is a visibility peak, not proof of hiring conversion.",
+      "related_ids": ["EVT-009", "SIG-LI-001", "SIG-LI-002", "SIG-LI-003", "FRC-001", "FRC-002", "FRC-003"]
     }
   ],
   "system_stages": [
@@ -129,7 +221,7 @@
       "short": "Measure",
       "input": "Governed records and thresholds",
       "transformation": "Calculate freshness, latency, completeness, and contradictions",
-      "output": "SLI-inspired indicators with explicit unknown states",
+      "output": "SLI-inspired indicators with evidence-backed states",
       "evidence_type": "Derived",
       "concepts": ["SLIs", "SLO-like targets", "error-budget logic"]
     },
@@ -167,131 +259,425 @@
       "concepts": ["post-delivery verification", "RCA", "durable improvement"]
     }
   ],
-  "journeys": [],
-  "events": [],
-  "signals": [],
-  "forecasts": [],
-  "forecast_outcomes": [],
-  "anomalies": [],
-  "actions": [],
+  "journeys": [
+    {
+      "journey_id": "JRN-A",
+      "entity_id": "ORG-23",
+      "journey_type": "hiring_process",
+      "label": "Priority Journey A",
+      "organization_alias": "Organization 23",
+      "role_family": "Service Health / Reliability",
+      "start_at": "2026-09-18",
+      "current_stage": "Interviewing",
+      "state": "active",
+      "last_observed_at": "2026-09-21",
+      "age_days": 1,
+      "health": "healthy",
+      "confidence_band": "High",
+      "next_expected_event": "Hiring-manager scheduling or next-stage decision",
+      "forecast_range": "1–3 business days",
+      "evidence_count": 3,
+      "blocker": "None observed",
+      "action": "Act",
+      "priority": "High",
+      "safe_to_render": true
+    },
+    {
+      "journey_id": "JRN-B",
+      "entity_id": "ORG-04",
+      "journey_type": "hiring_process",
+      "label": "Journey B",
+      "organization_alias": "Organization 04",
+      "role_family": "Infrastructure / Data Center",
+      "start_at": "2026-09-15",
+      "current_stage": "Recruiter outreach",
+      "state": "active",
+      "last_observed_at": "2026-09-15",
+      "age_days": 7,
+      "health": "watch",
+      "confidence_band": "High",
+      "next_expected_event": "Recruiter reply or screen confirmation",
+      "forecast_range": "4–7 business days",
+      "evidence_count": 3,
+      "blocker": "No follow-up date recorded",
+      "action": "Monitor",
+      "priority": "High",
+      "safe_to_render": true
+    },
+    {
+      "journey_id": "JRN-C",
+      "entity_id": "ORG-08",
+      "journey_type": "hiring_process",
+      "label": "Journey C",
+      "organization_alias": "Organization 08",
+      "role_family": "Technical Program Leadership",
+      "start_at": "2026-09-16",
+      "current_stage": "Applied — referred / awaiting review",
+      "state": "active",
+      "last_observed_at": "2026-09-16",
+      "age_days": 6,
+      "health": "watch",
+      "confidence_band": "High",
+      "next_expected_event": "Recruiter triage or no-response checkpoint",
+      "forecast_range": "4–7 business days",
+      "evidence_count": 3,
+      "blocker": "Follow-up checkpoint reached",
+      "action": "Monitor",
+      "priority": "Waiting",
+      "safe_to_render": true
+    },
+    {
+      "journey_id": "JRN-D",
+      "entity_id": "ORG-19",
+      "journey_type": "hiring_process",
+      "label": "Journey D",
+      "organization_alias": "Organization 19",
+      "role_family": "Technical Program Leadership",
+      "start_at": "2026-09-16",
+      "current_stage": "Applied — direct team outreach",
+      "state": "active",
+      "last_observed_at": "2026-09-16",
+      "age_days": 6,
+      "health": "watch",
+      "confidence_band": "High",
+      "next_expected_event": "Hiring-team response or follow-up decision",
+      "forecast_range": "4–7 business days",
+      "evidence_count": 3,
+      "blocker": "Follow-up checkpoint reached",
+      "action": "Act",
+      "priority": "Waiting",
+      "safe_to_render": true
+    },
+    {
+      "journey_id": "JRN-E",
+      "entity_id": "ORG-11",
+      "journey_type": "hiring_process",
+      "label": "Journey E",
+      "organization_alias": "Organization 11",
+      "role_family": "Technical Program Leadership",
+      "start_at": "2026-09-16",
+      "current_stage": "Needs confirmation",
+      "state": "active",
+      "last_observed_at": "2026-09-16",
+      "age_days": 6,
+      "health": "at_risk",
+      "confidence_band": "Moderate",
+      "next_expected_event": "Public status verification",
+      "forecast_range": "1–3 business days",
+      "evidence_count": 2,
+      "blocker": "Possible inactive role; closure not confirmed",
+      "action": "Investigate",
+      "priority": "High",
+      "safe_to_render": true
+    },
+    {
+      "journey_id": "JRN-F",
+      "entity_id": "ORG-11",
+      "journey_type": "hiring_process",
+      "label": "Journey F",
+      "organization_alias": "Organization 11",
+      "role_family": "Service Health / Reliability",
+      "start_at": "2026-09-16",
+      "current_stage": "Referral requested",
+      "state": "active",
+      "last_observed_at": "2026-09-16",
+      "age_days": 6,
+      "health": "watch",
+      "confidence_band": "Moderate",
+      "next_expected_event": "Referral or application confirmation",
+      "forecast_range": "4–7 business days",
+      "evidence_count": 2,
+      "blocker": "Application not yet confirmed",
+      "action": "Act",
+      "priority": "High",
+      "safe_to_render": true
+    },
+    {
+      "journey_id": "JRN-G",
+      "entity_id": "ORG-02",
+      "journey_type": "hiring_process",
+      "label": "Journey G",
+      "organization_alias": "Organization 02",
+      "role_family": "Infrastructure / Data Center",
+      "start_at": "2026-09-18",
+      "current_stage": "Targeting / recruiter identification",
+      "state": "active",
+      "last_observed_at": "2026-09-18",
+      "age_days": 4,
+      "health": "watch",
+      "confidence_band": "High",
+      "next_expected_event": "Direct outreach or application decision",
+      "forecast_range": "1–3 business days",
+      "evidence_count": 3,
+      "blocker": "No application recorded",
+      "action": "Act",
+      "priority": "High",
+      "safe_to_render": true
+    },
+    {
+      "journey_id": "JRN-H",
+      "entity_id": "ORG-01",
+      "journey_type": "hiring_process",
+      "label": "Journey H",
+      "organization_alias": "Organization 01",
+      "role_family": "Technical Program Leadership",
+      "start_at": "2026-09-14",
+      "current_stage": "Applied — awaiting review",
+      "state": "active",
+      "last_observed_at": "2026-09-18",
+      "age_days": 4,
+      "health": "watch",
+      "confidence_band": "High",
+      "next_expected_event": "Recruiter review or no-response checkpoint",
+      "forecast_range": "4–7 business days",
+      "evidence_count": 3,
+      "blocker": "Follow-up checkpoint reached",
+      "action": "Monitor",
+      "priority": "High",
+      "safe_to_render": true
+    }
+  ],
+  "events": [
+    {"event_id":"EVT-001","timestamp":"2026-09-21","journey_id":"JRN-A","entity_id":"ORG-23","event_type":"stage_change","evidence_state":"observed","source_type":"private_tracker","source_id":"EVD-005","summary_public":"Recruiter screen confirmed; journey handed to hiring manager.","confidence":0.98,"source_reliability":1.0,"safe_to_render":true},
+    {"event_id":"EVT-009","timestamp":"2026-09-19T16:38:00Z","journey_id":"portfolio","entity_id":"MARKET","event_type":"market_visibility_peak","evidence_state":"observed","source_type":"user_owned_analytics","source_id":"EVD-010","summary_public":"LinkedIn visibility peaked at 21,136 impressions, 11,810 members reached, and a 997-view weekly profile bucket.","confidence":0.99,"source_reliability":0.98,"safe_to_render":true},
+    {"event_id":"EVT-002","timestamp":"2026-09-18","journey_id":"JRN-H","entity_id":"ORG-01","event_type":"evidence_update","evidence_state":"observed","source_type":"private_tracker","source_id":"EVD-005","summary_public":"Employee-referral path and corrected application packet were recorded.","confidence":0.95,"source_reliability":0.95,"safe_to_render":true},
+    {"event_id":"EVT-003","timestamp":"2026-09-18","journey_id":"JRN-G","entity_id":"ORG-02","event_type":"source_refresh","evidence_state":"observed","source_type":"official_ats","source_id":"EVD-005","summary_public":"Official posting evidence was verified; recruiter-targeting path opened.","confidence":0.94,"source_reliability":0.95,"safe_to_render":true},
+    {"event_id":"EVT-004","timestamp":"2026-09-16","journey_id":"JRN-C","entity_id":"ORG-08","event_type":"application_referral","evidence_state":"observed","source_type":"private_tracker","source_id":"EVD-005","summary_public":"Application and referral were recorded; journey moved to awaiting review.","confidence":0.94,"source_reliability":0.95,"safe_to_render":true},
+    {"event_id":"EVT-005","timestamp":"2026-09-16","journey_id":"JRN-D","entity_id":"ORG-19","event_type":"direct_contact","evidence_state":"observed","source_type":"private_tracker","source_id":"EVD-005","summary_public":"Recruiter acknowledgment was recorded after application.","confidence":0.92,"source_reliability":0.95,"safe_to_render":true},
+    {"event_id":"EVT-006","timestamp":"2026-09-16","journey_id":"JRN-E","entity_id":"ORG-11","event_type":"contradiction","evidence_state":"observed","source_type":"multi_source","source_id":"EVD-005","summary_public":"A role may be inactive, but closure is not confirmed; both claims remain open.","confidence":0.72,"source_reliability":0.7,"safe_to_render":true},
+    {"event_id":"EVT-007","timestamp":"2026-09-16","journey_id":"JRN-F","entity_id":"ORG-11","event_type":"referral_requested","evidence_state":"observed","source_type":"private_tracker","source_id":"EVD-005","summary_public":"Referral outreach was recorded; application status remains unconfirmed.","confidence":0.78,"source_reliability":0.8,"safe_to_render":true},
+    {"event_id":"EVT-008","timestamp":"2026-09-15","journey_id":"JRN-B","entity_id":"ORG-04","event_type":"recruiter_outreach","evidence_state":"observed","source_type":"private_tracker","source_id":"EVD-005","summary_public":"Verified recruiter outreach was recorded for an infrastructure role family.","confidence":0.9,"source_reliability":0.9,"safe_to_render":true}
+  ],
+  "signals": [
+    {"signal_id":"SIG-001","created_at":"2026-09-21","journey_id":"JRN-A","signal_class":"confirmed_stage_advancement","signal_direction":"positive","strength":1.0,"confidence":0.98,"lighthouse_flag":true,"supporting_event_ids":["EVT-001"],"contradicting_event_ids":[],"health_impact":"healthy","forecast_impact":"raises confidence in a near-term next-stage event"},
+    {"signal_id":"SIG-002","created_at":"2026-09-16","journey_id":"JRN-D","signal_class":"direct_contact","signal_direction":"positive","strength":0.8,"confidence":0.92,"lighthouse_flag":true,"supporting_event_ids":["EVT-005"],"contradicting_event_ids":[],"health_impact":"watch","forecast_impact":"supports a response-window forecast while age remains within seven days"},
+    {"signal_id":"SIG-003","created_at":"2026-09-16","journey_id":"JRN-E","signal_class":"contradiction","signal_direction":"mixed","strength":0.9,"confidence":0.72,"lighthouse_flag":true,"supporting_event_ids":["EVT-006"],"contradicting_event_ids":["EVT-006"],"health_impact":"at_risk","forecast_impact":"withholds progression forecast until status is verified"},
+    {"signal_id":"SIG-004","created_at":"2026-09-22","journey_id":"portfolio","signal_class":"source_refresh","signal_direction":"neutral","strength":0.7,"confidence":0.96,"lighthouse_flag":false,"supporting_event_ids":["EVT-001","EVT-002","EVT-003","EVT-004","EVT-005","EVT-006","EVT-007","EVT-008"],"contradicting_event_ids":[],"health_impact":"watch","forecast_impact":"45 of 52 journeys are within the seven-day freshness window"},
+    {"signal_id":"SIG-LI-001","created_at":"2026-09-19T16:38:00Z","journey_id":"portfolio","signal_class":"market_visibility_peak","signal_direction":"positive","strength":1.0,"confidence":0.99,"lighthouse_flag":true,"supporting_event_ids":["EVT-009"],"contradicting_event_ids":[],"health_impact":"healthy","forecast_impact":"raises the chance of a near-term direct market response without proving conversion"},
+    {"signal_id":"SIG-LI-002","created_at":"2026-09-19T16:38:00Z","journey_id":"portfolio","signal_class":"attribution_gap","signal_direction":"mixed","strength":0.8,"confidence":0.96,"lighthouse_flag":true,"supporting_event_ids":["EVT-009"],"contradicting_event_ids":[],"health_impact":"watch","forecast_impact":"limits any claim that visibility caused recruiter conversations or interviews"},
+    {"signal_id":"SIG-LI-003","created_at":"2026-09-19T16:38:00Z","journey_id":"portfolio","signal_class":"pipeline_depth","signal_direction":"positive","strength":0.75,"confidence":0.95,"lighthouse_flag":false,"supporting_event_ids":["EVT-009"],"contradicting_event_ids":[],"health_impact":"watch","forecast_impact":"32 confirmed applications and one interviewing role support a portfolio-level next-event forecast"}
+  ],
+  "forecasts": [
+    {"forecast_id":"FRC-001","created_at":"2026-09-19T16:38:00Z","journey_id":"portfolio","forecast_type":"next_market_event","target_event":"At least one direct recruiter or hiring-stage event across the active portfolio","window_start":"2026-09-20","window_end":"2026-09-23","probability":null,"confidence_band":"Moderate","model_version":"v0.3-peak-replay","supporting_signal_ids":["SIG-LI-001","SIG-LI-003"],"contradicting_signal_ids":["SIG-LI-002"],"rationale":"The visibility peak coincided with 32 confirmed applications and one interview-stage journey, but content-to-recruiter attribution was incomplete.","change_condition":"A dated direct conversation or stage change verifies the forecast; visibility metrics alone do not.","status":"verified","replay_note":"Retrospective replay frozen to the peak snapshot; not evidence that the forecast was prospectively recorded on Sep 19."},
+    {"forecast_id":"FRC-002","created_at":"2026-09-19T16:38:00Z","journey_id":"portfolio","forecast_type":"warm_path_response","target_event":"At least one warm-path journey records a direct response or stage update","window_start":"2026-09-20","window_end":"2026-09-26","probability":null,"confidence_band":"Moderate","model_version":"v0.3-peak-replay","supporting_signal_ids":["SIG-LI-003"],"contradicting_signal_ids":["SIG-LI-002"],"rationale":"The snapshot recommended following existing warm introductions, while same-person attribution remained incomplete.","change_condition":"A source-linked reply or stage event verifies the forecast; inferred interest does not.","status":"open","replay_note":"Retrospective replay frozen to the peak snapshot."},
+    {"forecast_id":"FRC-003","created_at":"2026-09-19T16:38:00Z","journey_id":"portfolio","forecast_type":"attribution_quality","target_event":"Same-person content-to-recruiter attribution becomes measurable","window_start":"2026-09-20","window_end":"2026-09-26","probability":null,"confidence_band":"Low","model_version":"v0.3-peak-replay","supporting_signal_ids":["SIG-LI-001"],"contradicting_signal_ids":["SIG-LI-002"],"rationale":"Reach was high, but only 11 link visits were recorded and no dated recruiter conversation was tied to a post or profile visit.","change_condition":"A source-linked recruiter conversation tied to the visibility window would raise confidence.","status":"open","replay_note":"Retrospective replay frozen to the peak snapshot."}
+  ],
+  "forecast_outcomes": [
+    {"forecast_id":"FRC-001","observed_event_id":"EVT-001","outcome":"hit_within_window","observed_at":"2026-09-21","date_error_days":0,"directionally_correct":true,"calibration_note":"A direct stage event occurred inside the frozen window. This is one retrospective replay and is not a statistically meaningful calibration result."}
+  ],
+  "anomalies": [
+    {"anomaly_id":"ANO-001","detected_at":"2026-09-22","journey_id":"portfolio","anomaly_type":"follow_up_backlog","severity":"medium","description":"18 of 52 active records have a follow-up date due on or before the snapshot date.","evidence_ids":["EVD-005"],"status":"open","resolved_at":null,"immediate_action":"Triage high-priority and direct-engagement journeys first.","most_supported_explanation":"The pipeline expanded faster than dated follow-up coverage.","competing_explanations":"Some records may intentionally be monitor-only despite a historical due date.","preventive_action":"Require a current decision state when a follow-up date passes.","verification":"Recompute the queue after the next tracker refresh."},
+    {"anomaly_id":"ANO-002","detected_at":"2026-09-22","journey_id":"JRN-E","anomaly_type":"source_contradiction","severity":"high","description":"One journey is marked needs confirmation because role-status evidence conflicts.","evidence_ids":["EVD-005","EVD-009"],"status":"open","resolved_at":null,"immediate_action":"Check an official source or direct confirmation before closing the journey.","most_supported_explanation":"A public status signal changed after earlier outreach.","competing_explanations":"The role may be temporarily hidden, reposted, or still active through another channel.","preventive_action":"Record both source timestamps and preserve the last confirmed state.","verification":"Close only after authoritative or direct evidence resolves the conflict."}
+  ],
+  "actions": [
+    {"action_id":"ACT-001","created_at":"2026-09-22","journey_id":"JRN-A","action_type":"act","decision":"Prepare for hiring-manager engagement and confirm scheduling.","rationale":"Recent confirmed stage advancement is the strongest active signal.","trigger_signal_ids":["SIG-001"],"owner":"Floyd","due_at":"2026-09-23","status":"open","verification_event_id":null},
+    {"action_id":"ACT-002","created_at":"2026-09-22","journey_id":"JRN-E","action_type":"investigate","decision":"Resolve role-status contradiction before any progression claim.","rationale":"Conflicting evidence invalidates a clean health assessment.","trigger_signal_ids":["SIG-003"],"owner":"Floyd","due_at":"2026-09-23","status":"open","verification_event_id":null},
+    {"action_id":"ACT-003","created_at":"2026-09-22","journey_id":"portfolio","action_type":"act","decision":"Triage the 18 due-or-overdue follow-ups by engagement strength and priority.","rationale":"A dated queue converts staleness into a concrete operating action.","trigger_signal_ids":["SIG-004"],"owner":"Floyd","due_at":"2026-09-23","status":"open","verification_event_id":null}
+  ],
   "model_versions": [
     {
       "model_version": "v0.1",
       "created_at": "2026-09-22",
-      "description": "Transparent review model; no scoring is produced until observed event data exists.",
+      "description": "Initial transparent schema and guardrails.",
       "features": ["stage", "recency", "source reliability", "signal strength", "contradictions", "data completeness"],
       "weight_changes": "Initial assumptions only",
       "evaluation_notes": "Insufficient verified forecasts"
+    },
+    {
+      "model_version": "v0.2-zte",
+      "created_at": "2026-09-22",
+      "description": "Qualitative decision model grounded in tracker evidence and the Zero Trust sequence: verify provenance, determine journey target, assess health/risk, apply a decision rule, then verify the outcome.",
+      "features": ["stage progression", "source reliability tier", "days since touch", "warm path", "evidence traceability", "contradiction penalty"],
+      "weight_changes": "Direct stage advancement and direct contact outrank indirect interest; signals decay after seven days; unresolved contradictions block progression forecasts.",
+      "evaluation_notes": "Three forecasts opened; calibration is not scoreable until outcomes are recorded."
+    },
+    {
+      "model_version": "v0.3-peak-replay",
+      "created_at": "2026-09-22",
+      "description": "Retrospective forecast replay using only the LinkedIn analytics and pipeline snapshot available at the maximum visibility signal: 2026-09-19 16:38 UTC.",
+      "features": ["visibility peak", "confirmed application count", "interview-stage count", "warm-introduction context", "same-person attribution gap"],
+      "weight_changes": "Freezes inputs at the peak timestamp; all later tracker events are treated only as outcomes or post-freeze evidence.",
+      "evaluation_notes": "One forecast hit inside its window; two remain open. Replay timing is disclosed and does not establish prospective accuracy."
     }
   ],
   "indicators": [
     {
       "metric_id": "MET-001",
       "name": "Evidence freshness",
-      "definition": "Days since the most recent observed, public-safe event for an active journey.",
-      "target": "≤ 5 days",
-      "current": null,
-      "unit": "days",
-      "health": "unknown",
-      "evidence_ids": [],
-      "decision_rule": "If older than five days, review for a missing signal before changing journey health."
+      "definition": "Share of active records with a last touch in the prior seven days.",
+      "target": "≥ 90%",
+      "current": 86.5,
+      "unit": "%",
+      "health": "watch",
+      "evidence_ids": ["EVD-005"],
+      "decision_rule": "Review the seven stale records before treating silence as a negative signal."
     },
     {
       "metric_id": "MET-002",
-      "name": "Signal-to-action latency",
-      "definition": "Elapsed time between a qualifying observed signal and a recorded decision.",
-      "target": "≤ 2 business days",
-      "current": null,
-      "unit": "business days",
-      "health": "unknown",
-      "evidence_ids": [],
-      "decision_rule": "Investigate stalled decision ownership when the threshold is exceeded."
+      "name": "Median touch age",
+      "definition": "Median days since the most recent recorded touch across 52 active records.",
+      "target": "≤ 7 days",
+      "current": 6,
+      "unit": "days",
+      "health": "healthy",
+      "evidence_ids": ["EVD-005"],
+      "decision_rule": "Prioritize records older than seven days, weighted by stage and engagement strength."
     },
     {
       "metric_id": "MET-003",
-      "name": "Evidence completeness",
-      "definition": "Share of required evidence fields populated for the current journey state.",
+      "name": "Direct evidence coverage",
+      "definition": "Share of active records with a populated evidence-link field.",
       "target": "≥ 90%",
-      "current": null,
+      "current": 86.5,
       "unit": "%",
-      "health": "unknown",
-      "evidence_ids": [],
-      "decision_rule": "Do not create a forecast when required lineage fields are missing."
+      "health": "watch",
+      "evidence_ids": ["EVD-005"],
+      "decision_rule": "Do not assign high confidence to a record without a direct evidence object or authoritative source."
     },
     {
       "metric_id": "MET-004",
-      "name": "Contradiction rate",
-      "definition": "Share of active assessments with unresolved evidence conflicts.",
-      "target": "0 unresolved > 3 days",
-      "current": null,
+      "name": "Action coverage",
+      "definition": "Share of active records with a defined next action.",
+      "target": "100%",
+      "current": 100,
       "unit": "%",
-      "health": "unknown",
-      "evidence_ids": [],
-      "decision_rule": "Move to investigate; preserve both claims until stronger evidence resolves the conflict."
+      "health": "healthy",
+      "evidence_ids": ["EVD-005"],
+      "decision_rule": "No record may remain active without an explicit act, monitor, investigate, or close decision."
     },
     {
       "metric_id": "MET-005",
-      "name": "Forecast calibration",
-      "definition": "Agreement between frozen forecast confidence and later observed outcomes.",
-      "target": "Calibrate after a meaningful verified sample",
-      "current": null,
-      "unit": "score",
-      "health": "unknown",
-      "evidence_ids": [],
-      "decision_rule": "Show no calibration score until enough forecasts have observed outcomes."
+      "name": "Contradiction queue",
+      "definition": "Active records requiring status confirmation because evidence conflicts.",
+      "target": "0 unresolved",
+      "current": 1,
+      "unit": "record",
+      "health": "at_risk",
+      "evidence_ids": ["EVD-005"],
+      "decision_rule": "Investigate before closing, advancing, or forecasting the affected journey."
+    },
+    {
+      "metric_id": "MET-006",
+      "name": "Forecast verification",
+      "definition": "Frozen forecasts with separately recorded outcomes.",
+      "target": "Verify every closed forecast",
+      "current": "1 of 3",
+      "unit": "",
+      "health": "watch",
+      "evidence_ids": ["EVD-005", "EVD-006"],
+      "decision_rule": "One replay hit is visible, but calibration remains not yet scoreable until more prospective outcomes exist."
     }
+  ],
+  "portfolio_summary": {
+    "active_records": 52,
+    "anonymized_organizations": 23,
+    "direct_evidence_links": 45,
+    "warm_paths": 44,
+    "defined_next_actions": 52,
+    "fresh_within_7_days": 45,
+    "followups_due_or_overdue": 18,
+    "direct_engagement_journeys": 3
+  },
+  "market_snapshot": {
+    "freeze_at": "2026-09-19T16:38:00Z",
+    "title": "Maximum LinkedIn signal peak",
+    "period": "Content window: Sep 13–19, 2026 UTC",
+    "partial_day_note": "Sep 19 was a partial day. Premium began Sep 18, so incremental lift is not attributable from this snapshot.",
+    "metrics": [
+      {"label":"Post impressions","value":21136,"display":"21,136"},
+      {"label":"Members reached","value":11810,"display":"11,810"},
+      {"label":"Out-of-network impressions","value":83,"display":"83%"},
+      {"label":"Social engagements","value":143,"display":"143"},
+      {"label":"New followers","value":95,"display":"95"},
+      {"label":"Weekly profile-view bucket","value":997,"display":"997"}
+    ],
+    "pipeline_at_freeze": [
+      {"label":"Confirmed applications","value":32},
+      {"label":"Roles marked interviewing","value":1},
+      {"label":"Link visits from posts","value":11},
+      {"label":"Recruiter profile viewers · 90d","value":29}
+    ],
+    "interpretation": "A verified attention peak and a useful forecasting freeze point—not proof that content caused recruiter conversations, interviews, or offers.",
+    "evidence_id": "EVD-010"
+  },
+  "pipeline_mix": [
+    {"label":"Applied — awaiting review","count":30,"percent":57.7,"color":"accent"},
+    {"label":"Targeting / recruiter identification","count":9,"percent":17.3,"color":"violet"},
+    {"label":"Referral path","count":9,"percent":17.3,"color":"good"},
+    {"label":"Direct engagement","count":3,"percent":5.8,"color":"amber"},
+    {"label":"Needs confirmation","count":1,"percent":1.9,"color":"coral"}
+  ],
+  "heuristics": [
+    {"order":"01","name":"Verify provenance","rule":"User-confirmed or direct evidence outranks official ATS data; official ATS outranks public indexes; model inference never becomes observed fact.","effect":"Sets the maximum confidence band."},
+    {"order":"02","name":"Determine journey state","rule":"Stage changes require an observed event. Interest, referrals, and outreach can increase priority but do not advance the stage alone.","effect":"Prevents optimistic stage inflation."},
+    {"order":"03","name":"Apply recency decay","rule":"0–3 days is current, 4–7 days is watch, 8–14 days is stale, and over 14 days requires explicit investigation or closure review.","effect":"Turns silence into an action trigger, not a rejection claim."},
+    {"order":"04","name":"Weight signal strength","rule":"Confirmed stage advancement and direct scheduling are Lighthouse-class; warm paths and public changes are supporting signals.","effect":"Focuses attention on events that change decisions."},
+    {"order":"05","name":"Penalize contradictions","rule":"Conflicting status, missing evidence, or unconfirmed application state blocks high-confidence progression forecasts.","effect":"Routes the journey to investigate."},
+    {"order":"06","name":"Freeze, verify, recalibrate","rule":"Forecasts are time-stamped before outcomes. Misses change only the next model version, never the original record.","effect":"Creates an auditable learning loop."}
+  ],
+  "zero_trust_translation": [
+    {"zte":"Verify identity","lab":"Verify evidence provenance","mechanism":"Confirm who or what produced the signal and retain the source object.","evidence_id":"EVD-006"},
+    {"zte":"Determine destination","lab":"Determine journey target and stage","mechanism":"Resolve the role family, current lifecycle state, and expected next event.","evidence_id":"EVD-006"},
+    {"zte":"Assess risk","lab":"Assess opportunity health","mechanism":"Combine stage, source reliability, recency, warm path, evidence coverage, and contradictions.","evidence_id":"EVD-006"},
+    {"zte":"Enforce policy","lab":"Apply a decision rule","mechanism":"Act, monitor, investigate, close, or recalibrate based on visible thresholds.","evidence_id":"EVD-006"},
+    {"zte":"Device → network → app telemetry","lab":"Source → journey → outcome telemetry","mechanism":"Use end-to-end evidence rather than a single-point signal, inspired by ZDX visibility across device, path, and application.","evidence_id":"EVD-007"},
+    {"zte":"Alert → RCA → remediation","lab":"Anomaly → explanation → preventive action","mechanism":"Trigger on thresholds, preserve competing explanations, take action, and verify the result.","evidence_id":"EVD-008"}
   ],
   "lighthouse_candidates": [
     {
       "name": "Confirmed stage advancement",
-      "state": "hypothesis",
-      "why": "Direct evidence that the journey state changed; materially changes the next expected event.",
-      "reliability": "Source-dependent",
-      "decision": "Update journey stage and refresh the forecast only after evidence is linked."
+      "state": "observed",
+      "why": "One current journey has direct, user-confirmed stage advancement to hiring-manager handoff.",
+      "reliability": "High — direct and recent",
+      "decision": "Prepare, confirm scheduling, and open a near-term next-event forecast."
     },
     {
-      "name": "Direct scheduling event",
-      "state": "hypothesis",
-      "why": "A dated commitment is more decision-relevant than general interest or sentiment.",
-      "reliability": "High when tied to a calendar or direct message",
-      "decision": "Act on preparation and freeze a time-window forecast."
+      "name": "Warm or referral path",
+      "state": "derived",
+      "why": "44 of 52 active records include a warm-path or referral field, which changes prioritization but does not prove progression.",
+      "reliability": "Supporting — source quality varies",
+      "decision": "Prioritize follow-up while preserving the observed stage."
     },
     {
-      "name": "Public role-status change",
-      "state": "hypothesis",
-      "why": "A verifiable external change can challenge an internal assumption about journey health.",
-      "reliability": "Moderate; requires corroboration",
-      "decision": "Investigate before closing or escalating the journey."
+      "name": "Status contradiction",
+      "state": "observed",
+      "why": "One active journey has conflicting role-status evidence and cannot be cleanly classified.",
+      "reliability": "Moderate — sources disagree",
+      "decision": "Investigate before closing, advancing, or forecasting the journey."
     }
   ],
   "synthetic_checks": [
     {
       "check_id": "CHK-001",
-      "name": "Public role URL reachable",
-      "status": "awaiting observation",
-      "last_run": null,
-      "meaning": "Tests whether a registered public role page still responds; it does not prove hiring status."
+      "name": "Evidence freshness threshold",
+      "status": "7 stale journeys",
+      "health": "watch",
+      "last_run": "2026-09-22",
+      "meaning": "45 of 52 records were touched within seven days; seven crossed the review threshold."
     },
     {
       "check_id": "CHK-002",
-      "name": "Journey exceeds expected window",
-      "status": "awaiting source",
-      "last_run": null,
-      "meaning": "Flags an active journey whose last observed event is older than its configured threshold."
+      "name": "Follow-up checkpoint passed",
+      "status": "18 due or overdue",
+      "health": "watch",
+      "last_run": "2026-09-22",
+      "meaning": "Triage high-priority and direct-engagement records before lower-signal monitoring work."
     },
     {
       "check_id": "CHK-003",
       "name": "Evidence sources disagree",
-      "status": "awaiting source",
-      "last_run": null,
-      "meaning": "Surfaces conflicting claims without automatically selecting a winner."
+      "status": "1 contradiction",
+      "health": "at_risk",
+      "last_run": "2026-09-22",
+      "meaning": "One journey is held at investigate until an authoritative or direct source resolves status."
     },
     {
       "check_id": "CHK-004",
       "name": "Forecast past due",
-      "status": "awaiting source",
-      "last_run": null,
-      "meaning": "Finds forecasts whose verification window passed without an observed outcome."
+      "status": "0 past due",
+      "health": "healthy",
+      "last_run": "2026-09-22",
+      "meaning": "Three forecasts are open; each has a future verification window and explicit change condition."
     }
   ],
   "domain_patterns": [
@@ -305,7 +691,7 @@
       "measure": "Freshness, latency, completeness, and contradiction indicators",
       "verify": "Forecast outcomes and calibration notes",
       "improve": "Versioned model and preventive-action changes",
-      "evidence_ids": ["EVD-001"]
+      "evidence_ids": ["EVD-001", "EVD-005", "EVD-010"]
     },
     {
       "domain": "AMD",
@@ -386,9 +772,10 @@
     }
   ],
   "limitations": [
-    "The current review build contains no private recruiter, interview, email, calendar, or application-event data.",
+    "The source tracker contains private job-search data. The public layer exposes only aggregates, generic role families, aliased organizations, stage dates, and evidence-quality flags; names, requisition IDs, contacts, notes, and private links remain excluded.",
     "This is personal/process data, not production-service telemetry; CUJ, SLI, SLO, error-budget, and synthetic-monitoring concepts are used as careful analogies.",
-    "Forecasts are decision-support hypotheses, not guarantees. No calibration score is shown without a meaningful set of verified outcomes.",
+    "The forecast set is a retrospective replay frozen at the Sep 19 LinkedIn signal peak. It demonstrates the mechanism but must not be presented as a forecast that was prospectively recorded at that time.",
+    "One replay forecast hit its window; that single result is not statistically meaningful calibration or proof of predictive validity.",
     "Correlation does not establish causation; competing explanations remain visible when evidence cannot resolve them.",
     "LLM output cannot become observed fact without source evidence and human validation.",
     "Portfolio mechanisms are user-provided, public-safe evidence; they are not independently audited by this page."
@@ -396,23 +783,23 @@
   "missing_data": [
     {
       "priority": "Highest",
-      "item": "Public-safe journey and event records",
-      "value": "Enables real freshness, stage velocity, and signal-to-action metrics."
+      "item": "Prospectively frozen forecasts",
+      "value": "Separates true forward prediction from retrospective replay and enables credible calibration."
     },
     {
       "priority": "High",
-      "item": "Frozen forecasts created before outcomes",
-      "value": "Enables honest verification, error analysis, and later calibration."
+      "item": "Repeated LinkedIn and pipeline snapshots",
+      "value": "Enables time-series baselines, anomaly detection, and lag analysis instead of a single peak comparison."
     },
     {
       "priority": "High",
-      "item": "Evidence links or redacted evidence objects",
-      "value": "Strengthens claim lineage without exposing private communications."
+      "item": "Same-person attribution with consent",
+      "value": "Would allow a defensible link between visibility, recruiter interaction, and stage progression."
     },
     {
       "priority": "Medium",
-      "item": "Observed decisions and follow-up outcomes",
-      "value": "Demonstrates whether the operating loop changes action and improves learning."
+      "item": "Decision and action timestamps",
+      "value": "Enables true signal-to-action latency and follow-up effectiveness measurement."
     }
   ]
 }
