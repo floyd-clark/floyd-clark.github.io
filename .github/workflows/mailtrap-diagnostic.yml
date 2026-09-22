@@ -11,83 +11,98 @@ permissions:
   contents: read
 
 jobs:
-  diagnose-and-send:
+  api-credential-configured:
+    name: API credential configured
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check API token secret
+        env:
+          MAILTRAP_API_TOKEN: ${{ secrets.MAILTRAP_API_TOKEN }}
+          MAILTRAP_TOKEN: ${{ secrets.MAILTRAP_TOKEN }}
+        run: test -n "${MAILTRAP_API_TOKEN:-$MAILTRAP_TOKEN}"
+
+  smtp-credentials-configured:
+    name: SMTP credentials configured
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check SMTP secrets
+        env:
+          MAILTRAP_SMTP_USERNAME: ${{ secrets.MAILTRAP_SMTP_USERNAME }}
+          MAILTRAP_SMTP_PASSWORD: ${{ secrets.MAILTRAP_SMTP_PASSWORD }}
+        run: test -n "$MAILTRAP_SMTP_USERNAME" && test -n "$MAILTRAP_SMTP_PASSWORD"
+
+  sender-configured:
+    name: Verified sender configured
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check sender secret
+        env:
+          MAILTRAP_FROM_EMAIL: ${{ secrets.MAILTRAP_FROM_EMAIL }}
+        run: test -n "$MAILTRAP_FROM_EMAIL"
+
+  send-via-api:
+    name: Send Gmail test via Mailtrap API
+    needs:
+      - api-credential-configured
+      - sender-configured
+    if: ${{ always() && needs.api-credential-configured.result == 'success' && needs.sender-configured.result == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    env:
-      MAILTRAP_API_TOKEN: ${{ secrets.MAILTRAP_API_TOKEN }}
-      MAILTRAP_TOKEN: ${{ secrets.MAILTRAP_TOKEN }}
-      MAILTRAP_SMTP_USERNAME: ${{ secrets.MAILTRAP_SMTP_USERNAME }}
-      MAILTRAP_SMTP_PASSWORD: ${{ secrets.MAILTRAP_SMTP_PASSWORD }}
-      MAILTRAP_FROM_EMAIL: ${{ secrets.MAILTRAP_FROM_EMAIL }}
-      MAILTRAP_FROM_NAME: ${{ secrets.MAILTRAP_FROM_NAME }}
-      OWNER_EMAIL: floyd.clark.usma@gmail.com
     steps:
-      - name: Check Mailtrap configuration
-        shell: bash
-        run: |
-          api_token="${MAILTRAP_API_TOKEN:-$MAILTRAP_TOKEN}"
-          if [[ -n "$api_token" ]]; then
-            echo "Mailtrap API credential: configured"
-          else
-            echo "Mailtrap API credential: missing (MAILTRAP_API_TOKEN or MAILTRAP_TOKEN)"
-          fi
-
-          if [[ -n "$MAILTRAP_SMTP_USERNAME" && -n "$MAILTRAP_SMTP_PASSWORD" ]]; then
-            echo "Mailtrap SMTP credentials: configured"
-          else
-            echo "Mailtrap SMTP credentials: incomplete"
-          fi
-
-          if [[ -n "$MAILTRAP_FROM_EMAIL" ]]; then
-            echo "Verified sender address: configured"
-          else
-            echo "Verified sender address: missing (MAILTRAP_FROM_EMAIL)"
-          fi
-
-          if [[ -z "$api_token" && ( -z "$MAILTRAP_SMTP_USERNAME" || -z "$MAILTRAP_SMTP_PASSWORD" ) ]]; then
-            echo "::error::No complete Mailtrap API or SMTP credential set is available."
-            exit 1
-          fi
-
-          if [[ -z "$MAILTRAP_FROM_EMAIL" ]]; then
-            echo "::error::MAILTRAP_FROM_EMAIL is required and must be a verified Mailtrap Sending address."
-            exit 1
-          fi
-
-      - name: Send uniquely identified delivery test
+      - name: Submit uniquely identified Gmail delivery
+        env:
+          MAILTRAP_API_TOKEN: ${{ secrets.MAILTRAP_API_TOKEN }}
+          MAILTRAP_TOKEN: ${{ secrets.MAILTRAP_TOKEN }}
+          MAILTRAP_FROM_EMAIL: ${{ secrets.MAILTRAP_FROM_EMAIL }}
+          MAILTRAP_FROM_NAME: ${{ secrets.MAILTRAP_FROM_NAME }}
+          OWNER_EMAIL: floyd.clark.usma@gmail.com
         shell: bash
         run: |
           subject="Signal Intelligence Mailtrap delivery test · run $GITHUB_RUN_ID"
           message="GitHub Actions reached Mailtrap for the Signal Intelligence approval workflow. Run: $GITHUB_RUN_ID · Commit: $GITHUB_SHA"
-          api_token="${MAILTRAP_API_TOKEN:-$MAILTRAP_TOKEN}"
+          token="${MAILTRAP_API_TOKEN:-$MAILTRAP_TOKEN}"
+          payload=$(jq -n \
+            --arg from "$MAILTRAP_FROM_EMAIL" \
+            --arg from_name "${MAILTRAP_FROM_NAME:-Signal Intelligence Lab}" \
+            --arg to "$OWNER_EMAIL" \
+            --arg subject "$subject" \
+            --arg text "$message" \
+            '{from:{email:$from,name:$from_name},to:[{email:$to}],subject:$subject,text:$text,category:"Trust approval diagnostic"}')
+          curl --fail-with-body --silent --show-error \
+            --request POST \
+            --url https://send.api.mailtrap.io/api/send \
+            --header "Authorization: Bearer $token" \
+            --header "Content-Type: application/json" \
+            --data "$payload"
 
-          if [[ -n "$api_token" ]]; then
-            payload=$(jq -n \
-              --arg from "$MAILTRAP_FROM_EMAIL" \
-              --arg from_name "${MAILTRAP_FROM_NAME:-Signal Intelligence Lab}" \
-              --arg to "$OWNER_EMAIL" \
-              --arg subject "$subject" \
-              --arg text "$message" \
-              '{from:{email:$from,name:$from_name},to:[{email:$to}],subject:$subject,text:$text,category:"Trust approval diagnostic"}')
-            curl --fail-with-body --silent --show-error \
-              --request POST \
-              --url https://send.api.mailtrap.io/api/send \
-              --header "Authorization: Bearer $api_token" \
-              --header "Content-Type: application/json" \
-              --data "$payload"
-          else
-            curl --fail-with-body --silent --show-error \
-              --url smtp://live.smtp.mailtrap.io:587 \
-              --ssl-reqd \
-              --user "$MAILTRAP_SMTP_USERNAME:$MAILTRAP_SMTP_PASSWORD" \
-              --mail-from "$MAILTRAP_FROM_EMAIL" \
-              --mail-rcpt "$OWNER_EMAIL" \
-              --header "From: ${MAILTRAP_FROM_NAME:-Signal Intelligence Lab} <$MAILTRAP_FROM_EMAIL>" \
-              --header "To: $OWNER_EMAIL" \
-              --header "Subject: $subject" \
-              --data-raw "$message"
-          fi
-
-          echo
-          echo "Delivery request submitted to Mailtrap for $OWNER_EMAIL"
+  send-via-smtp:
+    name: Send Gmail test via Mailtrap SMTP
+    needs:
+      - api-credential-configured
+      - smtp-credentials-configured
+      - sender-configured
+    if: ${{ always() && needs.api-credential-configured.result != 'success' && needs.smtp-credentials-configured.result == 'success' && needs.sender-configured.result == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Submit uniquely identified Gmail delivery
+        env:
+          MAILTRAP_SMTP_USERNAME: ${{ secrets.MAILTRAP_SMTP_USERNAME }}
+          MAILTRAP_SMTP_PASSWORD: ${{ secrets.MAILTRAP_SMTP_PASSWORD }}
+          MAILTRAP_FROM_EMAIL: ${{ secrets.MAILTRAP_FROM_EMAIL }}
+          MAILTRAP_FROM_NAME: ${{ secrets.MAILTRAP_FROM_NAME }}
+          OWNER_EMAIL: floyd.clark.usma@gmail.com
+        shell: bash
+        run: |
+          subject="Signal Intelligence Mailtrap delivery test · run $GITHUB_RUN_ID"
+          message="GitHub Actions reached Mailtrap for the Signal Intelligence approval workflow. Run: $GITHUB_RUN_ID · Commit: $GITHUB_SHA"
+          curl --fail-with-body --silent --show-error \
+            --url smtp://live.smtp.mailtrap.io:587 \
+            --ssl-reqd \
+            --user "$MAILTRAP_SMTP_USERNAME:$MAILTRAP_SMTP_PASSWORD" \
+            --mail-from "$MAILTRAP_FROM_EMAIL" \
+            --mail-rcpt "$OWNER_EMAIL" \
+            --header "From: ${MAILTRAP_FROM_NAME:-Signal Intelligence Lab} <$MAILTRAP_FROM_EMAIL>" \
+            --header "To: $OWNER_EMAIL" \
+            --header "Subject: $subject" \
+            --data-raw "$message"
