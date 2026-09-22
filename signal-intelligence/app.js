@@ -1,5 +1,6 @@
 const DATA_URL = "data/lab-data.json";
-const ACCESS_CONSENT_KEY = "signal-intelligence-access-v3";
+const ACCESS_CONSENT_KEY = "signal-intelligence-access-v4";
+const ACCESS_REQUEST_KEY = "signal-intelligence-request-v1";
 const REVIEW_EVENT_KEY = "signal-intelligence-consented-events";
 const ACCESS_OWNER_EMAIL = "floyd.clark.usma@gmail.com";
 const APPROVAL_ENDPOINT = `https://formsubmit.co/ajax/${ACCESS_OWNER_EMAIL}`;
@@ -50,38 +51,28 @@ function safeLink(url, label) {
 
 function hasAccessConsent() {
   try {
-    return Boolean(sessionStorage.getItem(ACCESS_CONSENT_KEY));
+    const consent = JSON.parse(sessionStorage.getItem(ACCESS_CONSENT_KEY) || "null");
+    return consent?.version === "v4" && consent?.request_delivery_confirmed === true;
   } catch {
     return false;
   }
 }
 
-function buildApprovalMailto(reviewerEmail) {
-  const subject = `Signal Intelligence Lab trusted access request — ${reviewerEmail}`;
-  const body = [
-    "Hello Floyd,",
-    "",
-    "I am requesting trusted review access to the Signal Intelligence Lab.",
-    `Reviewer email: ${reviewerEmail}`,
-    `Review page: ${location.origin}${location.pathname}`,
-    "",
-    "I understand that:",
-    "- access is offered on a personal basis of trust;",
-    "- I will not forward the URL or redistribute content without written approval;",
-    "- this public static preview is an honor-based workflow, not technical access control.",
-    "",
-    "If you approve, please reply directly and state that you are extending access to me on the basis of trust.",
-    "",
-    "Thank you."
-  ].join("\n");
-  return `mailto:${ACCESS_OWNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+function createAccessRequestId() {
+  const timestamp = Date.now().toString(36).toUpperCase();
+  const random = typeof crypto.randomUUID === "function"
+    ? crypto.randomUUID().replaceAll("-", "").slice(0, 8).toUpperCase()
+    : Math.random().toString(36).slice(2, 10).toUpperCase();
+  return `SIL-${timestamp}-${random}`;
 }
 
-async function sendApprovalRequest(reviewerEmail) {
+async function sendApprovalRequest(reviewerEmail, requestId, requestedAt) {
   const message = [
     "I am requesting trusted review access to the Signal Intelligence Lab.",
     "",
+    `Request ID: ${requestId}`,
     `Reviewer email: ${reviewerEmail}`,
+    `Requested at: ${requestedAt}`,
     `Review page: ${location.origin}${location.pathname}`,
     "",
     "I understand that access is offered on a personal basis of trust, that I will not forward the URL or redistribute content without written approval, and that this public static preview is an honor-based workflow rather than technical access control.",
@@ -98,10 +89,12 @@ async function sendApprovalRequest(reviewerEmail) {
     body: JSON.stringify({
       email: reviewerEmail,
       _replyto: reviewerEmail,
-      _subject: `Signal Intelligence Lab trusted access request — ${reviewerEmail}`,
+      _subject: `Signal Intelligence access request · ${requestId} · ${reviewerEmail}`,
       _template: "table",
       request_type: "Trusted review access",
+      request_id: requestId,
       reviewer_email: reviewerEmail,
+      requested_at: requestedAt,
       review_page: `${location.origin}${location.pathname}`,
       message
     })
@@ -152,11 +145,14 @@ function wireAccessGate() {
   const approvalStatus = document.querySelector("#approval-status");
   const reviewerField = document.querySelector("#reviewer-identity");
   const requestApprovalButton = document.querySelector("#request-approval");
-  const requestApprovalFallback = document.querySelector("#request-approval-fallback");
+  let requestState = null;
+  let isSending = false;
 
   try {
     const priorConsent = JSON.parse(sessionStorage.getItem(ACCESS_CONSENT_KEY) || "null");
-    if (priorConsent?.reviewer_email) reviewerField.value = priorConsent.reviewer_email;
+    requestState = JSON.parse(sessionStorage.getItem(ACCESS_REQUEST_KEY) || "null");
+    if (requestState?.reviewer_email) reviewerField.value = requestState.reviewer_email;
+    else if (priorConsent?.reviewer_email) reviewerField.value = priorConsent.reviewer_email;
   } catch {
     // Ignore malformed or unavailable session state.
   }
@@ -166,16 +162,19 @@ function wireAccessGate() {
     : "Static review status: analytics are disabled; no events leave this browser tab.";
 
   const updateAccessState = () => {
-    const validEmail = reviewerField.validity.valid && reviewerField.value.trim() !== "";
-    requestApprovalFallback.href = validEmail
-      ? buildApprovalMailto(reviewerField.value.trim())
-      : `mailto:${ACCESS_OWNER_EMAIL}?subject=Signal%20Intelligence%20Lab%20trusted%20access%20request`;
-    requestApprovalFallback.setAttribute("aria-disabled", String(!validEmail));
-    requestApprovalButton.disabled = !validEmail;
-    enterButton.disabled = !(validEmail && checkbox.checked);
-    approvalStatus.textContent = validEmail
-      ? "Request ready. Send it here or use your email app, then wait for Floyd’s direct reply."
-      : "Enter your email to prepare an access request.";
+    const reviewerEmail = reviewerField.value.trim();
+    const validEmail = reviewerField.validity.valid && reviewerEmail !== "";
+    const requestDelivered = validEmail
+      && requestState?.delivery_confirmed === true
+      && requestState.reviewer_email.toLowerCase() === reviewerEmail.toLowerCase();
+    checkbox.disabled = !requestDelivered;
+    if (!requestDelivered) checkbox.checked = false;
+    requestApprovalButton.disabled = !validEmail || isSending || requestDelivered;
+    requestApprovalButton.textContent = requestDelivered ? "Request sent" : (isSending ? "Sending request…" : "Send access request");
+    enterButton.disabled = !(requestDelivered && checkbox.checked);
+    if (!validEmail) approvalStatus.textContent = "Enter your email to prepare an access request.";
+    else if (requestDelivered) approvalStatus.textContent = `Request ${requestState.request_id} delivered. Wait for Floyd’s direct reply, then confirm approval.`;
+    else approvalStatus.textContent = "Request required. Delivery must be confirmed before the approval step unlocks.";
   };
 
   reviewerField.addEventListener("input", updateAccessState);
@@ -186,27 +185,33 @@ function wireAccessGate() {
       approvalStatus.textContent = "A valid email is required before requesting access.";
       return;
     }
-    requestApprovalButton.disabled = true;
-    requestApprovalButton.textContent = "Sending request…";
+    isSending = true;
+    updateAccessState();
     approvalStatus.textContent = "Securely handing the request to the mail service…";
+    const reviewerEmail = reviewerField.value.trim();
+    const requestId = createAccessRequestId();
+    const requestedAt = new Date().toISOString();
+    let deliveryError = null;
     try {
-      await sendApprovalRequest(reviewerField.value.trim());
-      approvalStatus.textContent = "Request accepted for delivery. Wait for Floyd’s direct reply before confirming approval.";
-      requestApprovalButton.textContent = "Request sent";
+      await sendApprovalRequest(reviewerEmail, requestId, requestedAt);
+      requestState = {
+        request_id: requestId,
+        reviewer_email: reviewerEmail,
+        requested_at: requestedAt,
+        delivery_confirmed: true
+      };
+      try {
+        sessionStorage.setItem(ACCESS_REQUEST_KEY, JSON.stringify(requestState));
+      } catch {
+        // The active tab still retains requestState if session storage is unavailable.
+      }
     } catch (error) {
-      approvalStatus.textContent = `Automatic delivery could not be confirmed (${error.message}). Use the prepared-email fallback.`;
-      requestApprovalButton.textContent = "Retry access request";
-      requestApprovalButton.disabled = false;
+      deliveryError = error;
+    } finally {
+      isSending = false;
+      updateAccessState();
+      if (deliveryError) approvalStatus.textContent = `Delivery could not be confirmed (${deliveryError.message}). Retry is required before access can continue.`;
     }
-  });
-
-  requestApprovalFallback.addEventListener("click", (event) => {
-    if (!reviewerField.reportValidity()) {
-      event.preventDefault();
-      approvalStatus.textContent = "A valid email is required before requesting access.";
-      return;
-    }
-    approvalStatus.textContent = "Your email app opened a prepared request. Press Send, then wait for Floyd’s direct reply before confirming approval.";
   });
 
   dialog.addEventListener("cancel", (event) => event.preventDefault());
@@ -215,8 +220,23 @@ function wireAccessGate() {
     if (!checkbox.checked) return;
     if (!reviewerField.reportValidity()) return;
     const reviewerEmail = reviewerField.value.trim();
+    const requestDelivered = requestState?.delivery_confirmed === true
+      && requestState.reviewer_email.toLowerCase() === reviewerEmail.toLowerCase();
+    if (!requestDelivered) {
+      approvalStatus.textContent = "A delivered request is required before access can continue.";
+      updateAccessState();
+      return;
+    }
     try {
-      sessionStorage.setItem(ACCESS_CONSENT_KEY, JSON.stringify({ accepted_at: new Date().toISOString(), version: "v3", reviewer_email: reviewerEmail, direct_approval_attested: true }));
+      sessionStorage.setItem(ACCESS_CONSENT_KEY, JSON.stringify({
+        accepted_at: new Date().toISOString(),
+        version: "v4",
+        reviewer_email: reviewerEmail,
+        request_id: requestState.request_id,
+        requested_at: requestState.requested_at,
+        request_delivery_confirmed: true,
+        direct_approval_attested: true
+      }));
     } catch {
       // The dialog can still communicate terms if session storage is unavailable.
     }

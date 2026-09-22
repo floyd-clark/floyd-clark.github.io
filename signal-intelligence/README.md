@@ -26,7 +26,7 @@ The 2032 option map uses normalized indices and anonymized option labels derived
 
 ## Access and analytics boundary
 
-The in-page consent dialog communicates review, sharing, and analytics terms. It is not authentication. GitHub Pages cannot reliably identify a visitor, prevent URL forwarding, or enforce owner approval. Approval requests use FormSubmit's no-cost form relay and retain a prepared `mailto:` fallback. The dialog discloses that the reviewer address and page URL leave the browser when the visitor sends a request.
+The in-page consent dialog communicates review, sharing, and analytics terms. It is not authentication. GitHub Pages cannot reliably identify a visitor, prevent URL forwarding, or enforce owner approval. A successful FormSubmit handoff is required before the approval attestation unlocks. Every request includes a unique ID; the owner’s reply remains in the same Gmail thread, which provides a searchable request-and-approval catalog. The dialog discloses that the reviewer address and page URL leave the browser when the visitor sends a request.
 
 Analytics are intentionally disabled in this static review build. Consented events are retained only in browser `sessionStorage` and are not transmitted. Before enabling the dormant event endpoint, deploy behind real identity-aware access control and provide a consented privacy notice that describes the exact retained fields, purpose, retention period, and deletion process. Do not add fingerprinting, advertising cookies, cross-site tracking, or undisclosed telemetry.
 

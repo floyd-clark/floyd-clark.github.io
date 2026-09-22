@@ -351,6 +351,7 @@ dialog::backdrop { background: rgba(1, 6, 10, 0.82); backdrop-filter: blur(8px);
 .access-actions .btn:disabled { opacity: 0.38; cursor: not-allowed; transform: none; }
 .access-actions .btn[aria-disabled="true"] { opacity: 0.5; }
 .approval-status { margin: 10px 0 0; color: #b9c8d4; font-size: 0.7rem; }
+.approval-ledger-note { margin: 8px 0 0; color: var(--quiet); font-size: 0.66rem; line-height: 1.5; }
 .security-boundary { display: grid; gap: 6px; margin-top: 16px; padding: 13px 14px; border: 1px solid rgba(255, 194, 102, 0.24); border-radius: 12px; background: rgba(255, 194, 102, 0.05); }
 .security-boundary strong { color: #ffd18a; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
 .security-boundary span { color: var(--muted); font-size: 0.7rem; line-height: 1.5; }
