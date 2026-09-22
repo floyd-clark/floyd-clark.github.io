@@ -26,7 +26,9 @@ The 2032 option map uses normalized indices and anonymized option labels derived
 
 ## Access and analytics boundary
 
-The in-page consent dialog communicates review, sharing, and analytics terms. It is not authentication. GitHub Pages cannot reliably identify a visitor, prevent URL forwarding, or enforce owner approval. A successful FormSubmit handoff is required before the approval attestation unlocks. Every request includes a unique ID; the owner’s reply remains in the same Gmail thread, which provides a searchable request-and-approval catalog. The dialog discloses that the reviewer address and page URL leave the browser when the visitor sends a request.
+The in-page dialog sends each request to a Google Apps Script approval service. The service emails the owner an approval action and records requests and decisions in a private Google Sheet. The interface unlocks only after the service returns the owner’s recorded approval. The dialog discloses that the reviewer address, request ID, timestamp, and page URL leave the browser when a visitor requests access.
+
+This still is not file-level authentication. GitHub Pages cannot prevent a determined visitor from directly requesting public static assets or forwarding the URL. Use Zscaler Private Access or another identity-aware hosting layer before treating the page or its data as confidential.
 
 Analytics are intentionally disabled in this static review build. Consented events are retained only in browser `sessionStorage` and are not transmitted. Before enabling the dormant event endpoint, deploy behind real identity-aware access control and provide a consented privacy notice that describes the exact retained fields, purpose, retention period, and deletion process. Do not add fingerprinting, advertising cookies, cross-site tracking, or undisclosed telemetry.
 

@@ -784,15 +784,15 @@
     }
   ],
   "access_terms": {
-    "title": "Trust-based review access",
+    "title": "Owner-approved review access",
     "owner_contact": "floyd.clark.usma@gmail.com",
-    "access_rule": "Enter only after Floyd has directly replied to your request and personally approved you to review this page.",
+    "access_rule": "The review interface unlocks only after Floyd records an approval for your request.",
     "sharing_rule": "Approval is recipient-specific. Do not forward the URL, redistribute content, publish screenshots, or attempt to identify anonymized organizations without Floyd's written approval.",
     "analytics_rule": "If analytics are enabled on an authenticated deployment, consented events are limited to access time, page section, session identifier, and reviewer-supplied identity. No fingerprinting, advertising cookies, or cross-site tracking.",
-    "review_build_status": "Analytics are disabled in this static review build. A confirmed request delivery is required before the approval attestation unlocks. Each request carries a unique ID so the owner’s reply documents approval in the same searchable Gmail thread; this still does not technically authenticate or block a determined visitor.",
-    "consent_label": "I received Floyd’s direct approval for this request, and I accept the sharing and privacy terms.",
-    "trust_statement": "Floyd is sharing this work as an expression of personal trust. Approval is specific to the recipient and does not transfer.",
-    "production_security_rule": "This is an honor-based invitation, not technical access control. A production deployment would use Zscaler Private Access or another identity-aware zero-trust platform to verify identity, authorize each session, log access transparently, expire sessions, and revoke authorization."
+    "review_build_status": "Analytics are disabled. Each request receives a unique ID; the interface unlocks only after Floyd’s decision is recorded in his private approval catalog. Because the content is hosted on GitHub Pages, this is not a substitute for identity-aware protection of the underlying static files.",
+    "consent_label": "Floyd approved this request. I accept the sharing and privacy terms.",
+    "trust_statement": "Approval is specific to the recorded recipient and does not transfer.",
+    "production_security_rule": "This workflow records Floyd’s decision before the interface unlocks. GitHub Pages files remain publicly addressable; a production deployment would use Zscaler Private Access or another identity-aware zero-trust platform to verify identity, authorize each session, log access transparently, expire sessions, and revoke authorization."
   },
   "differentiated_metrics": [
     {
@@ -957,7 +957,7 @@
     "Correlation does not establish causation; competing explanations remain visible when evidence cannot resolve them.",
     "LLM output cannot become observed fact without source evidence and human validation.",
     "Portfolio mechanisms are user-provided, public-safe evidence; they are not independently audited by this page.",
-    "The access dialog is a terms-and-consent control, not authentication. GitHub Pages cannot enforce identity, prevent URL forwarding, or provide approval-only access.",
+    "The approval service records Floyd’s decision before the interface unlocks, but GitHub Pages does not protect the underlying static assets, verify identity, or prevent URL forwarding.",
     "The 2032 option chart is a normalized scenario model. Interpolated annual points are illustrative; exact wealth requires household and offer inputs that are intentionally not inferred."
   ],
   "missing_data": [

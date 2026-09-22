@@ -4,48 +4,49 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Intelligence Lab | Floyd S. Clark II</title>
-  <meta name="description" content="A trust-based review build for translating evidence, differentiated signals, strategic options, and forecast verification into an auditable personal decision system." />
+  <meta name="description" content="An owner-approved review build for translating evidence, differentiated signals, strategic options, and forecast verification into an auditable personal decision system." />
   <meta name="author" content="Floyd S. Clark II" />
   <meta name="theme-color" content="#071019" />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23071019'/%3E%3Cpath d='M12 43h9l7-22 8 29 7-19h9' fill='none' stroke='%235cc8ff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="styles.css?v=5" />
-  <script src="app.js?v=5" defer></script>
+  <link rel="stylesheet" href="styles.css?v=7" />
+  <script src="app.js?v=7" defer></script>
 </head>
 <body>
   <dialog id="access-dialog" class="access-dialog" aria-labelledby="access-title" aria-describedby="access-summary">
     <div class="access-shell">
       <div class="access-mark" aria-hidden="true">FC</div>
       <div>
-        <div class="micro-label">Trust-based review access</div>
-        <h2 id="access-title">Invitation granted on a basis of trust.</h2>
-        <p id="access-summary" class="access-summary">Enter only after Floyd has directly approved your request.</p>
+        <div class="micro-label">Owner-approved review access</div>
+        <h2 id="access-title">Request Floyd’s approval.</h2>
+        <p id="access-summary" class="access-summary">This page unlocks only after Floyd records an approval for your request.</p>
         <ol class="trust-flow" aria-label="Trusted review approval steps">
           <li><strong>Identify yourself</strong><span>Provide the email address Floyd will recognize.</span></li>
-          <li><strong>Send the request</strong><span>The page must confirm delivery before the approval step unlocks.</span></li>
-          <li><strong>Wait for Floyd</strong><span>Approval is a direct reply from floyd.clark.usma@gmail.com.</span></li>
-          <li><strong>Enter on trust</strong><span>Confirm that reply and honor the sharing terms.</span></li>
+          <li><strong>Request access</strong><span>Floyd receives your email address and an approval action.</span></li>
+          <li><strong>Wait for Floyd</strong><span>The page checks his recorded decision automatically.</span></li>
+          <li><strong>Accept terms</strong><span>Approved visitors accept the sharing terms and enter.</span></li>
         </ol>
-        <p class="trust-statement" id="trust-statement">Floyd is sharing this work as an expression of personal trust. Approval is specific to the recipient and does not transfer.</p>
+        <p class="trust-statement" id="trust-statement">Approval is specific to the recorded recipient and does not transfer.</p>
         <ul class="access-terms" id="access-terms"></ul>
         <label class="reviewer-field" for="reviewer-identity">
           <span>Reviewer email <small>required for the request</small></span>
           <input id="reviewer-identity" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required />
-          <small>When you send a request, your address and this page URL are forwarded to Floyd through FormSubmit. FormSubmit may retain submissions for up to 30 days. This static page does not verify the address.</small>
+          <small>Your email address, request ID, timestamp, and this page URL are sent to Floyd’s private Google approval service and recorded in his private approval catalog.</small>
         </label>
         <label class="consent-check">
           <input id="access-consent" type="checkbox" disabled />
-          <span id="access-consent-label">I confirm Floyd directly approved my access, and I accept the sharing and privacy terms.</span>
+          <span id="access-consent-label">Floyd approved this request. I accept the sharing and privacy terms.</span>
         </label>
         <div class="access-actions">
-          <button class="btn" id="request-approval" type="button" disabled>Send access request</button>
-          <button class="btn primary" id="enter-review" type="button" disabled>Continue on the basis of trust</button>
+          <button class="btn" id="request-approval" type="button" disabled>Request access</button>
+          <button class="btn" id="check-approval" type="button" hidden>Check approval</button>
+          <button class="btn primary" id="enter-review" type="button" disabled>Enter approved review</button>
         </div>
         <p class="approval-status" id="approval-status" aria-live="polite">Enter your email to prepare an access request.</p>
-        <p class="approval-ledger-note">Every delivered request receives a unique ID. Floyd’s approval reply stays in the same Gmail thread, creating a searchable request-and-approval catalog.</p>
+        <p class="approval-ledger-note">Every request receives a unique ID. Floyd’s decision is recorded in a private Google Sheet, creating a searchable approval catalog.</p>
         <aside class="security-boundary" aria-label="Security boundary">
           <strong>Security boundary</strong>
-          <span id="production-security-copy">This is an honor-based invitation, not technical access control. A production deployment would use Zscaler Private Access or another identity-aware platform to verify, authorize, log, expire, and revoke access.</span>
+          <span id="production-security-copy">This workflow verifies an owner decision before the interface unlocks. GitHub Pages files remain publicly addressable; stronger protection would use Zscaler Private Access or another identity-aware platform.</span>
           <a href="https://www.zscaler.com/products-and-solutions/zscaler-private-access" target="_blank" rel="noopener">Zscaler Private Access reference ↗</a>
         </aside>
         <p class="access-status" id="analytics-status">Analytics status loading…</p>
