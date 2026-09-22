@@ -20,7 +20,11 @@ jobs:
         env:
           MAILTRAP_API_TOKEN: ${{ secrets.MAILTRAP_API_TOKEN }}
           MAILTRAP_TOKEN: ${{ secrets.MAILTRAP_TOKEN }}
-        run: test -n "${MAILTRAP_API_TOKEN:-$MAILTRAP_TOKEN}"
+          MAILTRAP_API_KEY: ${{ secrets.MAILTRAP_API_KEY }}
+          VAR_MAILTRAP_API_TOKEN: ${{ vars.MAILTRAP_API_TOKEN }}
+          VAR_MAILTRAP_TOKEN: ${{ vars.MAILTRAP_TOKEN }}
+          VAR_MAILTRAP_API_KEY: ${{ vars.MAILTRAP_API_KEY }}
+        run: test -n "${MAILTRAP_API_TOKEN:-${MAILTRAP_TOKEN:-${MAILTRAP_API_KEY:-${VAR_MAILTRAP_API_TOKEN:-${VAR_MAILTRAP_TOKEN:-$VAR_MAILTRAP_API_KEY}}}}}"
 
   smtp-credentials-configured:
     name: SMTP credentials configured
@@ -31,7 +35,20 @@ jobs:
         env:
           MAILTRAP_SMTP_USERNAME: ${{ secrets.MAILTRAP_SMTP_USERNAME }}
           MAILTRAP_SMTP_PASSWORD: ${{ secrets.MAILTRAP_SMTP_PASSWORD }}
-        run: test -n "$MAILTRAP_SMTP_USERNAME" && test -n "$MAILTRAP_SMTP_PASSWORD"
+          MAILTRAP_USERNAME: ${{ secrets.MAILTRAP_USERNAME }}
+          MAILTRAP_PASSWORD: ${{ secrets.MAILTRAP_PASSWORD }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          VAR_MAILTRAP_SMTP_USERNAME: ${{ vars.MAILTRAP_SMTP_USERNAME }}
+          VAR_MAILTRAP_SMTP_PASSWORD: ${{ vars.MAILTRAP_SMTP_PASSWORD }}
+          VAR_MAILTRAP_USERNAME: ${{ vars.MAILTRAP_USERNAME }}
+          VAR_MAILTRAP_PASSWORD: ${{ vars.MAILTRAP_PASSWORD }}
+          VAR_SMTP_USERNAME: ${{ vars.SMTP_USERNAME }}
+          VAR_SMTP_PASSWORD: ${{ vars.SMTP_PASSWORD }}
+        run: |
+          username="${MAILTRAP_SMTP_USERNAME:-${MAILTRAP_USERNAME:-${SMTP_USERNAME:-${VAR_MAILTRAP_SMTP_USERNAME:-${VAR_MAILTRAP_USERNAME:-$VAR_SMTP_USERNAME}}}}}"
+          password="${MAILTRAP_SMTP_PASSWORD:-${MAILTRAP_PASSWORD:-${SMTP_PASSWORD:-${VAR_MAILTRAP_SMTP_PASSWORD:-${VAR_MAILTRAP_PASSWORD:-$VAR_SMTP_PASSWORD}}}}}"
+          test -n "$username" && test -n "$password"
 
   sender-configured:
     name: Verified sender configured
@@ -41,7 +58,27 @@ jobs:
       - name: Check sender secret
         env:
           MAILTRAP_FROM_EMAIL: ${{ secrets.MAILTRAP_FROM_EMAIL }}
-        run: test -n "$MAILTRAP_FROM_EMAIL"
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          VAR_MAILTRAP_FROM_EMAIL: ${{ vars.MAILTRAP_FROM_EMAIL }}
+          VAR_FROM_EMAIL: ${{ vars.FROM_EMAIL }}
+          VAR_SENDER_EMAIL: ${{ vars.SENDER_EMAIL }}
+        run: test -n "${MAILTRAP_FROM_EMAIL:-${FROM_EMAIL:-${SENDER_EMAIL:-${VAR_MAILTRAP_FROM_EMAIL:-${VAR_FROM_EMAIL:-$VAR_SENDER_EMAIL}}}}}"
+
+  production-smtp-host-configured:
+    name: Production SMTP host configured
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      - name: Reject Mailtrap Sandbox hosts
+        env:
+          MAILTRAP_HOST: ${{ secrets.MAILTRAP_HOST }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          VAR_MAILTRAP_HOST: ${{ vars.MAILTRAP_HOST }}
+          VAR_SMTP_HOST: ${{ vars.SMTP_HOST }}
+        run: |
+          host="${MAILTRAP_HOST:-${SMTP_HOST:-${VAR_MAILTRAP_HOST:-$VAR_SMTP_HOST}}}"
+          test -z "$host" || test "$host" = "live.smtp.mailtrap.io" || test "$host" = "smtp.mailtrap.live"
 
   send-via-api:
     name: Send Gmail test via Mailtrap API
@@ -57,16 +94,26 @@ jobs:
         env:
           MAILTRAP_API_TOKEN: ${{ secrets.MAILTRAP_API_TOKEN }}
           MAILTRAP_TOKEN: ${{ secrets.MAILTRAP_TOKEN }}
+          MAILTRAP_API_KEY: ${{ secrets.MAILTRAP_API_KEY }}
+          VAR_MAILTRAP_API_TOKEN: ${{ vars.MAILTRAP_API_TOKEN }}
+          VAR_MAILTRAP_TOKEN: ${{ vars.MAILTRAP_TOKEN }}
+          VAR_MAILTRAP_API_KEY: ${{ vars.MAILTRAP_API_KEY }}
           MAILTRAP_FROM_EMAIL: ${{ secrets.MAILTRAP_FROM_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          VAR_MAILTRAP_FROM_EMAIL: ${{ vars.MAILTRAP_FROM_EMAIL }}
+          VAR_FROM_EMAIL: ${{ vars.FROM_EMAIL }}
+          VAR_SENDER_EMAIL: ${{ vars.SENDER_EMAIL }}
           MAILTRAP_FROM_NAME: ${{ secrets.MAILTRAP_FROM_NAME }}
           OWNER_EMAIL: floyd.clark.usma@gmail.com
         shell: bash
         run: |
           subject="Signal Intelligence Mailtrap delivery test · run $GITHUB_RUN_ID"
           message="GitHub Actions reached Mailtrap for the Signal Intelligence approval workflow. Run: $GITHUB_RUN_ID · Commit: $GITHUB_SHA"
-          token="${MAILTRAP_API_TOKEN:-$MAILTRAP_TOKEN}"
+          token="${MAILTRAP_API_TOKEN:-${MAILTRAP_TOKEN:-${MAILTRAP_API_KEY:-${VAR_MAILTRAP_API_TOKEN:-${VAR_MAILTRAP_TOKEN:-$VAR_MAILTRAP_API_KEY}}}}}"
+          from_email="${MAILTRAP_FROM_EMAIL:-${FROM_EMAIL:-${SENDER_EMAIL:-${VAR_MAILTRAP_FROM_EMAIL:-${VAR_FROM_EMAIL:-$VAR_SENDER_EMAIL}}}}}"
           payload=$(jq -n \
-            --arg from "$MAILTRAP_FROM_EMAIL" \
+            --arg from "$from_email" \
             --arg from_name "${MAILTRAP_FROM_NAME:-Signal Intelligence Lab}" \
             --arg to "$OWNER_EMAIL" \
             --arg subject "$subject" \
@@ -85,7 +132,8 @@ jobs:
       - api-credential-configured
       - smtp-credentials-configured
       - sender-configured
-    if: ${{ always() && needs.api-credential-configured.result != 'success' && needs.smtp-credentials-configured.result == 'success' && needs.sender-configured.result == 'success' }}
+      - production-smtp-host-configured
+    if: ${{ always() && needs.api-credential-configured.result != 'success' && needs.smtp-credentials-configured.result == 'success' && needs.sender-configured.result == 'success' && needs.production-smtp-host-configured.result == 'success' }}
     runs-on: ubuntu-latest
     environment: github-pages
     timeout-minutes: 5
@@ -94,20 +142,48 @@ jobs:
         env:
           MAILTRAP_SMTP_USERNAME: ${{ secrets.MAILTRAP_SMTP_USERNAME }}
           MAILTRAP_SMTP_PASSWORD: ${{ secrets.MAILTRAP_SMTP_PASSWORD }}
+          MAILTRAP_USERNAME: ${{ secrets.MAILTRAP_USERNAME }}
+          MAILTRAP_PASSWORD: ${{ secrets.MAILTRAP_PASSWORD }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          VAR_MAILTRAP_SMTP_USERNAME: ${{ vars.MAILTRAP_SMTP_USERNAME }}
+          VAR_MAILTRAP_SMTP_PASSWORD: ${{ vars.MAILTRAP_SMTP_PASSWORD }}
+          VAR_MAILTRAP_USERNAME: ${{ vars.MAILTRAP_USERNAME }}
+          VAR_MAILTRAP_PASSWORD: ${{ vars.MAILTRAP_PASSWORD }}
+          VAR_SMTP_USERNAME: ${{ vars.SMTP_USERNAME }}
+          VAR_SMTP_PASSWORD: ${{ vars.SMTP_PASSWORD }}
           MAILTRAP_FROM_EMAIL: ${{ secrets.MAILTRAP_FROM_EMAIL }}
+          FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          VAR_MAILTRAP_FROM_EMAIL: ${{ vars.MAILTRAP_FROM_EMAIL }}
+          VAR_FROM_EMAIL: ${{ vars.FROM_EMAIL }}
+          VAR_SENDER_EMAIL: ${{ vars.SENDER_EMAIL }}
           MAILTRAP_FROM_NAME: ${{ secrets.MAILTRAP_FROM_NAME }}
+          MAILTRAP_HOST: ${{ secrets.MAILTRAP_HOST }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          VAR_MAILTRAP_HOST: ${{ vars.MAILTRAP_HOST }}
+          VAR_SMTP_HOST: ${{ vars.SMTP_HOST }}
+          MAILTRAP_PORT: ${{ secrets.MAILTRAP_PORT }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          VAR_MAILTRAP_PORT: ${{ vars.MAILTRAP_PORT }}
+          VAR_SMTP_PORT: ${{ vars.SMTP_PORT }}
           OWNER_EMAIL: floyd.clark.usma@gmail.com
         shell: bash
         run: |
           subject="Signal Intelligence Mailtrap delivery test · run $GITHUB_RUN_ID"
           message="GitHub Actions reached Mailtrap for the Signal Intelligence approval workflow. Run: $GITHUB_RUN_ID · Commit: $GITHUB_SHA"
+          username="${MAILTRAP_SMTP_USERNAME:-${MAILTRAP_USERNAME:-${SMTP_USERNAME:-${VAR_MAILTRAP_SMTP_USERNAME:-${VAR_MAILTRAP_USERNAME:-$VAR_SMTP_USERNAME}}}}}"
+          password="${MAILTRAP_SMTP_PASSWORD:-${MAILTRAP_PASSWORD:-${SMTP_PASSWORD:-${VAR_MAILTRAP_SMTP_PASSWORD:-${VAR_MAILTRAP_PASSWORD:-$VAR_SMTP_PASSWORD}}}}}"
+          from_email="${MAILTRAP_FROM_EMAIL:-${FROM_EMAIL:-${SENDER_EMAIL:-${VAR_MAILTRAP_FROM_EMAIL:-${VAR_FROM_EMAIL:-$VAR_SENDER_EMAIL}}}}}"
+          host="${MAILTRAP_HOST:-${SMTP_HOST:-${VAR_MAILTRAP_HOST:-${VAR_SMTP_HOST:-live.smtp.mailtrap.io}}}}"
+          port="${MAILTRAP_PORT:-${SMTP_PORT:-${VAR_MAILTRAP_PORT:-${VAR_SMTP_PORT:-587}}}}"
           curl --fail-with-body --silent --show-error \
-            --url smtp://live.smtp.mailtrap.io:587 \
+            --url "smtp://$host:$port" \
             --ssl-reqd \
-            --user "$MAILTRAP_SMTP_USERNAME:$MAILTRAP_SMTP_PASSWORD" \
-            --mail-from "$MAILTRAP_FROM_EMAIL" \
+            --user "$username:$password" \
+            --mail-from "$from_email" \
             --mail-rcpt "$OWNER_EMAIL" \
-            --header "From: ${MAILTRAP_FROM_NAME:-Signal Intelligence Lab} <$MAILTRAP_FROM_EMAIL>" \
+            --header "From: ${MAILTRAP_FROM_NAME:-Signal Intelligence Lab} <$from_email>" \
             --header "To: $OWNER_EMAIL" \
             --header "Subject: $subject" \
             --data-raw "$message"
