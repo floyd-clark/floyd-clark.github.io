@@ -2,6 +2,7 @@ const DATA_URL = "data/lab-data.json";
 const ACCESS_CONSENT_KEY = "signal-intelligence-access-v3";
 const REVIEW_EVENT_KEY = "signal-intelligence-consented-events";
 const ACCESS_OWNER_EMAIL = "floyd.clark.usma@gmail.com";
+const APPROVAL_ENDPOINT = `https://formsubmit.co/ajax/${ACCESS_OWNER_EMAIL}`;
 const ANALYTICS_CONFIG = Object.freeze({
   enabled: false,
   endpoint: "",
@@ -76,6 +77,48 @@ function buildApprovalMailto(reviewerEmail) {
   return `mailto:${ACCESS_OWNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
+async function sendApprovalRequest(reviewerEmail) {
+  const message = [
+    "I am requesting trusted review access to the Signal Intelligence Lab.",
+    "",
+    `Reviewer email: ${reviewerEmail}`,
+    `Review page: ${location.origin}${location.pathname}`,
+    "",
+    "I understand that access is offered on a personal basis of trust, that I will not forward the URL or redistribute content without written approval, and that this public static preview is an honor-based workflow rather than technical access control.",
+    "",
+    "If approved, please reply directly and state that you are extending access on the basis of trust."
+  ].join("\n");
+
+  const response = await fetch(APPROVAL_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      email: reviewerEmail,
+      _replyto: reviewerEmail,
+      _subject: `Signal Intelligence Lab trusted access request — ${reviewerEmail}`,
+      _template: "table",
+      request_type: "Trusted review access",
+      reviewer_email: reviewerEmail,
+      review_page: `${location.origin}${location.pathname}`,
+      message
+    })
+  });
+
+  let result = null;
+  try {
+    result = await response.json();
+  } catch {
+    // The HTTP status remains the delivery handoff signal if the service returns no JSON.
+  }
+  if (!response.ok || result?.success === "false") {
+    throw new Error(result?.message || `Request service returned ${response.status}.`);
+  }
+  return result;
+}
+
 function captureConsentedEvent(eventName, detail = {}) {
   if (!hasAccessConsent()) return;
   const reviewer = document.querySelector("#reviewer-identity")?.value.trim() || "not supplied";
@@ -108,7 +151,8 @@ function wireAccessGate() {
   const status = document.querySelector("#analytics-status");
   const approvalStatus = document.querySelector("#approval-status");
   const reviewerField = document.querySelector("#reviewer-identity");
-  const requestApprovalLink = document.querySelector("#request-approval");
+  const requestApprovalButton = document.querySelector("#request-approval");
+  const requestApprovalFallback = document.querySelector("#request-approval-fallback");
 
   try {
     const priorConsent = JSON.parse(sessionStorage.getItem(ACCESS_CONSENT_KEY) || "null");
@@ -123,20 +167,40 @@ function wireAccessGate() {
 
   const updateAccessState = () => {
     const validEmail = reviewerField.validity.valid && reviewerField.value.trim() !== "";
-    requestApprovalLink.href = validEmail
+    requestApprovalFallback.href = validEmail
       ? buildApprovalMailto(reviewerField.value.trim())
       : `mailto:${ACCESS_OWNER_EMAIL}?subject=Signal%20Intelligence%20Lab%20trusted%20access%20request`;
-    requestApprovalLink.setAttribute("aria-disabled", String(!validEmail));
+    requestApprovalFallback.setAttribute("aria-disabled", String(!validEmail));
+    requestApprovalButton.disabled = !validEmail;
     enterButton.disabled = !(validEmail && checkbox.checked);
     approvalStatus.textContent = validEmail
-      ? "Request ready. Open the prepared email, press Send, and wait for Floyd’s direct reply."
+      ? "Request ready. Send it here or use your email app, then wait for Floyd’s direct reply."
       : "Enter your email to prepare an access request.";
   };
 
   reviewerField.addEventListener("input", updateAccessState);
   checkbox.addEventListener("change", updateAccessState);
 
-  requestApprovalLink.addEventListener("click", (event) => {
+  requestApprovalButton.addEventListener("click", async () => {
+    if (!reviewerField.reportValidity()) {
+      approvalStatus.textContent = "A valid email is required before requesting access.";
+      return;
+    }
+    requestApprovalButton.disabled = true;
+    requestApprovalButton.textContent = "Sending request…";
+    approvalStatus.textContent = "Securely handing the request to the mail service…";
+    try {
+      await sendApprovalRequest(reviewerField.value.trim());
+      approvalStatus.textContent = "Request accepted for delivery. Wait for Floyd’s direct reply before confirming approval.";
+      requestApprovalButton.textContent = "Request sent";
+    } catch (error) {
+      approvalStatus.textContent = `Automatic delivery could not be confirmed (${error.message}). Use the prepared-email fallback.`;
+      requestApprovalButton.textContent = "Retry access request";
+      requestApprovalButton.disabled = false;
+    }
+  });
+
+  requestApprovalFallback.addEventListener("click", (event) => {
     if (!reviewerField.reportValidity()) {
       event.preventDefault();
       approvalStatus.textContent = "A valid email is required before requesting access.";
