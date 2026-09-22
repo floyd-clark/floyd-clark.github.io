@@ -1,6 +1,7 @@
 const DATA_URL = "data/lab-data.json";
-const ACCESS_CONSENT_KEY = "signal-intelligence-access-v2";
+const ACCESS_CONSENT_KEY = "signal-intelligence-access-v3";
 const REVIEW_EVENT_KEY = "signal-intelligence-consented-events";
+const ACCESS_OWNER_EMAIL = "floyd.clark.usma@gmail.com";
 const ANALYTICS_CONFIG = Object.freeze({
   enabled: false,
   endpoint: "",
@@ -54,6 +55,27 @@ function hasAccessConsent() {
   }
 }
 
+function buildApprovalMailto(reviewerEmail) {
+  const subject = `Signal Intelligence Lab trusted access request — ${reviewerEmail}`;
+  const body = [
+    "Hello Floyd,",
+    "",
+    "I am requesting trusted review access to the Signal Intelligence Lab.",
+    `Reviewer email: ${reviewerEmail}`,
+    `Review page: ${location.origin}${location.pathname}`,
+    "",
+    "I understand that:",
+    "- access is offered on a personal basis of trust;",
+    "- I will not forward the URL or redistribute content without written approval;",
+    "- this public static preview is an honor-based workflow, not technical access control.",
+    "",
+    "If you approve, please reply directly and state that you are extending access to me on the basis of trust.",
+    "",
+    "Thank you."
+  ].join("\n");
+  return `mailto:${ACCESS_OWNER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
 function captureConsentedEvent(eventName, detail = {}) {
   if (!hasAccessConsent()) return;
   const reviewer = document.querySelector("#reviewer-identity")?.value.trim() || "not supplied";
@@ -84,11 +106,13 @@ function wireAccessGate() {
   const checkbox = document.querySelector("#access-consent");
   const enterButton = document.querySelector("#enter-review");
   const status = document.querySelector("#analytics-status");
+  const approvalStatus = document.querySelector("#approval-status");
   const reviewerField = document.querySelector("#reviewer-identity");
+  const requestApprovalLink = document.querySelector("#request-approval");
 
   try {
     const priorConsent = JSON.parse(sessionStorage.getItem(ACCESS_CONSENT_KEY) || "null");
-    if (priorConsent?.reviewer_identity) reviewerField.value = priorConsent.reviewer_identity;
+    if (priorConsent?.reviewer_email) reviewerField.value = priorConsent.reviewer_email;
   } catch {
     // Ignore malformed or unavailable session state.
   }
@@ -97,17 +121,38 @@ function wireAccessGate() {
     ? "Consent-only analytics are enabled. No advertising cookies, cross-site tracking, or fingerprinting."
     : "Static review status: analytics are disabled; no events leave this browser tab.";
 
-  checkbox.addEventListener("change", () => {
-    enterButton.disabled = !checkbox.checked;
+  const updateAccessState = () => {
+    const validEmail = reviewerField.validity.valid && reviewerField.value.trim() !== "";
+    requestApprovalLink.href = validEmail
+      ? buildApprovalMailto(reviewerField.value.trim())
+      : `mailto:${ACCESS_OWNER_EMAIL}?subject=Signal%20Intelligence%20Lab%20trusted%20access%20request`;
+    requestApprovalLink.setAttribute("aria-disabled", String(!validEmail));
+    enterButton.disabled = !(validEmail && checkbox.checked);
+    approvalStatus.textContent = validEmail
+      ? "Request ready. Open the prepared email, press Send, and wait for Floyd’s direct reply."
+      : "Enter your email to prepare an access request.";
+  };
+
+  reviewerField.addEventListener("input", updateAccessState);
+  checkbox.addEventListener("change", updateAccessState);
+
+  requestApprovalLink.addEventListener("click", (event) => {
+    if (!reviewerField.reportValidity()) {
+      event.preventDefault();
+      approvalStatus.textContent = "A valid email is required before requesting access.";
+      return;
+    }
+    approvalStatus.textContent = "Your email app opened a prepared request. Press Send, then wait for Floyd’s direct reply before confirming approval.";
   });
 
   dialog.addEventListener("cancel", (event) => event.preventDefault());
 
   enterButton.addEventListener("click", () => {
     if (!checkbox.checked) return;
-    const reviewerIdentity = reviewerField.value.trim();
+    if (!reviewerField.reportValidity()) return;
+    const reviewerEmail = reviewerField.value.trim();
     try {
-      sessionStorage.setItem(ACCESS_CONSENT_KEY, JSON.stringify({ accepted_at: new Date().toISOString(), version: "v2", reviewer_identity: reviewerIdentity }));
+      sessionStorage.setItem(ACCESS_CONSENT_KEY, JSON.stringify({ accepted_at: new Date().toISOString(), version: "v3", reviewer_email: reviewerEmail, direct_approval_attested: true }));
     } catch {
       // The dialog can still communicate terms if session storage is unavailable.
     }
@@ -115,12 +160,15 @@ function wireAccessGate() {
     captureConsentedEvent("access_granted", { analytics_enabled: ANALYTICS_CONFIG.enabled });
   });
 
+  updateAccessState();
   if (!hasAccessConsent()) dialog.showModal();
 }
 
 function configureAccessTerms(terms) {
   document.querySelector("#access-summary").textContent = terms.access_rule;
   document.querySelector("#access-consent-label").textContent = terms.consent_label;
+  document.querySelector("#trust-statement").textContent = terms.trust_statement;
+  document.querySelector("#production-security-copy").textContent = terms.production_security_rule;
   document.querySelector("#access-terms").innerHTML = [
     terms.sharing_rule,
     terms.analytics_rule,
@@ -590,7 +638,7 @@ function qualityChecks(data) {
   const optionLabelsSafe = data.value_options.options.every((option) => /^Option [A-Z]$/.test(option.label) && !option.company && !option.req_id && !option.compensation);
   results.push({ name: "Anonymized option layer", pass: optionLabelsSafe, detail: optionLabelsSafe ? "2032 paths use generic option labels and normalized indices." : "A 2032 option exposes an identifier or compensation field." });
 
-  const consentTermsComplete = ["access_rule", "sharing_rule", "analytics_rule", "review_build_status"].every((field) => Boolean(data.access_terms[field]));
+  const consentTermsComplete = ["access_rule", "sharing_rule", "analytics_rule", "review_build_status", "consent_label", "trust_statement", "production_security_rule"].every((field) => Boolean(data.access_terms[field]));
   results.push({ name: "Consent transparency", pass: consentTermsComplete && ANALYTICS_CONFIG.enabled === false, detail: consentTermsComplete && ANALYTICS_CONFIG.enabled === false ? "Access, sharing, and analytics terms are explicit; review-build analytics remain off." : "Consent terms or analytics state require review." });
 
   return results;

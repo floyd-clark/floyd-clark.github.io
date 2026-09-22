@@ -334,6 +334,12 @@ dialog::backdrop { background: rgba(1, 6, 10, 0.82); backdrop-filter: blur(8px);
 .access-mark { display: grid; place-items: center; width: 64px; height: 64px; border: 1px solid rgba(92, 200, 255, 0.36); border-radius: 20px; color: var(--accent); background: rgba(92, 200, 255, 0.08); font-weight: 900; letter-spacing: 0.06em; }
 .access-shell h2 { margin: 10px 0 10px; font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -0.045em; }
 .access-summary { color: #ced9e3; font-size: 0.92rem; }
+.trust-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 18px 0; padding: 0; list-style: none; counter-reset: trust-step; }
+.trust-flow li { counter-increment: trust-step; display: grid; gap: 5px; min-height: 104px; padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255, 255, 255, 0.025); }
+.trust-flow li::before { content: "0" counter(trust-step); color: var(--accent); font-size: 0.68rem; font-weight: 900; letter-spacing: 0.09em; }
+.trust-flow strong { color: #e8f0f7; font-size: 0.72rem; }
+.trust-flow span { color: var(--quiet); font-size: 0.65rem; line-height: 1.45; }
+.trust-statement { margin: 0; padding: 12px 14px; border-left: 3px solid var(--accent); color: #dce6ef; background: rgba(92, 200, 255, 0.06); font-size: 0.76rem; }
 .access-terms { display: grid; gap: 9px; margin: 18px 0; padding-left: 19px; color: var(--muted); font-size: 0.78rem; }
 .reviewer-field { display: grid; gap: 7px; padding: 14px; margin: 17px 0; border: 1px solid var(--line); border-radius: 14px; background: rgba(255, 255, 255, 0.02); }
 .reviewer-field > span { color: #dce6ef; font-size: 0.78rem; font-weight: 780; }
@@ -343,6 +349,12 @@ dialog::backdrop { background: rgba(1, 6, 10, 0.82); backdrop-filter: blur(8px);
 .consent-check input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--accent); }
 .access-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 19px; }
 .access-actions .btn:disabled { opacity: 0.38; cursor: not-allowed; transform: none; }
+.access-actions .btn[aria-disabled="true"] { opacity: 0.5; }
+.approval-status { margin: 10px 0 0; color: #b9c8d4; font-size: 0.7rem; }
+.security-boundary { display: grid; gap: 6px; margin-top: 16px; padding: 13px 14px; border: 1px solid rgba(255, 194, 102, 0.24); border-radius: 12px; background: rgba(255, 194, 102, 0.05); }
+.security-boundary strong { color: #ffd18a; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.security-boundary span { color: var(--muted); font-size: 0.7rem; line-height: 1.5; }
+.security-boundary a { width: fit-content; color: var(--accent); font-size: 0.68rem; font-weight: 750; }
 .access-status { margin: 14px 0 0; color: var(--good); font-size: 0.7rem; }
 .dialog-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; padding: 24px; border-bottom: 1px solid var(--line); }
 .dialog-head h2 { margin: 0; font-size: 1.5rem; }
@@ -388,7 +400,13 @@ dialog::backdrop { background: rgba(1, 6, 10, 0.82); backdrop-filter: blur(8px);
   .pipeline-legend, .peak-mini-grid { grid-template-columns: 1fr; }
   .access-shell { grid-template-columns: 1fr; padding: 23px; }
   .access-mark { width: 52px; height: 52px; border-radius: 15px; }
+  .trust-flow { grid-template-columns: 1fr 1fr; }
   .chart-legend { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .trust-flow { grid-template-columns: 1fr; }
+  .trust-flow li { min-height: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

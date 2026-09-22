@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Intelligence Lab | Floyd S. Clark II</title>
-  <meta name="description" content="A consent-gated review build for translating evidence, differentiated signals, strategic options, and forecast verification into an auditable personal decision system." />
+  <meta name="description" content="A trust-based review build for translating evidence, differentiated signals, strategic options, and forecast verification into an auditable personal decision system." />
   <meta name="author" content="Floyd S. Clark II" />
   <meta name="theme-color" content="#071019" />
   <meta name="robots" content="noindex,nofollow" />
@@ -17,23 +17,36 @@
     <div class="access-shell">
       <div class="access-mark" aria-hidden="true">FC</div>
       <div>
-        <div class="micro-label">Consent before access</div>
-        <h2 id="access-title">Private review. Explicit terms.</h2>
-        <p id="access-summary" class="access-summary">This page contains a public-safe view of a personal life and career decision system. Access is intended only for reviewers authorized by Floyd.</p>
+        <div class="micro-label">Trust-based review access</div>
+        <h2 id="access-title">Invitation granted on a basis of trust.</h2>
+        <p id="access-summary" class="access-summary">Enter only after Floyd has directly approved your request.</p>
+        <ol class="trust-flow" aria-label="Trusted review approval steps">
+          <li><strong>Identify yourself</strong><span>Provide the email address Floyd will recognize.</span></li>
+          <li><strong>Send the request</strong><span>Your email app opens a prepared message; you must press Send.</span></li>
+          <li><strong>Wait for Floyd</strong><span>Approval is a direct reply from floyd.clark.usma@gmail.com.</span></li>
+          <li><strong>Enter on trust</strong><span>Confirm that reply and honor the sharing terms.</span></li>
+        </ol>
+        <p class="trust-statement" id="trust-statement">Floyd is sharing this work as an expression of personal trust. Approval is specific to the recipient and does not transfer.</p>
         <ul class="access-terms" id="access-terms"></ul>
         <label class="reviewer-field" for="reviewer-identity">
-          <span>Reviewer identity <small>optional in this static preview</small></span>
-          <input id="reviewer-identity" type="text" autocomplete="name" placeholder="Name or work email" />
-          <small>Stored only for this browser tab while analytics are disabled. An authenticated deployment should replace this field with verified identity.</small>
+          <span>Reviewer email <small>required for the request</small></span>
+          <input id="reviewer-identity" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required />
+          <small>Used to prepare your email request and stored only in this browser tab. This static page does not verify the address.</small>
         </label>
         <label class="consent-check">
           <input id="access-consent" type="checkbox" />
-          <span id="access-consent-label">I understand the access, sharing, and privacy terms.</span>
+          <span id="access-consent-label">I confirm Floyd directly approved my access, and I accept the sharing and privacy terms.</span>
         </label>
         <div class="access-actions">
-          <button class="btn primary" id="enter-review" type="button" disabled>Enter private review</button>
-          <a class="btn" href="mailto:floyd.clark.usma@gmail.com?subject=Signal%20Intelligence%20Lab%20access%20request">Request approval</a>
+          <a class="btn" id="request-approval" href="mailto:floyd.clark.usma@gmail.com?subject=Signal%20Intelligence%20Lab%20trusted%20access%20request" aria-disabled="true">Request trusted access</a>
+          <button class="btn primary" id="enter-review" type="button" disabled>Continue on the basis of trust</button>
         </div>
+        <p class="approval-status" id="approval-status" aria-live="polite">Enter your email to prepare an access request.</p>
+        <aside class="security-boundary" aria-label="Security boundary">
+          <strong>Security boundary</strong>
+          <span id="production-security-copy">This is an honor-based invitation, not technical access control. A production deployment would use Zscaler Private Access or another identity-aware platform to verify, authorize, log, expire, and revoke access.</span>
+          <a href="https://www.zscaler.com/products-and-solutions/zscaler-private-access" target="_blank" rel="noopener">Zscaler Private Access reference ↗</a>
+        </aside>
         <p class="access-status" id="analytics-status">Analytics status loading…</p>
       </div>
     </div>
@@ -429,7 +442,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div>© 2026 Floyd S. Clark II · Signal Intelligence Lab</div>
-      <div>Private review terms · analytics off · authentication required before publication</div>
+      <div>Trust-based review · analytics off · production authentication is a separate security path</div>
     </div>
   </footer>
 
