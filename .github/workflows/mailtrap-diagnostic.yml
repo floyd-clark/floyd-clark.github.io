@@ -14,6 +14,7 @@ jobs:
   api-credential-configured:
     name: API credential configured
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - name: Check API token secret
         env:
@@ -24,6 +25,7 @@ jobs:
   smtp-credentials-configured:
     name: SMTP credentials configured
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - name: Check SMTP secrets
         env:
@@ -34,6 +36,7 @@ jobs:
   sender-configured:
     name: Verified sender configured
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - name: Check sender secret
         env:
@@ -47,6 +50,7 @@ jobs:
       - sender-configured
     if: ${{ always() && needs.api-credential-configured.result == 'success' && needs.sender-configured.result == 'success' }}
     runs-on: ubuntu-latest
+    environment: github-pages
     timeout-minutes: 5
     steps:
       - name: Submit uniquely identified Gmail delivery
@@ -83,6 +87,7 @@ jobs:
       - sender-configured
     if: ${{ always() && needs.api-credential-configured.result != 'success' && needs.smtp-credentials-configured.result == 'success' && needs.sender-configured.result == 'success' }}
     runs-on: ubuntu-latest
+    environment: github-pages
     timeout-minutes: 5
     steps:
       - name: Submit uniquely identified Gmail delivery
