@@ -789,7 +789,7 @@
     "access_rule": "Enter only after Floyd has directly replied to your request and personally approved you to review this page.",
     "sharing_rule": "Approval is recipient-specific. Do not forward the URL, redistribute content, publish screenshots, or attempt to identify anonymized organizations without Floyd's written approval.",
     "analytics_rule": "If analytics are enabled on an authenticated deployment, consented events are limited to access time, page section, session identifier, and reviewer-supplied identity. No fingerprinting, advertising cookies, or cross-site tracking.",
-    "review_build_status": "Analytics are disabled in this static review build. The email request and attestation create a human approval loop, but they do not technically authenticate or block a determined visitor.",
+    "review_build_status": "Analytics are disabled in this static review build. Access requests are forwarded through FormSubmit with a prepared-email fallback; the request and attestation create a human approval loop, but they do not technically authenticate or block a determined visitor.",
     "consent_label": "I confirm Floyd directly approved my access, and I accept the sharing and privacy terms.",
     "trust_statement": "Floyd is sharing this work as an expression of personal trust. Approval is specific to the recipient and does not transfer.",
     "production_security_rule": "This is an honor-based invitation, not technical access control. A production deployment would use Zscaler Private Access or another identity-aware zero-trust platform to verify identity, authorize each session, log access transparently, expire sessions, and revoke authorization."

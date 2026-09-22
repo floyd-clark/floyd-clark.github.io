@@ -9,8 +9,8 @@
   <meta name="theme-color" content="#071019" />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23071019'/%3E%3Cpath d='M12 43h9l7-22 8 29 7-19h9' fill='none' stroke='%235cc8ff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="styles.css?v=3" />
-  <script src="app.js?v=3" defer></script>
+  <link rel="stylesheet" href="styles.css?v=4" />
+  <script src="app.js?v=4" defer></script>
 </head>
 <body>
   <dialog id="access-dialog" class="access-dialog" aria-labelledby="access-title" aria-describedby="access-summary">
@@ -22,7 +22,7 @@
         <p id="access-summary" class="access-summary">Enter only after Floyd has directly approved your request.</p>
         <ol class="trust-flow" aria-label="Trusted review approval steps">
           <li><strong>Identify yourself</strong><span>Provide the email address Floyd will recognize.</span></li>
-          <li><strong>Send the request</strong><span>Your email app opens a prepared message; you must press Send.</span></li>
+          <li><strong>Send the request</strong><span>The page forwards your request to Floyd, with a prepared-email fallback.</span></li>
           <li><strong>Wait for Floyd</strong><span>Approval is a direct reply from floyd.clark.usma@gmail.com.</span></li>
           <li><strong>Enter on trust</strong><span>Confirm that reply and honor the sharing terms.</span></li>
         </ol>
@@ -31,14 +31,15 @@
         <label class="reviewer-field" for="reviewer-identity">
           <span>Reviewer email <small>required for the request</small></span>
           <input id="reviewer-identity" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required />
-          <small>Used to prepare your email request and stored only in this browser tab. This static page does not verify the address.</small>
+          <small>When you send a request, your address and this page URL are forwarded to Floyd through FormSubmit. FormSubmit may retain submissions for up to 30 days. This static page does not verify the address.</small>
         </label>
         <label class="consent-check">
           <input id="access-consent" type="checkbox" />
           <span id="access-consent-label">I confirm Floyd directly approved my access, and I accept the sharing and privacy terms.</span>
         </label>
         <div class="access-actions">
-          <a class="btn" id="request-approval" href="mailto:floyd.clark.usma@gmail.com?subject=Signal%20Intelligence%20Lab%20trusted%20access%20request" aria-disabled="true">Request trusted access</a>
+          <button class="btn" id="request-approval" type="button" disabled>Send access request</button>
+          <a class="btn" id="request-approval-fallback" href="mailto:floyd.clark.usma@gmail.com?subject=Signal%20Intelligence%20Lab%20trusted%20access%20request" aria-disabled="true">Use email app instead</a>
           <button class="btn primary" id="enter-review" type="button" disabled>Continue on the basis of trust</button>
         </div>
         <p class="approval-status" id="approval-status" aria-live="polite">Enter your email to prepare an access request.</p>
