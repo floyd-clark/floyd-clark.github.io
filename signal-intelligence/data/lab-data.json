@@ -189,6 +189,18 @@
       "safe_to_render": true,
       "description_public": "Public-safe aggregate snapshot: 21,136 impressions, 11,810 members reached, 83% out-of-network impressions, 143 social engagements, 95 new followers, and a 997-view weekly profile bucket. This is a visibility peak, not proof of hiring conversion.",
       "related_ids": ["EVT-009", "SIG-LI-001", "SIG-LI-002", "SIG-LI-003", "FRC-001", "FRC-002", "FRC-003"]
+    },
+    {
+      "evidence_id": "EVD-011",
+      "title": "Anonymized 2032 decision-model snapshot",
+      "source_id": "SRC-004",
+      "source_type": "google_sheet",
+      "source_date": "2026-09-22",
+      "path_or_url": "",
+      "confidentiality": "private",
+      "safe_to_render": true,
+      "description_public": "A public-safe projection layer derived from the private 2032 decision model. Employer names, requisition identifiers, compensation bands, contacts, and exact household assumptions are withheld; the page renders normalized option indices and uncertainty ranges instead.",
+      "related_ids": ["OPT-A", "OPT-B", "OPT-C", "OPT-D", "OPT-E", "OPT-F"]
     }
   ],
   "system_stages": [
@@ -771,6 +783,170 @@
       "control": "Verify against an observed result and update only a new model version"
     }
   ],
+  "access_terms": {
+    "title": "Private review access",
+    "owner_contact": "floyd.clark.usma@gmail.com",
+    "access_rule": "Enter only if Floyd has authorized you to review this page.",
+    "sharing_rule": "Do not forward the URL, redistribute content, publish screenshots, or attempt to identify anonymized organizations without written approval.",
+    "analytics_rule": "If analytics are enabled on an authenticated deployment, consented events are limited to access time, page section, session identifier, and reviewer-supplied identity. No fingerprinting, advertising cookies, or cross-site tracking.",
+    "review_build_status": "Analytics are disabled in this static review build. The consent gate communicates terms but is not authentication.",
+    "consent_label": "I understand the access, sharing, and privacy terms"
+  },
+  "differentiated_metrics": [
+    {
+      "value": "21,136",
+      "label": "Peak post impressions",
+      "comparison": "Maximum observed content window",
+      "basis": "Own-signal baseline; not a labor-market percentile"
+    },
+    {
+      "value": "997",
+      "label": "Weekly profile-view bucket",
+      "comparison": "+995 versus the prior recorded bucket",
+      "basis": "Observed LinkedIn snapshot"
+    },
+    {
+      "value": "83%",
+      "label": "Out-of-network reach",
+      "comparison": "Attention extended beyond the existing network",
+      "basis": "Observed LinkedIn snapshot"
+    },
+    {
+      "value": "44/52",
+      "label": "Warm or referral paths",
+      "comparison": "84.6% of the active portfolio",
+      "basis": "Tracker field coverage; not proof of progression"
+    },
+    {
+      "value": "52/52",
+      "label": "Defined next actions",
+      "comparison": "100% decision coverage",
+      "basis": "Anonymized tracker snapshot"
+    },
+    {
+      "value": "3 layers",
+      "label": "Cross-domain operating range",
+      "comparison": "Silicon validation → infrastructure governance → service health",
+      "basis": "Public portfolio evidence"
+    }
+  ],
+  "power_principles": [
+    {
+      "name": "Control optionality",
+      "principle": "Build multiple credible paths so no single employer, advocate, or market cycle controls the outcome.",
+      "proof": "52 active options across 23 anonymized organizations; the model keeps conversion paths and long-horizon development paths separate."
+    },
+    {
+      "name": "Compound scarce intersections",
+      "principle": "Power grows where capabilities are difficult to substitute and useful across multiple markets.",
+      "proof": "The portfolio connects accelerator validation, datacenter constraints, operating governance, and reliability decision systems."
+    },
+    {
+      "name": "Own the operating system",
+      "principle": "Move from coordinating tasks to defining the metrics, decision rights, cadence, and verification loop used by an organization.",
+      "proof": "The site demonstrates source-of-truth design, thresholds, RCA, forecast verification, and preventive action—not a static project list."
+    },
+    {
+      "name": "Convert attention into access",
+      "principle": "Visibility is only useful when it creates a verified human route, stage change, or decision-quality signal.",
+      "proof": "The peak signal is frozen separately from later outcomes; reach alone never advances a journey stage."
+    },
+    {
+      "name": "Preserve downside control",
+      "principle": "Prefer decisions with reversible downside, portable skills, and multiple recovery paths when outcomes remain uncertain.",
+      "proof": "Every option exposes a P10 floor, P50 path, P90 upside, primary gate, and next information that could change the decision."
+    },
+    {
+      "name": "Protect information integrity",
+      "principle": "Credibility compounds when uncertainty, source quality, and contradictions remain visible.",
+      "proof": "Observed facts, derived claims, forecasts, and hypotheses are separate evidence states throughout the page."
+    }
+  ],
+  "value_options": {
+    "title": "2032 personal-equity option map",
+    "model_version": "2032 decision model · market-wide Pareto frontier",
+    "baseline_year": 2026,
+    "target_year": 2032,
+    "baseline_index": 100,
+    "evidence_id": "EVD-011",
+    "interpretation": "The index combines durable career capital and economic capture. It is an option-value comparison—not a net-worth promise, salary quote, or employer statistic.",
+    "interpolation_note": "Years between 2026 and 2032 are illustrative compound paths connecting the common 2026 baseline to audited 2032 endpoints. Only the 2032 P10/P50/P90 values come directly from the decision model.",
+    "dollar_policy": "Exact dollar projections remain withheld until offer mechanics, housing, filing status, partner timing, portfolio choices, and keep/sell/rent decisions are known.",
+    "options": [
+      {
+        "option_id": "OPT-A",
+        "label": "Option A",
+        "archetype": "Service-health operating system",
+        "p10": 123.0,
+        "p50": 160.1,
+        "p90": 205.3,
+        "current_access_prior": 17.0,
+        "lead_adjusted_index": 100.0,
+        "power_move": "Turn reliability evidence into organization-wide metrics, cadence, and decision authority.",
+        "primary_gate": "Verified routing, manager quality, level economics, and scope."
+      },
+      {
+        "option_id": "OPT-B",
+        "label": "Option B",
+        "archetype": "Silicon-to-productization flywheel",
+        "p10": 108.0,
+        "p50": 155.1,
+        "p90": 215.6,
+        "current_access_prior": 15.0,
+        "lead_adjusted_index": 83.3,
+        "power_move": "Acquire the hardest-to-recreate missing layer and expand future market access.",
+        "primary_gate": "Technical ownership depth, verified engagement, and level."
+      },
+      {
+        "option_id": "OPT-C",
+        "label": "Option C",
+        "archetype": "Principal AI infrastructure",
+        "p10": 118.7,
+        "p50": 158.3,
+        "p90": 207.0,
+        "current_access_prior": 7.0,
+        "lead_adjusted_index": 53.9,
+        "power_move": "Use principal-level scope to shorten the path to director-equivalent decision surface.",
+        "primary_gate": "Hiring-manager route, level, and location permanence."
+      },
+      {
+        "option_id": "OPT-D",
+        "label": "Option D",
+        "archetype": "Custom-silicon platform",
+        "p10": 124.6,
+        "p50": 165.7,
+        "p90": 216.1,
+        "current_access_prior": 5.0,
+        "lead_adjusted_index": 29.2,
+        "power_move": "Compound custom silicon with hyperscale platform reach and resilient internal option density.",
+        "primary_gate": "Team-level access, level interpretation, and qualification threshold."
+      },
+      {
+        "option_id": "OPT-E",
+        "label": "Option E",
+        "archetype": "AI infrastructure leadership",
+        "p10": 117.6,
+        "p50": 154.7,
+        "p90": 200.7,
+        "current_access_prior": 4.5,
+        "lead_adjusted_index": 27.8,
+        "power_move": "Translate operating breadth into direct ownership of strategic infrastructure outcomes.",
+        "primary_gate": "Senior scope evidence and a verified human route."
+      },
+      {
+        "option_id": "OPT-F",
+        "label": "Option F",
+        "archetype": "Austin execution compounder",
+        "p10": 94.8,
+        "p50": 137.2,
+        "p90": 192.3,
+        "current_access_prior": 11.0,
+        "lead_adjusted_index": 54.5,
+        "power_move": "Convert strongest near-term fit and geographic efficiency into durable scope growth.",
+        "primary_gate": "Ownership depth, advancement path, and cycle exposure."
+      }
+    ]
+  },
   "limitations": [
     "The source tracker contains private job-search data. The public layer exposes only aggregates, generic role families, aliased organizations, stage dates, and evidence-quality flags; names, requisition IDs, contacts, notes, and private links remain excluded.",
     "This is personal/process data, not production-service telemetry; CUJ, SLI, SLO, error-budget, and synthetic-monitoring concepts are used as careful analogies.",
@@ -778,7 +954,9 @@
     "One replay forecast hit its window; that single result is not statistically meaningful calibration or proof of predictive validity.",
     "Correlation does not establish causation; competing explanations remain visible when evidence cannot resolve them.",
     "LLM output cannot become observed fact without source evidence and human validation.",
-    "Portfolio mechanisms are user-provided, public-safe evidence; they are not independently audited by this page."
+    "Portfolio mechanisms are user-provided, public-safe evidence; they are not independently audited by this page.",
+    "The access dialog is a terms-and-consent control, not authentication. GitHub Pages cannot enforce identity, prevent URL forwarding, or provide approval-only access.",
+    "The 2032 option chart is a normalized scenario model. Interpolated annual points are illustrative; exact wealth requires household and offer inputs that are intentionally not inferred."
   ],
   "missing_data": [
     {

@@ -22,6 +22,14 @@ The starter CSV rows from the build packet were treated as schema examples only.
 
 Forecast replay inputs are frozen at `2026-09-19T16:38:00Z`, the maximum LinkedIn visibility snapshot in the tracker. Later events may appear only as outcomes or post-freeze evidence. Because this replay was constructed afterward, it must remain labeled retrospective and must not be presented as a prospectively recorded prediction.
 
+The 2032 option map uses normalized indices and anonymized option labels derived from the private decision-model tab. Intermediate years are illustrative compound paths between a common 2026 baseline and the model's 2032 endpoints. They are not annual salary or net-worth forecasts.
+
+## Access and analytics boundary
+
+The in-page consent dialog communicates review, sharing, and analytics terms. It is not authentication. GitHub Pages cannot reliably identify a visitor, prevent URL forwarding, or enforce owner approval.
+
+Analytics are intentionally disabled in this static review build. Consented events are retained only in browser `sessionStorage` and are not transmitted. Before enabling the dormant event endpoint, deploy behind real identity-aware access control and provide a consented privacy notice that describes the exact retained fields, purpose, retention period, and deletion process. Do not add fingerprinting, advertising cookies, cross-site tracking, or undisclosed telemetry.
+
 ## Add records safely
 
 1. Add or update a source in `sources`.
@@ -56,5 +64,7 @@ Model output must never silently become an observed fact.
 - Validate all source and evidence references.
 - Confirm no private paths, names, messages, credentials, or tokens are present.
 - Test keyboard navigation, small screens, and 200% text zoom.
+- Put the page behind authenticated access before claiming approval-only review.
+- Keep analytics disabled until the consent notice, endpoint, retention policy, and access controls are verified.
 - Run `node signal-intelligence/scripts/validate-data.mjs`.
 - Review the page from a web server, not `file://`.

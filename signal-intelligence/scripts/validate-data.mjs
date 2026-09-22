@@ -9,7 +9,8 @@ const errors = [];
 
 const requiredCollections = [
   "sources", "evidence", "journeys", "events", "signals", "forecasts",
-  "forecast_outcomes", "anomalies", "actions", "model_versions"
+  "forecast_outcomes", "anomalies", "actions", "model_versions",
+  "differentiated_metrics", "power_principles"
 ];
 
 for (const collection of requiredCollections) {
@@ -83,6 +84,23 @@ for (const journey of data.journeys) {
 for (const event of data.events) {
   if (!event.safe_to_render || !event.summary_public) errors.push(`${event.event_id} is missing a public-safe event summary`);
   if (!evidenceIds.has(event.source_id)) errors.push(`${event.event_id} references missing evidence ${event.source_id}`);
+}
+
+if (!data.access_terms || !data.access_terms.analytics_rule || !data.access_terms.sharing_rule) {
+  errors.push("Access terms must disclose analytics and sharing rules");
+}
+
+if (!data.value_options || !Array.isArray(data.value_options.options)) {
+  errors.push("value_options.options must be an array");
+} else {
+  for (const option of data.value_options.options) {
+    if (!/^Option [A-Z]$/.test(option.label || "")) errors.push(`${option.option_id || "Option"} must use a generic label`);
+    for (const forbidden of ["company", "req_id", "compensation", "salary", "contact"]) {
+      if (Object.hasOwn(option, forbidden)) errors.push(`${option.option_id} exposes forbidden field ${forbidden}`);
+    }
+    if (![option.p10, option.p50, option.p90].every(Number.isFinite)) errors.push(`${option.option_id} is missing numeric uncertainty endpoints`);
+    if (!(option.p10 <= option.p50 && option.p50 <= option.p90)) errors.push(`${option.option_id} has an invalid P10/P50/P90 order`);
+  }
 }
 
 if (errors.length) {

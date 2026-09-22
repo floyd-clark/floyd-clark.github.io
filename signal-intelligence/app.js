@@ -1,4 +1,23 @@
 const DATA_URL = "data/lab-data.json";
+const ACCESS_CONSENT_KEY = "signal-intelligence-access-v2";
+const REVIEW_EVENT_KEY = "signal-intelligence-consented-events";
+const ANALYTICS_CONFIG = Object.freeze({
+  enabled: false,
+  endpoint: "",
+  mode: "consent-only"
+});
+
+function getSessionId() {
+  try {
+    const existing = sessionStorage.getItem("signal-intelligence-session-id");
+    if (existing) return existing;
+    const created = crypto.randomUUID();
+    sessionStorage.setItem("signal-intelligence-session-id", created);
+    return created;
+  } catch {
+    return "session-unavailable";
+  }
+}
 
 const escapeHtml = (value = "") => String(value)
   .replaceAll("&", "&amp;")
@@ -25,6 +44,102 @@ function safeLink(url, label) {
   if (!isSafe) return `<span class="cell-muted">Path withheld</span>`;
   const external = url.startsWith("https://") ? ' target="_blank" rel="noopener"' : "";
   return `<a href="${escapeHtml(url)}"${external}>${escapeHtml(label)} ↗</a>`;
+}
+
+function hasAccessConsent() {
+  try {
+    return Boolean(sessionStorage.getItem(ACCESS_CONSENT_KEY));
+  } catch {
+    return false;
+  }
+}
+
+function captureConsentedEvent(eventName, detail = {}) {
+  if (!hasAccessConsent()) return;
+  const reviewer = document.querySelector("#reviewer-identity")?.value.trim() || "not supplied";
+  const event = {
+    event_name: eventName,
+    occurred_at: new Date().toISOString(),
+    session_id: getSessionId(),
+    reviewer_identity: reviewer,
+    page: location.pathname,
+    ...detail
+  };
+
+  try {
+    const prior = JSON.parse(sessionStorage.getItem(REVIEW_EVENT_KEY) || "[]");
+    sessionStorage.setItem(REVIEW_EVENT_KEY, JSON.stringify([...prior, event].slice(-50)));
+  } catch {
+    // Storage may be unavailable; consent status remains authoritative.
+  }
+
+  window.dispatchEvent(new CustomEvent("signal-intelligence:analytics", { detail: event }));
+  if (ANALYTICS_CONFIG.enabled && ANALYTICS_CONFIG.endpoint) {
+    navigator.sendBeacon(ANALYTICS_CONFIG.endpoint, JSON.stringify(event));
+  }
+}
+
+function wireAccessGate() {
+  const dialog = document.querySelector("#access-dialog");
+  const checkbox = document.querySelector("#access-consent");
+  const enterButton = document.querySelector("#enter-review");
+  const status = document.querySelector("#analytics-status");
+  const reviewerField = document.querySelector("#reviewer-identity");
+
+  try {
+    const priorConsent = JSON.parse(sessionStorage.getItem(ACCESS_CONSENT_KEY) || "null");
+    if (priorConsent?.reviewer_identity) reviewerField.value = priorConsent.reviewer_identity;
+  } catch {
+    // Ignore malformed or unavailable session state.
+  }
+
+  status.textContent = ANALYTICS_CONFIG.enabled
+    ? "Consent-only analytics are enabled. No advertising cookies, cross-site tracking, or fingerprinting."
+    : "Static review status: analytics are disabled; no events leave this browser tab.";
+
+  checkbox.addEventListener("change", () => {
+    enterButton.disabled = !checkbox.checked;
+  });
+
+  dialog.addEventListener("cancel", (event) => event.preventDefault());
+
+  enterButton.addEventListener("click", () => {
+    if (!checkbox.checked) return;
+    const reviewerIdentity = reviewerField.value.trim();
+    try {
+      sessionStorage.setItem(ACCESS_CONSENT_KEY, JSON.stringify({ accepted_at: new Date().toISOString(), version: "v2", reviewer_identity: reviewerIdentity }));
+    } catch {
+      // The dialog can still communicate terms if session storage is unavailable.
+    }
+    dialog.close();
+    captureConsentedEvent("access_granted", { analytics_enabled: ANALYTICS_CONFIG.enabled });
+  });
+
+  if (!hasAccessConsent()) dialog.showModal();
+}
+
+function configureAccessTerms(terms) {
+  document.querySelector("#access-summary").textContent = terms.access_rule;
+  document.querySelector("#access-consent-label").textContent = terms.consent_label;
+  document.querySelector("#access-terms").innerHTML = [
+    terms.sharing_rule,
+    terms.analytics_rule,
+    terms.review_build_status
+  ].map((term) => `<li>${escapeHtml(term)}</li>`).join("");
+}
+
+function wireSectionAnalytics() {
+  if (!("IntersectionObserver" in window)) return;
+  const seen = new Set();
+  const observer = new IntersectionObserver((entries) => {
+    if (!hasAccessConsent()) return;
+    entries.filter((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.35).forEach((entry) => {
+      if (seen.has(entry.target.id)) return;
+      seen.add(entry.target.id);
+      captureConsentedEvent("section_view", { section: entry.target.id });
+    });
+  }, { threshold: [0.35] });
+  document.querySelectorAll("main section[id]").forEach((section) => observer.observe(section));
 }
 
 function renderFlow(stages) {
@@ -111,6 +226,109 @@ function renderMarket(data) {
       <p class="pipeline-note">${escapeHtml(snapshot.interpretation)} Freeze evidence: <span class="mono">${escapeHtml(snapshot.evidence_id)}</span>.</p>
     </div>
   `;
+}
+
+function renderDifferentiators(items) {
+  document.querySelector("#differentiated-metrics").innerHTML = items.map((item) => `
+    <article class="advantage-card">
+      <div class="advantage-value">${escapeHtml(item.value)}</div>
+      <h3>${escapeHtml(item.label)}</h3>
+      <p>${escapeHtml(item.comparison)}</p>
+      <span>${escapeHtml(item.basis)}</span>
+    </article>
+  `).join("");
+}
+
+function renderPowerPrinciples(items) {
+  document.querySelector("#power-principles").innerHTML = items.map((item, index) => `
+    <article class="power-card">
+      <div class="power-number">${String(index + 1).padStart(2, "0")}</div>
+      <h3>${escapeHtml(item.name)}</h3>
+      <p>${escapeHtml(item.principle)}</p>
+      <div class="power-proof"><strong>Evidence on this page</strong>${escapeHtml(item.proof)}</div>
+    </article>
+  `).join("");
+}
+
+function renderValueOptions(model) {
+  const colors = ["#5cc8ff", "#b8a1ff", "#79e0ae", "#ffcc73", "#ff8f7c", "#8aa7c2"];
+  const years = [2026, 2028, 2030, 2032];
+  const trajectoryWidth = 860;
+  const trajectoryHeight = 390;
+  const margin = { left: 62, right: 30, top: 28, bottom: 55 };
+  const minY = 90;
+  const maxY = 175;
+  const innerWidth = trajectoryWidth - margin.left - margin.right;
+  const innerHeight = trajectoryHeight - margin.top - margin.bottom;
+  const x = (index) => margin.left + (innerWidth * index / (years.length - 1));
+  const y = (value) => margin.top + ((maxY - value) / (maxY - minY)) * innerHeight;
+  const ticks = [100, 120, 140, 160];
+
+  const grid = ticks.map((tick) => `
+    <line x1="${margin.left}" y1="${y(tick)}" x2="${trajectoryWidth - margin.right}" y2="${y(tick)}" class="chart-gridline" />
+    <text x="${margin.left - 12}" y="${y(tick) + 4}" text-anchor="end" class="chart-axis-label">${tick}</text>
+  `).join("");
+  const yearLabels = years.map((year, index) => `<text x="${x(index)}" y="${trajectoryHeight - 20}" text-anchor="middle" class="chart-axis-label">${year}</text>`).join("");
+  const lines = model.options.map((option, optionIndex) => {
+    const values = years.map((_, index) => model.baseline_index * Math.pow(option.p50 / model.baseline_index, index / (years.length - 1)));
+    const points = values.map((value, index) => `${x(index)},${y(value)}`).join(" ");
+    return `
+      <polyline points="${points}" fill="none" stroke="${colors[optionIndex]}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      ${values.map((value, index) => `<circle cx="${x(index)}" cy="${y(value)}" r="${index === years.length - 1 ? 5 : 3}" fill="${colors[optionIndex]}" />`).join("")}
+    `;
+  }).join("");
+  const legend = model.options.map((option, index) => `<span><i style="--legend:${colors[index]}"></i>${escapeHtml(option.label)} · ${escapeHtml(option.archetype)}</span>`).join("");
+
+  document.querySelector("#trajectory-chart").innerHTML = `
+    <svg class="option-chart" viewBox="0 0 ${trajectoryWidth} ${trajectoryHeight}" role="img" aria-label="Illustrative personal-equity index paths from 2026 to 2032">
+      ${grid}${yearLabels}${lines}
+      <text x="20" y="18" class="chart-axis-label">INDEX</text>
+    </svg>
+    <div class="chart-legend">${legend}</div>
+    <p class="chart-note">${escapeHtml(model.interpolation_note)}</p>
+  `;
+
+  const rangeWidth = 860;
+  const rangeHeight = 78 + model.options.length * 54;
+  const rangeLeft = 190;
+  const rangeRight = 820;
+  const rangeMin = 90;
+  const rangeMax = 225;
+  const rangeX = (value) => rangeLeft + ((value - rangeMin) / (rangeMax - rangeMin)) * (rangeRight - rangeLeft);
+  const rangeTicks = [100, 140, 180, 220];
+  const rangeGrid = rangeTicks.map((tick) => `
+    <line x1="${rangeX(tick)}" y1="34" x2="${rangeX(tick)}" y2="${rangeHeight - 32}" class="chart-gridline" />
+    <text x="${rangeX(tick)}" y="22" text-anchor="middle" class="chart-axis-label">${tick}</text>
+  `).join("");
+  const rangeRows = model.options.map((option, index) => {
+    const rowY = 62 + index * 54;
+    return `
+      <text x="18" y="${rowY + 4}" class="range-label">${escapeHtml(option.label)} · ${escapeHtml(option.archetype)}</text>
+      <line x1="${rangeX(option.p10)}" y1="${rowY}" x2="${rangeX(option.p90)}" y2="${rowY}" stroke="${colors[index]}" stroke-width="8" stroke-linecap="round" opacity="0.42" />
+      <circle cx="${rangeX(option.p50)}" cy="${rowY}" r="6" fill="${colors[index]}" />
+      <text x="${rangeX(option.p50)}" y="${rowY - 12}" text-anchor="middle" class="range-value">${option.p50}</text>
+    `;
+  }).join("");
+  document.querySelector("#range-chart").innerHTML = `
+    <svg class="option-chart" viewBox="0 0 ${rangeWidth} ${rangeHeight}" role="img" aria-label="2032 P10 to P90 uncertainty bands with P50 markers">
+      ${rangeGrid}${rangeRows}
+    </svg>
+    <p class="chart-note">Whisker = P10–P90 scenario range. Dot = P50. Wider is not automatically worse; it means the option carries more unresolved upside and downside.</p>
+  `;
+
+  document.querySelector("#option-cards").innerHTML = model.options.map((option, index) => `
+    <article class="option-card" style="--option-color:${colors[index]}">
+      <div class="option-card-head"><span class="option-id">${escapeHtml(option.label)}</span><span class="option-access">Access prior ${escapeHtml(option.current_access_prior)}%</span></div>
+      <h3>${escapeHtml(option.archetype)}</h3>
+      <div class="option-score"><span>2032 P50</span><strong>${escapeHtml(option.p50)}</strong><small>index</small></div>
+      <div class="option-bar"><span style="--option-share:${escapeHtml(option.lead_adjusted_index)}"></span></div>
+      <p><strong>Power move</strong>${escapeHtml(option.power_move)}</p>
+      <p><strong>Primary gate</strong>${escapeHtml(option.primary_gate)}</p>
+    </article>
+  `).join("");
+
+  document.querySelector("#options-interpretation").textContent = `${model.interpretation} Evidence: ${model.evidence_id}.`;
+  document.querySelector("#options-dollar-policy").textContent = model.dollar_policy;
 }
 
 function renderSummary(data) {
@@ -369,6 +587,12 @@ function qualityChecks(data) {
   const safeEvents = data.events.every((event) => event.safe_to_render && event.source_id && event.summary_public);
   results.push({ name: "Anonymized tracker layer", pass: anonymizedJourneys && safeEvents, detail: anonymizedJourneys && safeEvents ? "Public journeys use stable aliases and public-safe event summaries." : "A public journey or event needs privacy review." });
 
+  const optionLabelsSafe = data.value_options.options.every((option) => /^Option [A-Z]$/.test(option.label) && !option.company && !option.req_id && !option.compensation);
+  results.push({ name: "Anonymized option layer", pass: optionLabelsSafe, detail: optionLabelsSafe ? "2032 paths use generic option labels and normalized indices." : "A 2032 option exposes an identifier or compensation field." });
+
+  const consentTermsComplete = ["access_rule", "sharing_rule", "analytics_rule", "review_build_status"].every((field) => Boolean(data.access_terms[field]));
+  results.push({ name: "Consent transparency", pass: consentTermsComplete && ANALYTICS_CONFIG.enabled === false, detail: consentTermsComplete && ANALYTICS_CONFIG.enabled === false ? "Access, sharing, and analytics terms are explicit; review-build analytics remain off." : "Consent terms or analytics state require review." });
+
   return results;
 }
 
@@ -393,6 +617,7 @@ function wireTour() {
 }
 
 async function init() {
+  wireAccessGate();
   wireTour();
   try {
     const response = await fetch(DATA_URL, { cache: "no-store" });
@@ -402,15 +627,19 @@ async function init() {
     document.querySelector("#as-of").textContent = data.meta.as_of;
     document.querySelector("#forecast-freeze").textContent = data.meta.forecast_freeze_label;
     document.querySelector("#forecast-freeze-full").textContent = data.meta.forecast_freeze_label;
+    configureAccessTerms(data.access_terms);
+    renderDifferentiators(data.differentiated_metrics);
     renderFlow(data.system_stages);
     renderMarket(data);
     renderSummary(data);
     renderEmptyOrJourneyTable(data.journeys);
     renderEmptyOrTimeline(data.events);
     renderHeuristics(data.heuristics);
+    renderPowerPrinciples(data.power_principles);
     renderZeroTrust(data.zero_trust_translation);
     renderLighthouse(data.lighthouse_candidates);
     renderIndicators(data.indicators);
+    renderValueOptions(data.value_options);
     renderForecasts(data);
     renderSyntheticChecks(data.synthetic_checks);
     renderAnomalies(data.anomalies);
@@ -420,10 +649,11 @@ async function init() {
     renderDomainPatterns(data.domain_patterns);
     renderMethodology(data);
     renderQuality(data);
+    wireSectionAnalytics();
   } catch (error) {
     console.error(error);
     const message = `<div class="empty-state"><strong>Local data could not be loaded.</strong><p>Serve this directory through a local web server or GitHub Pages; browsers block JSON fetches from file URLs.</p></div>`;
-    document.querySelectorAll("#summary-metrics, #flow-grid, #flow-detail, #market-snapshot, #pipeline-graphic, #journey-matrix, #signal-timeline, #heuristics-grid, #zero-trust-flow").forEach((element) => {
+    document.querySelectorAll("#summary-metrics, #differentiated-metrics, #flow-grid, #flow-detail, #market-snapshot, #pipeline-graphic, #journey-matrix, #signal-timeline, #heuristics-grid, #power-principles, #zero-trust-flow, #trajectory-chart, #range-chart, #option-cards").forEach((element) => {
       element.innerHTML = message;
     });
     document.querySelector("#as-of").textContent = "Unavailable";

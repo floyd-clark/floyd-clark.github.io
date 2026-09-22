@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Intelligence Lab | Floyd S. Clark II</title>
-  <meta name="description" content="A public-safe operating-model demonstration for turning fragmented evidence into measurable health, explicit forecasts, decisions, verification, and learning." />
+  <meta name="description" content="A consent-gated review build for translating evidence, differentiated signals, strategic options, and forecast verification into an auditable personal decision system." />
   <meta name="author" content="Floyd S. Clark II" />
   <meta name="theme-color" content="#071019" />
   <meta name="robots" content="noindex,nofollow" />
@@ -13,6 +13,32 @@
   <script src="app.js" defer></script>
 </head>
 <body>
+  <dialog id="access-dialog" class="access-dialog" aria-labelledby="access-title" aria-describedby="access-summary">
+    <div class="access-shell">
+      <div class="access-mark" aria-hidden="true">FC</div>
+      <div>
+        <div class="micro-label">Consent before access</div>
+        <h2 id="access-title">Private review. Explicit terms.</h2>
+        <p id="access-summary" class="access-summary">This page contains a public-safe view of a personal life and career decision system. Access is intended only for reviewers authorized by Floyd.</p>
+        <ul class="access-terms" id="access-terms"></ul>
+        <label class="reviewer-field" for="reviewer-identity">
+          <span>Reviewer identity <small>optional in this static preview</small></span>
+          <input id="reviewer-identity" type="text" autocomplete="name" placeholder="Name or work email" />
+          <small>Stored only for this browser tab while analytics are disabled. An authenticated deployment should replace this field with verified identity.</small>
+        </label>
+        <label class="consent-check">
+          <input id="access-consent" type="checkbox" />
+          <span id="access-consent-label">I understand the access, sharing, and privacy terms.</span>
+        </label>
+        <div class="access-actions">
+          <button class="btn primary" id="enter-review" type="button" disabled>Enter private review</button>
+          <a class="btn" href="mailto:floyd.clark.usma@gmail.com?subject=Signal%20Intelligence%20Lab%20access%20request">Request approval</a>
+        </div>
+        <p class="access-status" id="analytics-status">Analytics status loading…</p>
+      </div>
+    </div>
+  </dialog>
+
   <a class="skip-link" href="#main">Skip to main content</a>
 
   <nav class="site-nav" aria-label="Primary navigation">
@@ -23,8 +49,9 @@
         <a href="#market">Market</a>
         <a href="#health">Health</a>
         <a href="#heuristics">Heuristics</a>
+        <a href="#power">Power</a>
+        <a href="#options">Options</a>
         <a href="#forecasting">Forecasts</a>
-        <a href="#evidence">Evidence</a>
         <a class="back-link" href="../">← Portfolio</a>
       </div>
     </div>
@@ -36,11 +63,11 @@
         <div>
           <div class="eyebrow">Service health · evidence · decision intelligence</div>
           <h1>Signal<br />Intelligence Lab</h1>
-          <p class="hero-subtitle">An observable decision system for turning fragmented evidence into measurable outcomes.</p>
+          <p class="hero-subtitle">A non-typical candidate operating system for turning rare experience, market attention, and evidence into measurable options.</p>
           <div class="signal-chain" aria-label="Operating loop">
             <span>Signals</span><span>Source of Truth</span><span>Health</span><span>Forecast</span><span>Decision</span><span>Verification</span>
           </div>
-          <p class="hero-note">This is a small-scale operating-model demonstration built from personal, public, and user-owned data. It demonstrates methodology—not production-service scale or statistical certainty.</p>
+          <p class="hero-note">This is not a résumé in dashboard form. It is a controlled demonstration of how cross-domain experience, operating mechanisms, and decision discipline compound into leverage—without confusing visibility with proof.</p>
           <div class="cta-row">
             <button class="btn primary" id="open-tour" type="button">Start the 90-second tour</button>
             <a class="btn" href="#system">Inspect the system</a>
@@ -48,7 +75,7 @@
         </div>
         <aside class="review-card" aria-label="Review build status">
           <div class="micro-label">Review build · anonymized data</div>
-          <h2>52 active journeys. Private identifiers removed.</h2>
+          <h2>A differentiated signal profile. Private identifiers removed.</h2>
           <p>The public layer now uses the user-owned tracker for aggregate health, aliased journeys, evidence-quality flags, and decisions—without exposing names, requisition IDs, contacts, notes, or private links.</p>
           <dl class="review-list">
             <div class="review-item"><dt>Mode</dt><dd>Review v1</dd></div>
@@ -60,6 +87,19 @@
         </aside>
       </div>
     </header>
+
+    <section id="advantage" class="advantage-section" aria-labelledby="advantage-title">
+      <div class="container">
+        <div class="section-head compact-head">
+          <div>
+            <div class="kicker">Differentiated signal profile</div>
+            <h2 class="title" id="advantage-title">Above the personal baseline. Beyond a conventional candidate narrative.</h2>
+          </div>
+          <p class="intro">These are evidence-backed differentiators, not invented population percentiles. Where no credible market benchmark exists, the comparison is explicitly against the prior personal baseline or portfolio coverage.</p>
+        </div>
+        <div class="advantage-grid" id="differentiated-metrics"></div>
+      </div>
+    </section>
 
     <section id="system" aria-labelledby="system-title">
       <div class="container">
@@ -138,6 +178,19 @@
       </div>
     </section>
 
+    <section id="power" aria-labelledby="power-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">Strategic power principles</div>
+            <h2 class="title" id="power-title">Power is optionality, scarcity, and control of the decision system.</h2>
+          </div>
+          <p class="intro">The page uses power as disciplined agency—not manipulation: create multiple credible paths, compound capabilities that are hard to replace, own the operating mechanisms, and protect downside when evidence is incomplete.</p>
+        </div>
+        <div class="power-grid" id="power-principles"></div>
+      </div>
+    </section>
+
     <section id="zero-trust" aria-labelledby="zero-trust-title">
       <div class="container">
         <div class="section-head">
@@ -181,6 +234,34 @@
             <tbody id="indicator-rows"></tbody>
           </table>
         </div>
+      </div>
+    </section>
+
+    <section id="options" aria-labelledby="options-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="kicker">2032 personal-equity options</div>
+            <h2 class="title" id="options-title">Map the consequence of a decision without pretending the future is a dollar amount.</h2>
+          </div>
+          <p class="intro">Each option starts from a common 2026 index of 100. The 2032 endpoints come from the private decision model; intermediate years illustrate the path, while P10–P90 bands keep uncertainty visible.</p>
+        </div>
+        <div class="option-disclosure">
+          <span class="badge hypothesis">Scenario model</span>
+          <p id="options-interpretation"></p>
+        </div>
+        <div class="options-layout">
+          <article class="panel chart-panel">
+            <div class="panel-head"><h3>Personal-equity trajectory</h3><p>2026 baseline → 2032 P50</p></div>
+            <div class="chart-wrap" id="trajectory-chart"></div>
+          </article>
+          <article class="panel chart-panel">
+            <div class="panel-head"><h3>2032 uncertainty range</h3><p>P10 · P50 · P90</p></div>
+            <div class="chart-wrap" id="range-chart"></div>
+          </article>
+        </div>
+        <div class="option-cards" id="option-cards"></div>
+        <div class="options-footnote"><strong>Why no exact wealth number:</strong> <span id="options-dollar-policy"></span></div>
       </div>
     </section>
 
@@ -348,7 +429,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div>© 2026 Floyd S. Clark II · Signal Intelligence Lab</div>
-      <div>Review build · static data · GitHub Pages compatible</div>
+      <div>Private review terms · analytics off · authentication required before publication</div>
     </div>
   </footer>
 
@@ -358,14 +439,16 @@
       <button class="icon-btn" id="close-tour" type="button" aria-label="Close tour">×</button>
     </div>
     <ol class="tour-list">
+      <li>Access begins with explicit review, sharing, and analytics terms. This static build transmits no visitor events and does not pretend its dialog is authentication.</li>
       <li>I normalized 52 active market journeys across 23 anonymized organizations without publishing names, requisitions, contacts, or private evidence.</li>
+      <li>The differentiated profile surfaces unusually strong personal signals—21,136 peak impressions, 83% out-of-network reach, 44 warm paths, and 100% next-action coverage—without inventing a population percentile.</li>
       <li>I separated observed tracker facts, derived health metrics, forecasts, and hypotheses.</li>
       <li>I froze the forecast replay at the maximum LinkedIn signal peak: Sep 19, 2026 at 16:38 UTC.</li>
-      <li>I used visible heuristics—stage, source reliability, recency, signal strength, coverage, and contradiction penalty—to derive decisions.</li>
+      <li>I used visible heuristics and strategic-power principles: control optionality, compound scarce intersections, own the operating system, and preserve downside control.</li>
       <li>I grounded the operating sequence in Zero Trust Exchange and ZDX concepts without implying access to production telemetry.</li>
+      <li>The 2032 option map compares six anonymized paths with P10/P50/P90 ranges and a common index baseline; exact dollar wealth remains withheld until household and offer mechanics are known.</li>
       <li>I converted thresholds into actions: 18 follow-ups due, seven stale journeys, and one status contradiction to investigate.</li>
-      <li>I recorded later events as outcomes; one replay forecast hit its window, while calibration remains statistically immature.</li>
-      <li>The scale is personal, but the operating pattern is durable: establish truth, expose risk, facilitate decisions, verify outcomes, and improve the next version.</li>
+      <li>The scale is personal, but the pattern is durable: establish truth, create leverage, expose risk, make decisions, verify outcomes, and improve the next version.</li>
     </ol>
   </dialog>
 
