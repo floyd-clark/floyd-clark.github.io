@@ -46,13 +46,24 @@ function createRequest_(parameters) {
 
   const cache = CacheService.getScriptCache();
   const cooldownKey = `request:${digest_(email)}`;
-  if (cache.get(cooldownKey)) throw new Error("A request for this email was recently sent. Wait ten minutes before retrying.");
 
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
   try {
     const sheet = getSheet_();
     if (findRow_(sheet, requestId)) throw new Error("This request ID already exists.");
+
+    const approvedAt = findApprovedEmail_(sheet, email);
+    if (approvedAt) {
+      const decidedAt = new Date().toISOString();
+      sheet.getRange(sheet.getLastRow() + 1, 1, 1, HEADERS.length).setNumberFormat("@").setValues([[
+        requestId, email, requestedAt, "approved", decidedAt, digest_(clientSecret),
+        "", source, decidedAt
+      ]]);
+      return { ok: true, requestId, status: "approved", decidedAt, recognized: true };
+    }
+
+    if (cache.get(cooldownKey)) throw new Error("A request for this email was recently sent. Wait ten minutes before retrying.");
 
     const decisionToken = Utilities.getUuid().replace(/-/g, "") + Utilities.getUuid().replace(/-/g, "");
     const row = sheet.getLastRow() + 1;
@@ -112,7 +123,6 @@ function recordDecision_(parameters) {
     const email = sheet.getRange(row, 2).getDisplayValue();
     const decidedAt = new Date().toISOString();
     sheet.getRange(row, 4, 1, 2).setValues([[decision, decidedAt]]);
-    sheet.getRange(row, 7).setValue("");
     return renderResult_(decision === "approved" ? "Access approved" : "Access denied", `${email} is now ${decision}. The visitor's page will update automatically.`, decision === "approved");
   } finally {
     lock.releaseLock();
@@ -122,8 +132,8 @@ function recordDecision_(parameters) {
 function sendOwnerEmail_(email, requestId, decisionToken) {
   const reviewUrl = `${ScriptApp.getService().getUrl()}?action=review&token=${encodeURIComponent(decisionToken)}`;
   const subject = `Approve Signal Intelligence access: ${email}`;
-  const plainBody = `Reviewer: ${email}\n\nOpen this phone-friendly decision page to approve or deny access:\n${reviewUrl}\n\nRequest ID: ${requestId}`;
-  const htmlBody = `<p>Someone requested access to Signal Intelligence.</p><p style="font-size:20px"><strong>${escapeHtml_(email)}</strong></p><p><a href="${reviewUrl}" style="display:block;max-width:320px;padding:15px 18px;border-radius:10px;background:#1677ff;color:#fff;text-align:center;text-decoration:none;font-size:17px;font-weight:700">Review &amp; approve</a></p><p style="color:#666;font-size:12px">Works on phone or computer · Request ID: ${escapeHtml_(requestId)}</p>`;
+  const plainBody = `Reviewer: ${email}\n\nApprove from Gmail on your phone or computer:\n${reviewUrl}\n\nRequest ID: ${requestId}\nThis link remains valid after your decision.`;
+  const htmlBody = `<p>Someone requested access to Signal Intelligence.</p><p style="font-size:20px"><strong>${escapeHtml_(email)}</strong></p><p><a href="${reviewUrl}" style="display:block;max-width:320px;padding:17px 20px;border-radius:12px;background:#1677ff;color:#fff;text-align:center;text-decoration:none;font-size:18px;font-weight:700">Approve from phone</a></p><p style="color:#666;font-size:12px">Opens a phone-friendly Approve / Deny page in Gmail. This link remains valid after your decision.<br>Request ID: ${escapeHtml_(requestId)}</p>`;
   GmailApp.sendEmail(CONFIG.OWNER_EMAIL, subject, plainBody, { htmlBody, name: "Signal Intelligence Access" });
 }
 
@@ -157,6 +167,17 @@ function findRowByToken_(sheet, token) {
   if (sheet.getLastRow() < 2) return 0;
   const match = sheet.getRange(2, 7, sheet.getLastRow() - 1, 1).createTextFinder(token).matchEntireCell(true).findNext();
   return match ? match.getRow() : 0;
+}
+
+function findApprovedEmail_(sheet, email) {
+  if (sheet.getLastRow() < 2) return 0;
+  const values = sheet.getRange(2, 2, sheet.getLastRow() - 1, 3).getDisplayValues();
+  for (let index = values.length - 1; index >= 0; index -= 1) {
+    if (String(values[index][0]).trim().toLowerCase() === email && String(values[index][2]).toLowerCase() === "approved") {
+      return index + 2;
+    }
+  }
+  return 0;
 }
 
 function normalizeEmail_(value) {

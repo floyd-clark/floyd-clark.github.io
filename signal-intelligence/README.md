@@ -26,7 +26,7 @@ The 2032 option map uses normalized indices and anonymized option labels derived
 
 ## Access and analytics boundary
 
-The in-page dialog sends each request to a Google Apps Script approval service. The service emails the owner a phone-friendly approval action and records requests and decisions in a private Google Sheet. The visitor accepts the terms before requesting; the page then polls automatically and opens the interface as soon as the service returns the owner’s recorded approval. The dialog discloses that the reviewer address, request ID, timestamp, and page URL leave the browser when a visitor requests access.
+The in-page dialog sends each request to a Google Apps Script approval service. The service emails the owner a reusable, phone-friendly approval action and records requests and decisions in a private Google Sheet. An email with any recorded approval is recognized on later requests and enters immediately; the approved browser also retains consent in `localStorage`. New requests poll automatically and open as soon as the service returns the owner’s approval. The dialog discloses that the reviewer address, request ID, timestamp, and page URL leave the browser when a visitor requests access.
 
 This still is not file-level authentication. GitHub Pages cannot prevent a determined visitor from directly requesting public static assets or forwarding the URL. Use Zscaler Private Access or another identity-aware hosting layer before treating the page or its data as confidential.
 

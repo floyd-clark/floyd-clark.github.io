@@ -9,8 +9,8 @@
   <meta name="theme-color" content="#071019" />
   <meta name="robots" content="noindex,nofollow" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23071019'/%3E%3Cpath d='M12 43h9l7-22 8 29 7-19h9' fill='none' stroke='%235cc8ff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="styles.css?v=8" />
-  <script src="app.js?v=8" defer></script>
+  <link rel="stylesheet" href="styles.css?v=9" />
+  <script src="app.js?v=9" defer></script>
 </head>
 <body>
   <dialog id="access-dialog" class="access-dialog" aria-labelledby="access-title" aria-describedby="access-summary">
@@ -22,7 +22,7 @@
         <p id="access-summary" class="access-summary">This page unlocks only after Floyd records an approval for your request.</p>
         <ol class="trust-flow" aria-label="Trusted review approval steps">
           <li><strong>Identify yourself</strong><span>Provide the email address Floyd will recognize.</span></li>
-          <li><strong>Request access</strong><span>Floyd receives your email address and an approval action.</span></li>
+          <li><strong>Request access</strong><span>Previously approved emails enter immediately; new emails go to Floyd.</span></li>
           <li><strong>Wait for Floyd</strong><span>The page checks his recorded decision automatically.</span></li>
           <li><strong>Automatic entry</strong><span>When Floyd approves, this page opens automatically.</span></li>
         </ol>
@@ -41,7 +41,7 @@
           <button class="btn primary" id="request-approval" type="button" disabled>Request access</button>
         </div>
         <p class="approval-status" id="approval-status" aria-live="polite">Enter your email to prepare an access request.</p>
-        <p class="approval-ledger-note">Every request receives a unique ID. Floyd’s decision is recorded in a private Google Sheet, creating a searchable approval catalog.</p>
+        <p class="approval-ledger-note">Every request receives a unique ID. Once Floyd approves an email, it is recognized on later visits and this browser remembers access.</p>
         <aside class="security-boundary" aria-label="Security boundary">
           <strong>Security boundary</strong>
           <span id="production-security-copy">This workflow verifies an owner decision before the interface unlocks. GitHub Pages files remain publicly addressable; stronger protection would use Zscaler Private Access or another identity-aware platform.</span>

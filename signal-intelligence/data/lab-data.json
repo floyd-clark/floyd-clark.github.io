@@ -786,11 +786,11 @@
   "access_terms": {
     "title": "Owner-approved review access",
     "owner_contact": "floyd.clark.usma@gmail.com",
-    "access_rule": "Accept the terms once, request access, and leave this page open. It refreshes the decision automatically and opens as soon as Floyd approves.",
+    "access_rule": "Accept the terms once and request access. Previously approved emails enter immediately; new requests open automatically as soon as Floyd approves.",
     "sharing_rule": "Approval is recipient-specific. Do not forward the URL, redistribute content, publish screenshots, or attempt to identify anonymized organizations without Floyd's written approval.",
     "analytics_rule": "If analytics are enabled on an authenticated deployment, consented events are limited to access time, page section, session identifier, and reviewer-supplied identity. No fingerprinting, advertising cookies, or cross-site tracking.",
     "review_build_status": "Analytics are disabled. Each request receives a unique ID; the interface unlocks only after Floyd’s decision is recorded in his private approval catalog. Because the content is hosted on GitHub Pages, this is not a substitute for identity-aware protection of the underlying static files.",
-    "consent_label": "I accept the sharing and privacy terms. Access will open automatically after Floyd approves.",
+    "consent_label": "I accept the sharing and privacy terms. Approved emails open immediately; new access opens automatically after Floyd approves.",
     "trust_statement": "Approval is specific to the recorded recipient and does not transfer.",
     "production_security_rule": "This workflow records Floyd’s decision before the interface unlocks. GitHub Pages files remain publicly addressable; a production deployment would use Zscaler Private Access or another identity-aware zero-trust platform to verify identity, authorize each session, log access transparently, expire sessions, and revoke authorization."
   },

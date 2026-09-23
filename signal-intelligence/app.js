@@ -1,6 +1,6 @@
-const DATA_URL = "data/lab-data.json?v=8";
-const ACCESS_CONSENT_KEY = "signal-intelligence-access-v6";
-const ACCESS_REQUEST_KEY = "signal-intelligence-request-v3";
+const DATA_URL = "data/lab-data.json?v=9";
+const ACCESS_CONSENT_KEY = "signal-intelligence-access-v7";
+const ACCESS_REQUEST_KEY = "signal-intelligence-request-v4";
 const REVIEW_EVENT_KEY = "signal-intelligence-consented-events";
 const APPROVAL_SERVICE_URL = "https://script.google.com/macros/s/AKfycbxz_SbPkuy73LM4TT7R96oDyduZgen2YK6HQr_JbHYywqYxpDRNSKmgbCuQG_O4c_ph3A/exec";
 const APPROVAL_POLL_INTERVAL_MS = 8000;
@@ -51,8 +51,8 @@ function safeLink(url, label) {
 
 function hasAccessConsent() {
   try {
-    const consent = JSON.parse(sessionStorage.getItem(ACCESS_CONSENT_KEY) || "null");
-    return consent?.version === "v6" && consent?.owner_approval_confirmed === true;
+    const consent = JSON.parse(localStorage.getItem(ACCESS_CONSENT_KEY) || "null");
+    return consent?.version === "v7" && consent?.owner_approval_confirmed === true;
   } catch {
     return false;
   }
@@ -172,8 +172,8 @@ function wireAccessGate() {
   let pollTimer = null;
 
   try {
-    const priorConsent = JSON.parse(sessionStorage.getItem(ACCESS_CONSENT_KEY) || "null");
-    requestState = JSON.parse(sessionStorage.getItem(ACCESS_REQUEST_KEY) || "null");
+    const priorConsent = JSON.parse(localStorage.getItem(ACCESS_CONSENT_KEY) || "null");
+    requestState = JSON.parse(localStorage.getItem(ACCESS_REQUEST_KEY) || "null");
     if (requestState?.reviewer_email) reviewerField.value = requestState.reviewer_email;
     else if (priorConsent?.reviewer_email) reviewerField.value = priorConsent.reviewer_email;
     checkbox.checked = requestState?.terms_accepted === true;
@@ -194,9 +194,9 @@ function wireAccessGate() {
     isGranting = true;
     approvalStatus.textContent = `Approved by Floyd · ${requestState.request_id}. Opening your review…`;
     try {
-      sessionStorage.setItem(ACCESS_CONSENT_KEY, JSON.stringify({
+      localStorage.setItem(ACCESS_CONSENT_KEY, JSON.stringify({
         accepted_at: new Date().toISOString(),
-        version: "v6",
+        version: "v7",
         reviewer_email: reviewerEmail,
         request_id: requestState.request_id,
         requested_at: requestState.requested_at,
@@ -251,17 +251,18 @@ function wireAccessGate() {
     const clientSecret = createClientSecret();
     let deliveryError = null;
     try {
-      await sendApprovalRequest(reviewerEmail, requestId, requestedAt, clientSecret);
+      const result = await sendApprovalRequest(reviewerEmail, requestId, requestedAt, clientSecret);
       requestState = {
         request_id: requestId,
         reviewer_email: reviewerEmail,
         requested_at: requestedAt,
         client_secret: clientSecret,
-        status: "pending",
+        status: result.status || "pending",
+        decided_at: result.decidedAt || "",
         terms_accepted: true
       };
       try {
-        sessionStorage.setItem(ACCESS_REQUEST_KEY, JSON.stringify(requestState));
+        localStorage.setItem(ACCESS_REQUEST_KEY, JSON.stringify(requestState));
       } catch {
         // The active tab still retains requestState if session storage is unavailable.
       }
@@ -282,7 +283,7 @@ function wireAccessGate() {
       const result = await checkApprovalStatus(requestState);
       requestState.status = result.status;
       requestState.decided_at = result.decidedAt || "";
-      sessionStorage.setItem(ACCESS_REQUEST_KEY, JSON.stringify(requestState));
+      localStorage.setItem(ACCESS_REQUEST_KEY, JSON.stringify(requestState));
     } catch (error) {
       approvalStatus.textContent = `Approval check failed (${error.message}). You can retry.`;
     } finally {
