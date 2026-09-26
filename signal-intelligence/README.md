@@ -10,7 +10,13 @@ A public projection of Floyd S. Clark II's real, privately maintained role track
 
 ## Interpretation
 
-Observed inputs (tracker stages, touches, and export values) are separate from derived counts. A tracker application is not an interview. Impressions are repeated displays; reached members are unique within LinkedIn's reported window; engagements count actions. Neither source supplies matched viewer-to-recruiter or viewer-to-application attribution. No conversion, causality, or calibrated forecast is claimed.
+Observed inputs (tracker stages, touches, and export values) are separate from derived counts. A tracker application is not an interview. Impressions are repeated displays; reached members are unique within LinkedIn's reported window; engagements count actions. Neither source supplies matched viewer-to-recruiter or viewer-to-application attribution. No conversion, causality, or calibrated probability is claimed.
+
+## Forecasts and scenarios
+
+The public forecast ledger is issued September 26 for September 27–October 3, 2026. Two testable events refer to direct responses in the applied and referral-requested cohorts. Supporting and counterevidence, verification rules, window, version, and pending outcomes are published in `data/public-snapshot.json`. Future outcome updates must retain the original target and window and cite a dated tracker event. The ledger does not infer responses from LinkedIn exposure.
+
+The 2032 scenario lens uses the private 2032 Decision Model. It pools five broad paths, excludes the private company-level options, and rounds the lower, middle, and upper modeled index ranges to five points. The 2026 index is 100. Ranges describe scenario endpoints across paths, not statistical confidence intervals, offer odds, or dollar returns. Refresh the private assumptions before using this model for a decision.
 
 Excluded from the public projection: organization names, exact role titles, requisition IDs, contacts, correspondence, private links, and raw notes. The original tracker and export remain private. The live site and its source are public; do not add protected data to GitHub Pages.
 

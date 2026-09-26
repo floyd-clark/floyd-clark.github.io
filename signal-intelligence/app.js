@@ -32,5 +32,17 @@ function render(data) {
     row.append(make('strong',fmt(d.impressions),'trend-value'),make('small',`${d.engagements} actions · +${d.followers} followers`,'trend-note'));
     $('#trend').append(row);
   }
+  const f=data.forecast;
+  $('#forecast-meta').textContent=`Issued ${f.createdAt.slice(0,10)} · Window ${f.window} · ${f.modelVersion} · ${f.status}`;
+  for(const item of f.cards){
+    const card=make('article','','forecast-card');
+    card.append(make('span',`${item.id} · ${f.status}`,'forecast-id'),make('h3',item.title),make('p',item.target,'forecast-target'));
+    const details=make('dl','','forecast-details');
+    for(const [label,value] of [['Supporting evidence',item.support],['Counterevidence',item.against],['Verification rule',item.change],['Outcome',item.outcome]])details.append(make('dt',label),make('dd',value));
+    card.append(details);$('#forecast-cards').append(card);
+  }
+  for(const band of f.scenario.bands){
+    const card=make('article','','scenario-card');card.append(make('span',band.name,'forecast-id'),make('strong',band.range),make('small',`2032 index · ${f.scenario.base}`),make('p',band.meaning));$('#scenario-cards').append(card);
+  }
 }
 fetch('data/public-snapshot.json').then(r=>{if(!r.ok)throw Error('Data unavailable');return r.json();}).then(render).catch(()=>{$('#metrics').textContent='The snapshot could not be loaded. Inspect data/public-snapshot.json directly.';});
