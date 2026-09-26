@@ -1,6 +1,6 @@
 // Anonymous page-open telemetry and notification; this is not access control.
 // Set this to the /exec URL of the deployed visitor-alert Apps Script web app.
-const VISIT_ALERT_URL = '';
+const VISIT_ALERT_URL = 'https://script.google.com/macros/s/AKfycbxz_SbPkuy73LM4TT7R96oDyduZgen2YK6HQr_JbHYywqYxpDRNSKmgbCuQG_O4c_ph3A/exec';
 if (VISIT_ALERT_URL && location.origin === 'https://floyd-clark.github.io') {
   const event = crypto.randomUUID();
   const url = new URL(VISIT_ALERT_URL);
