@@ -26,6 +26,16 @@ function renderFunnel(data){
   for(const [stage,count] of stages){const item=make('div','','funnel-row');item.append(make('span',stage));const track=make('div','','funnel-track'),bar=make('div','','funnel-bar');bar.style.width=`${100*count/data.pipeline.active}%`;track.append(bar);item.append(track,make('strong',`${count} · ${Math.round(100*count/data.pipeline.active)}%`));list.append(item);}
   list.append(make('p',`Denominator: ${data.pipeline.active} active records. Stages total ${stages.reduce((n,[,v])=>n+v,0)}. Closed records excluded.`,'chart-caption'));
 }
+function renderBrief(data){
+  const brief=data.changeBrief;
+  const entries=[['Changed',brief.changed],['Unchanged / scope',brief.unchanged],['Weak signals',brief.weakSignals],['Forecast change',[brief.forecastChange]],['Best use of time',[brief.bestUseOfTime]]];
+  if(brief.strongSignals.length) entries.splice(2,0,['Strong signals',brief.strongSignals]);
+  for(const [title,items] of entries){const card=make('article','','card brief-card');card.append(make('h3',title));for(const item of items)card.append(make('p',item));$('#daily-brief').append(card);}
+  const chart=$('#history-chart');
+  for(const point of data.history){const row=make('div','','history-row');row.append(make('span',point.date));for(const [label,value] of [['Active',point.active],['Applied',point.applied],['Closed',point.closed]]){const block=make('span',`${label} ${value}`,'history-value');block.style.setProperty('--share',`${Math.round(value/Math.max(...data.history.map(d=>d.active))*100)}%`);row.append(block);}chart.append(row);}
+  const bands={};for(const j of data.pipeline.journeys)bands[j.lastTouch]=(bands[j.lastTouch]||0)+1;
+  for(const [label,count] of Object.entries(bands).sort((a,b)=>a[0].localeCompare(b[0]))){const row=make('div','','funnel-row');row.append(make('span',label));const track=make('div','','funnel-track'),bar=make('div','','funnel-bar');bar.style.width=`${100*count/data.pipeline.active}%`;track.append(bar);row.append(track,make('strong',`${count} / ${data.pipeline.active}`));$('#aging-chart').append(row);}
+}
 function renderModels(data){
   const controls=()=>{
     const cohort=$('#forecast-cohort').value,n=data.pipeline.stages[cohort],q=Number($('#daily-rate').value)/100;
@@ -41,6 +51,7 @@ function renderModels(data){
   plot($('#long-plot'),series,6,240,[[0,'2026'],[2,'2028'],[4,'2030'],[6,'2032']],'INDEX · 2026 = 100');
 }
 function render(data) {
+  renderBrief(data);
   const metrics=[
     ['Active roles',data.pipeline.active,'Tracker · Sep 25'],
     ['Confirmed applications',data.pipeline.confirmedApplications,'Subset of active roles'],
@@ -86,4 +97,4 @@ function render(data) {
     const card=make('article','','scenario-card');card.append(make('span',band.name,'forecast-id'),make('strong',band.range),make('small',`2032 index · ${f.scenario.base}`),make('p',band.meaning));$('#scenario-cards').append(card);
   }
 }
-fetch('data/public-snapshot.json?v=14').then(r=>{if(!r.ok)throw Error('Data unavailable');return r.json();}).then(render).catch(error=>{$('#metrics').textContent='The snapshot could not be loaded. Inspect data/public-snapshot.json directly.';console.error(error);});
+fetch('data/public-snapshot.json?v=15').then(r=>{if(!r.ok)throw Error('Data unavailable');return r.json();}).then(render).catch(error=>{$('#metrics').textContent='The snapshot could not be loaded. Inspect data/public-snapshot.json directly.';console.error(error);});
