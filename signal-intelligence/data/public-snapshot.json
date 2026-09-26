@@ -1,10 +1,13 @@
 {
   "meta": {
     "title": "Signal Intelligence Lab",
-    "asOf": "2026-09-25",
-    "trackerUpdated": "2026-09-25",
+    "asOf": "2026-09-26",
+    "trackerUpdated": "2026-09-26",
     "linkedinWindow": "2026-09-19 to 2026-09-25",
-    "privacy": "Aggregate and redacted public projection; no names, IDs, contact details, private URLs, or raw application notes."
+    "privacy": "Aggregate and redacted public projection; no names, IDs, contact details, private URLs, or raw application notes.",
+    "trackerScope": "60 recorded roles: 55 active and 5 closed. Two separately confirmed applications are absent from Active Roles and excluded pending reconciliation.",
+    "linkedinUpdated": "2026-09-25; no new export ingested on September 26",
+    "snapshotSource": "Floyd Clark - Job Application Tracker - Sep 2026, Active Roles, read 2026-09-26 14:02 UTC; LinkedIn export Sep 19–25 retained"
   },
   "pipeline": {
     "active": 55,
@@ -404,7 +407,10 @@
         "lastTouch": "0–2 days",
         "evidence": "Submission recorded"
       }
-    ]
+    ],
+    "unreconciledApplications": 2,
+    "unreconciledNote": "Two separately confirmed applications are missing from tracker. Their stages are not silently inferred into the active count.",
+    "stageSemantics": "Mutually exclusive current tracker states, not sequential funnel conversions."
   },
   "linkedin": {
     "impressions": 4900,
@@ -468,7 +474,7 @@
     "createdAt": "2026-09-26T12:44:00Z",
     "modelVersion": "public-v0.4",
     "window": "2026-09-27 to 2026-10-03",
-    "status": "Open; outcome pending",
+    "status": "Open; outcome pending. No calibrated response probability.",
     "cards": [
       {
         "id": "F-01",
@@ -511,5 +517,47 @@
         }
       ]
     }
+  },
+  "history": [
+    {
+      "date": "2026-09-25",
+      "path": "data/history/2026-09-25.json",
+      "active": 55,
+      "closed": 5,
+      "applied": 32,
+      "source": "previous published snapshot"
+    },
+    {
+      "date": "2026-09-26",
+      "active": 55,
+      "closed": 5,
+      "applied": 32,
+      "source": "tracker Active Roles; 60 populated rows, two known missing applications excluded"
+    }
+  ],
+  "changeBrief": {
+    "since": "2026-09-25",
+    "changed": [
+      "Two confirmed applications were identified outside Active Roles; tracker reconciliation is pending."
+    ],
+    "unchanged": [
+      "55 active tracker records, 5 closed records, and 32 active applied-stage records."
+    ],
+    "strongSignals": [],
+    "weakSignals": [
+      "Company-level profile attention is directional only; no person-to-application attribution."
+    ],
+    "forecastChange": "No calibrated forecast change; no new outcome cohort or response timing series.",
+    "bestUseOfTime": "Reconcile the two missing applications, then prioritize direct human/warm paths and new high-fit roles. Avoid repeated analysis of silent applications."
+  },
+  "trajectory": {
+    "path": [
+      "GPU / accelerator validation",
+      "AI infrastructure integration",
+      "AI infrastructure systems / program leadership",
+      "AI infrastructure organizational leadership"
+    ],
+    "center": "Principal / Staff technical program leadership in AI infrastructure and platform systems",
+    "measurement": "Alignment trend insufficient evidence: role-family history is not yet normalized across multiple comparable snapshots."
   }
 }
