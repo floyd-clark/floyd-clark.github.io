@@ -463,5 +463,53 @@
     "engagements": "Sum of daily engagement actions; not unique people.",
     "applications": "Tracker records at an applied stage, including one with role ID pending.",
     "attribution": "LinkedIn reach is not proof of recruiter contact, interview, or hiring conversion."
+  },
+  "forecast": {
+    "createdAt": "2026-09-26T12:44:00Z",
+    "modelVersion": "public-v0.4",
+    "window": "2026-09-27 to 2026-10-03",
+    "status": "Open; outcome pending",
+    "cards": [
+      {
+        "id": "F-01",
+        "title": "Direct next-stage contact",
+        "target": "At least one dated direct recruiter or hiring-stage response for an active applied role by October 3.",
+        "support": "32 active records have a confirmed applied stage; 5 other active records show recruiter outreach.",
+        "against": "An application or outreach label is not a response. Prior response rates are unavailable.",
+        "change": "Verify with a dated direct reply or documented stage change tied to an existing role.",
+        "outcome": "Pending"
+      },
+      {
+        "id": "F-02",
+        "title": "Referral-path response",
+        "target": "At least one of the six referral-requested roles receives a dated direct reply or stage update by October 3.",
+        "support": "Six active tracker records are in Referral requested.",
+        "against": "A request is not a completed introduction or a response; follow-through is unobserved.",
+        "change": "Verify only with a dated reply or tracker stage update for one of those six records.",
+        "outcome": "Pending"
+      }
+    ],
+    "scenario": {
+      "source": "Private 2032 Decision Model, anonymized pooled envelope of five non-identifying pathways; rounded to five index points",
+      "base": "2026 = 100",
+      "year": 2032,
+      "bands": [
+        {
+          "name": "Lower modeled path",
+          "range": "95–125",
+          "meaning": "Scope or access grows more slowly."
+        },
+        {
+          "name": "Middle modeled path",
+          "range": "135–165",
+          "meaning": "Career capital and economic capture compound."
+        },
+        {
+          "name": "Upper modeled path",
+          "range": "190–220",
+          "meaning": "Larger ownership and option value materialize."
+        }
+      ]
+    }
   }
 }
