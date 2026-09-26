@@ -45,4 +45,4 @@ function render(data) {
     const card=make('article','','scenario-card');card.append(make('span',band.name,'forecast-id'),make('strong',band.range),make('small',`2032 index · ${f.scenario.base}`),make('p',band.meaning));$('#scenario-cards').append(card);
   }
 }
-fetch('data/public-snapshot.json?v=12').then(r=>{if(!r.ok)throw Error('Data unavailable');return r.json();}).then(render).catch(()=>{$('#metrics').textContent='The snapshot could not be loaded. Inspect data/public-snapshot.json directly.';});
+fetch('data/public-snapshot.json?v=13').then(r=>{if(!r.ok)throw Error('Data unavailable');return r.json();}).then(render).catch(()=>{$('#metrics').textContent='The snapshot could not be loaded. Inspect data/public-snapshot.json directly.';});
