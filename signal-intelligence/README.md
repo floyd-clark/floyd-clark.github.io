@@ -1,6 +1,6 @@
 # Signal Intelligence Lab
 
-A public projection of Floyd S. Clark II's real, privately maintained role tracker and LinkedIn analytics. The [live page](https://floyd-clark.github.io/signal-intelligence/) uses no login or analytics endpoint. It is a static site.
+A public projection of Floyd S. Clark II's real, privately maintained role tracker and LinkedIn analytics. The [live page](https://floyd-clark.github.io/signal-intelligence/) is a static site without login. An optional page-open email alert is prepared in [`visitor-alert/`](visitor-alert/README.md); it is inactive until its separate Apps Script endpoint is deployed and configured.
 
 ## Source and window
 
