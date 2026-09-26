@@ -19,7 +19,7 @@ function renderFunnel(data){
   h.append(make('p','LINKEDIN · Sep 19–25','funnel-label'));
   row('Impressions',data.linkedin.impressions,100,'attention');row('Members reached',data.linkedin.reached,72,'attention');row('Engagement actions',data.linkedin.engagements,37,'attention');
   h.append(make('div','ATTRIBUTION UNKNOWN · no matched person-level path','hourglass-gap'));
-  h.append(make('p','ROLE TRACKER · Sep 25','funnel-label'));
+  h.append(make('p',`ROLE TRACKER · ${data.meta.asOf}`,'funnel-label'));
   row('Applied',data.pipeline.confirmedApplications,59,'pipeline');row('Active roles',data.pipeline.active,100,'pipeline');
   const list=$('#role-funnel');
   const stages=Object.entries(data.pipeline.stages).sort((a,b)=>b[1]-a[1]);
@@ -53,7 +53,7 @@ function renderModels(data){
 function render(data) {
   renderBrief(data);
   const metrics=[
-    ['Active roles',data.pipeline.active,'Tracker · Sep 25'],
+    ['Active roles',data.pipeline.active,`Tracker · ${data.meta.asOf}`],
     ['Confirmed applications',data.pipeline.confirmedApplications,'Subset of active roles'],
     ['LinkedIn impressions',fmt(data.linkedin.impressions),'Sep 19–25 · repeated displays'],
     ['Members reached',fmt(data.linkedin.reached),'Sep 19–25 · unique members'],
