@@ -1,0 +1,515 @@
+{
+  "meta": {
+    "title": "Signal Intelligence Lab",
+    "asOf": "2026-09-25",
+    "trackerUpdated": "2026-09-25",
+    "linkedinWindow": "2026-09-19 to 2026-09-25",
+    "privacy": "Aggregate and redacted public projection; no names, IDs, contact details, private URLs, or raw application notes."
+  },
+  "pipeline": {
+    "active": 55,
+    "closed": 5,
+    "confirmedApplications": 32,
+    "stages": {
+      "Applied": 32,
+      "Targeting": 9,
+      "Recruiter outreach": 5,
+      "Applying": 2,
+      "Needs confirmation": 1,
+      "Referral requested": 6
+    },
+    "journeys": [
+      {
+        "id": "R-01",
+        "family": "Capacity / deployment",
+        "stage": "Applied",
+        "lastTouch": "3–7 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-02",
+        "family": "Software / platform",
+        "stage": "Applied",
+        "lastTouch": "3–7 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-03",
+        "family": "Cross-functional program",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-04",
+        "family": "Data center / AI infrastructure",
+        "stage": "Targeting",
+        "lastTouch": "3–7 days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-05",
+        "family": "Cross-functional program",
+        "stage": "Targeting",
+        "lastTouch": "3–7 days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-06",
+        "family": "Data center / AI infrastructure",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-07",
+        "family": "Hardware / compute",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-08",
+        "family": "Capacity / deployment",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-09",
+        "family": "Hardware / compute",
+        "stage": "Recruiter outreach",
+        "lastTouch": "8+ days",
+        "evidence": "Outreach recorded"
+      },
+      {
+        "id": "R-10",
+        "family": "Capacity / deployment",
+        "stage": "Targeting",
+        "lastTouch": "3–7 days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-11",
+        "family": "Product readiness / NPI",
+        "stage": "Applied",
+        "lastTouch": "3–7 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-12",
+        "family": "Capacity / deployment",
+        "stage": "Applying",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-13",
+        "family": "Data center / AI infrastructure",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-14",
+        "family": "Data center / AI infrastructure",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-15",
+        "family": "Cross-functional program",
+        "stage": "Applied",
+        "lastTouch": "3–7 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-16",
+        "family": "Software / platform",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-17",
+        "family": "Cross-functional program",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-18",
+        "family": "Hardware / compute",
+        "stage": "Targeting",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-19",
+        "family": "Data center / AI infrastructure",
+        "stage": "Applied",
+        "lastTouch": "3–7 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-20",
+        "family": "Cross-functional program",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-21",
+        "family": "Capacity / deployment",
+        "stage": "Needs confirmation",
+        "lastTouch": "8+ days",
+        "evidence": "Unverified"
+      },
+      {
+        "id": "R-22",
+        "family": "Hardware / compute",
+        "stage": "Referral requested",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-23",
+        "family": "Capacity / deployment",
+        "stage": "Referral requested",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-24",
+        "family": "Software / platform",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-25",
+        "family": "Software / platform",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-26",
+        "family": "Data center / AI infrastructure",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-27",
+        "family": "Capacity / deployment",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-28",
+        "family": "Product readiness / NPI",
+        "stage": "Referral requested",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-29",
+        "family": "Capacity / deployment",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-30",
+        "family": "Data center / AI infrastructure",
+        "stage": "Referral requested",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-31",
+        "family": "Capacity / deployment",
+        "stage": "Referral requested",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-32",
+        "family": "Product readiness / NPI",
+        "stage": "Referral requested",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-33",
+        "family": "Software / platform",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-34",
+        "family": "Software / platform",
+        "stage": "Targeting",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-35",
+        "family": "Software / platform",
+        "stage": "Targeting",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-36",
+        "family": "Data center / AI infrastructure",
+        "stage": "Targeting",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-37",
+        "family": "Capacity / deployment",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-38",
+        "family": "Facilities / energy",
+        "stage": "Applying",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-39",
+        "family": "Data center / AI infrastructure",
+        "stage": "Targeting",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-40",
+        "family": "Facilities / energy",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-41",
+        "family": "Cross-functional program",
+        "stage": "Targeting",
+        "lastTouch": "8+ days",
+        "evidence": "Tracker state"
+      },
+      {
+        "id": "R-42",
+        "family": "Hardware / compute",
+        "stage": "Applied",
+        "lastTouch": "8+ days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-43",
+        "family": "Data center / AI infrastructure",
+        "stage": "Applied",
+        "lastTouch": "3–7 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-44",
+        "family": "Facilities / energy",
+        "stage": "Recruiter outreach",
+        "lastTouch": "3–7 days",
+        "evidence": "Outreach recorded"
+      },
+      {
+        "id": "R-45",
+        "family": "Data center / AI infrastructure",
+        "stage": "Recruiter outreach",
+        "lastTouch": "3–7 days",
+        "evidence": "Outreach recorded"
+      },
+      {
+        "id": "R-46",
+        "family": "Product readiness / NPI",
+        "stage": "Recruiter outreach",
+        "lastTouch": "0–2 days",
+        "evidence": "Outreach recorded"
+      },
+      {
+        "id": "R-47",
+        "family": "Capacity / deployment",
+        "stage": "Recruiter outreach",
+        "lastTouch": "0–2 days",
+        "evidence": "Outreach recorded"
+      },
+      {
+        "id": "R-48",
+        "family": "Cross-functional program",
+        "stage": "Applied",
+        "lastTouch": "0–2 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-49",
+        "family": "Data center / AI infrastructure",
+        "stage": "Applied",
+        "lastTouch": "0–2 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-50",
+        "family": "Data center / AI infrastructure",
+        "stage": "Applied",
+        "lastTouch": "0–2 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-51",
+        "family": "Unspecified role",
+        "stage": "Applied",
+        "lastTouch": "0–2 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-52",
+        "family": "Hardware / compute",
+        "stage": "Applied",
+        "lastTouch": "0–2 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-53",
+        "family": "Product readiness / NPI",
+        "stage": "Applied",
+        "lastTouch": "0–2 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-54",
+        "family": "Data center / AI infrastructure",
+        "stage": "Applied",
+        "lastTouch": "0–2 days",
+        "evidence": "Submission recorded"
+      },
+      {
+        "id": "R-55",
+        "family": "Data center / AI infrastructure",
+        "stage": "Applied",
+        "lastTouch": "0–2 days",
+        "evidence": "Submission recorded"
+      }
+    ]
+  },
+  "linkedin": {
+    "impressions": 4900,
+    "reached": 3033,
+    "engagements": 62,
+    "newFollowers": 40,
+    "totalFollowers": 1162,
+    "days": [
+      {
+        "date": "Sep 19",
+        "impressions": 1006,
+        "engagements": 8,
+        "followers": 3
+      },
+      {
+        "date": "Sep 20",
+        "impressions": 611,
+        "engagements": 6,
+        "followers": 5
+      },
+      {
+        "date": "Sep 21",
+        "impressions": 1029,
+        "engagements": 15,
+        "followers": 9
+      },
+      {
+        "date": "Sep 22",
+        "impressions": 572,
+        "engagements": 3,
+        "followers": 9
+      },
+      {
+        "date": "Sep 23",
+        "impressions": 821,
+        "engagements": 18,
+        "followers": 4
+      },
+      {
+        "date": "Sep 24",
+        "impressions": 581,
+        "engagements": 9,
+        "followers": 5
+      },
+      {
+        "date": "Sep 25",
+        "impressions": 280,
+        "engagements": 3,
+        "followers": 5
+      }
+    ]
+  },
+  "definitions": {
+    "impressions": "Displays, not unique people.",
+    "reached": "Unique members reached in this LinkedIn export window.",
+    "engagements": "Sum of daily engagement actions; not unique people.",
+    "applications": "Tracker records at an applied stage, including one with role ID pending.",
+    "attribution": "LinkedIn reach is not proof of recruiter contact, interview, or hiring conversion."
+  },
+  "forecast": {
+    "createdAt": "2026-09-26T12:44:00Z",
+    "modelVersion": "public-v0.4",
+    "window": "2026-09-27 to 2026-10-03",
+    "status": "Open; outcome pending",
+    "cards": [
+      {
+        "id": "F-01",
+        "title": "Direct next-stage contact",
+        "target": "At least one dated direct recruiter or hiring-stage response for an active applied role by October 3.",
+        "support": "32 active records have a confirmed applied stage; 5 other active records show recruiter outreach.",
+        "against": "An application or outreach label is not a response. Prior response rates are unavailable.",
+        "change": "Verify with a dated direct reply or documented stage change tied to an existing role.",
+        "outcome": "Pending"
+      },
+      {
+        "id": "F-02",
+        "title": "Referral-path response",
+        "target": "At least one of the six referral-requested roles receives a dated direct reply or stage update by October 3.",
+        "support": "Six active tracker records are in Referral requested.",
+        "against": "A request is not a completed introduction or a response; follow-through is unobserved.",
+        "change": "Verify only with a dated reply or tracker stage update for one of those six records.",
+        "outcome": "Pending"
+      }
+    ],
+    "scenario": {
+      "source": "Private 2032 Decision Model, anonymized pooled envelope of five non-identifying pathways; rounded to five index points",
+      "base": "2026 = 100",
+      "year": 2032,
+      "bands": [
+        {
+          "name": "Lower modeled path",
+          "range": "95–125",
+          "meaning": "Scope or access grows more slowly."
+        },
+        {
+          "name": "Middle modeled path",
+          "range": "135–165",
+          "meaning": "Career capital and economic capture compound."
+        },
+        {
+          "name": "Upper modeled path",
+          "range": "190–220",
+          "meaning": "Larger ownership and option value materialize."
+        }
+      ]
+    }
+  }
+}
