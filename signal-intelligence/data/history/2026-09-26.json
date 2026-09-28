@@ -1,38 +1,39 @@
 {
   "meta": {
     "title": "Signal Intelligence Lab",
-    "asOf": "2026-09-27",
-    "trackerUpdated": "2026-09-27",
-    "linkedinWindow": "2026-09-21 to 2026-09-27",
+    "asOf": "2026-09-26",
+    "trackerUpdated": "2026-09-26",
+    "linkedinWindow": "2026-09-19 to 2026-09-25",
     "privacy": "Aggregate and redacted public projection; no names, IDs, contact details, private URLs, or raw application notes.",
-    "trackerScope": "67 tracked records: 61 active and 6 closed across 33 active organizations. Public projection also retains 54 direct evidence links, 61 defined next actions, 18 touches within seven days, 15 follow-ups due or overdue, 43 records older than seven days, and one contradiction.",
-    "linkedinUpdated": "2026-09-27",
-    "snapshotSource": "Approved public-safe September 27 tracker and LinkedIn aggregates; no private row-level source data or messages are included"
+    "trackerScope": "60 recorded roles: 55 active and 5 closed. Two separately confirmed applications are absent from Active Roles and excluded pending reconciliation.",
+    "linkedinUpdated": "2026-09-25; no new export ingested on September 26",
+    "snapshotSource": "Floyd Clark - Job Application Tracker - Sep 2026, Active Roles, read 2026-09-26 14:02 UTC; LinkedIn export Sep 19–25 retained"
   },
   "pipeline": {
-    "active": 61,
-    "closed": 6,
-    "confirmedApplications": 37,
+    "active": 55,
+    "closed": 5,
+    "confirmedApplications": 32,
     "stages": {
-      "Applied": 37,
+      "Applied": 32,
       "Targeting": 9,
-      "Recruiter outreach": 6,
+      "Recruiter outreach": 5,
+      "Applying": 2,
       "Needs confirmation": 1,
-      "Referral requested": 8
+      "Referral requested": 6
     },
     "journeys": [
       {
         "id": "R-01",
         "family": "Capacity / deployment",
         "stage": "Applied",
-        "lastTouch": "8+ days",
+        "lastTouch": "3–7 days",
         "evidence": "Submission recorded"
       },
       {
         "id": "R-02",
         "family": "Software / platform",
         "stage": "Applied",
-        "lastTouch": "8+ days",
+        "lastTouch": "3–7 days",
         "evidence": "Submission recorded"
       },
       {
@@ -46,7 +47,7 @@
         "id": "R-04",
         "family": "Data center / AI infrastructure",
         "stage": "Targeting",
-        "lastTouch": "8+ days",
+        "lastTouch": "3–7 days",
         "evidence": "Tracker state"
       },
       {
@@ -101,7 +102,7 @@
       {
         "id": "R-12",
         "family": "Capacity / deployment",
-        "stage": "Applied",
+        "stage": "Applying",
         "lastTouch": "8+ days",
         "evidence": "Tracker state"
       },
@@ -283,7 +284,7 @@
       {
         "id": "R-38",
         "family": "Facilities / energy",
-        "stage": "Applied",
+        "stage": "Applying",
         "lastTouch": "8+ days",
         "evidence": "Tracker state"
       },
@@ -405,66 +406,60 @@
         "stage": "Applied",
         "lastTouch": "0–2 days",
         "evidence": "Submission recorded"
-      },
-      {
-        "id": "R-56",
-        "family": "Unspecified role",
-        "stage": "Applied",
-        "lastTouch": "8+ days",
-        "evidence": "Aggregate tracker state"
-      },
-      {
-        "id": "R-57",
-        "family": "Unspecified role",
-        "stage": "Applied",
-        "lastTouch": "8+ days",
-        "evidence": "Aggregate tracker state"
-      },
-      {
-        "id": "R-58",
-        "family": "Unspecified role",
-        "stage": "Applied",
-        "lastTouch": "8+ days",
-        "evidence": "Aggregate tracker state"
-      },
-      {
-        "id": "R-59",
-        "family": "Unspecified role",
-        "stage": "Referral requested",
-        "lastTouch": "8+ days",
-        "evidence": "Aggregate tracker state"
-      },
-      {
-        "id": "R-60",
-        "family": "Unspecified role",
-        "stage": "Referral requested",
-        "lastTouch": "8+ days",
-        "evidence": "Aggregate tracker state"
-      },
-      {
-        "id": "R-61",
-        "family": "Unspecified role",
-        "stage": "Recruiter outreach",
-        "lastTouch": "8+ days",
-        "evidence": "Aggregate tracker state"
       }
     ],
-    "unreconciledApplications": 0,
-    "unreconciledNote": "All 67 tracked records are included in the September 27 aggregate totals.",
-    "stageSemantics": "Mutually exclusive current tracker groupings, not sequential funnel conversions. Referral requested represents the referral / advocate aggregate; Recruiter outreach represents direct engagement."
+    "unreconciledApplications": 2,
+    "unreconciledNote": "Two separately confirmed applications are missing from tracker. Their stages are not silently inferred into the active count.",
+    "stageSemantics": "Mutually exclusive current tracker states, not sequential funnel conversions."
   },
   "linkedin": {
-    "impressions": 3922,
-    "reached": 2322,
-    "engagements": 54,
-    "newFollowers": 48,
-    "totalFollowers": 1172,
+    "impressions": 4900,
+    "reached": 3033,
+    "engagements": 62,
+    "newFollowers": 40,
+    "totalFollowers": 1162,
     "days": [
       {
-        "date": "Sep 21–27",
-        "impressions": 3922,
-        "engagements": 54,
-        "followers": 48
+        "date": "Sep 19",
+        "impressions": 1006,
+        "engagements": 8,
+        "followers": 3
+      },
+      {
+        "date": "Sep 20",
+        "impressions": 611,
+        "engagements": 6,
+        "followers": 5
+      },
+      {
+        "date": "Sep 21",
+        "impressions": 1029,
+        "engagements": 15,
+        "followers": 9
+      },
+      {
+        "date": "Sep 22",
+        "impressions": 572,
+        "engagements": 3,
+        "followers": 9
+      },
+      {
+        "date": "Sep 23",
+        "impressions": 821,
+        "engagements": 18,
+        "followers": 4
+      },
+      {
+        "date": "Sep 24",
+        "impressions": 581,
+        "engagements": 9,
+        "followers": 5
+      },
+      {
+        "date": "Sep 25",
+        "impressions": 280,
+        "engagements": 3,
+        "followers": 5
       }
     ]
   },
@@ -472,7 +467,7 @@
     "impressions": "Displays, not unique people.",
     "reached": "Unique members reached in this LinkedIn export window.",
     "engagements": "Sum of daily engagement actions; not unique people.",
-    "applications": "Tracker records in the applied aggregate stage.",
+    "applications": "Tracker records at an applied stage, including one with role ID pending.",
     "attribution": "LinkedIn reach is not proof of recruiter contact, interview, or hiring conversion."
   },
   "forecast": {
@@ -534,36 +529,26 @@
     },
     {
       "date": "2026-09-26",
-      "path": "data/history/2026-09-26.json",
       "active": 55,
       "closed": 5,
       "applied": 32,
       "source": "tracker Active Roles; 60 populated rows, two known missing applications excluded"
-    },
-    {
-      "date": "2026-09-27",
-      "active": 61,
-      "closed": 6,
-      "applied": 37,
-      "source": "approved public-safe September 27 tracker aggregate"
     }
   ],
   "changeBrief": {
-    "since": "2026-09-26",
+    "since": "2026-09-25",
     "changed": [
-      "The tracker now contains 67 records: 61 active and 6 closed across 33 active organizations.",
-      "Current active groupings are 37 applied, 9 targeting, 8 referral / advocate, 6 direct engagement, and 1 needs confirmation.",
-      "The Sep 21–27 LinkedIn aggregate records 3,922 impressions, 2,322 members reached, 54 engagements, a 1.38% engagement rate, 48 new followers, and 1,172 total followers."
+      "Two confirmed applications were identified outside Active Roles; tracker reconciliation is pending."
     ],
     "unchanged": [
-      "The public layer remains aggregate and redacted: 54 direct evidence links, 61 defined next actions, 18 touches within seven days, 15 due or overdue follow-ups, 43 records older than seven days, and 1 contradiction."
+      "55 active tracker records, 5 closed records, and 32 active applied-stage records."
     ],
     "strongSignals": [],
     "weakSignals": [
       "Company-level profile attention is directional only; no person-to-application attribution."
     ],
-    "forecastChange": "The frozen September 26 forecast ledger and methodology are unchanged; current counts do not rewrite it.",
-    "bestUseOfTime": "Prioritize the 15 due or overdue follow-ups, starting with direct engagement and referral / advocate paths."
+    "forecastChange": "No calibrated forecast change; no new outcome cohort or response timing series.",
+    "bestUseOfTime": "Reconcile the two missing applications, then prioritize direct human/warm paths and new high-fit roles. Avoid repeated analysis of silent applications."
   },
   "trajectory": {
     "path": [

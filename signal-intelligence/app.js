@@ -16,11 +16,11 @@ function plot(container, series, maxX, maxY, xLabels, yTitle){
 function renderFunnel(data){
   const h=$('#hourglass');
   const row=(label,value,width,kind)=>{const item=make('div','','hourglass-row '+kind);const bar=make('div','','hourglass-bar');bar.style.width=`${Math.max(12,width)}%`;bar.append(make('span',`${label} · ${fmt(value)}`));item.append(bar);h.append(item);};
-  h.append(make('p','LINKEDIN · Sep 19–25','funnel-label'));
+  h.append(make('p','LINKEDIN · Sep 21–27','funnel-label'));
   row('Impressions',data.linkedin.impressions,100,'attention');row('Members reached',data.linkedin.reached,72,'attention');row('Engagement actions',data.linkedin.engagements,37,'attention');
   h.append(make('div','ATTRIBUTION UNKNOWN · no matched person-level path','hourglass-gap'));
   h.append(make('p',`ROLE TRACKER · ${data.meta.asOf}`,'funnel-label'));
-  row('Applied',data.pipeline.confirmedApplications,59,'pipeline');row('Active roles',data.pipeline.active,100,'pipeline');
+  row('Applied',data.pipeline.confirmedApplications,61,'pipeline');row('Active roles',data.pipeline.active,100,'pipeline');
   const list=$('#role-funnel');
   const stages=Object.entries(data.pipeline.stages).sort((a,b)=>b[1]-a[1]);
   for(const [stage,count] of stages){const item=make('div','','funnel-row');item.append(make('span',stage));const track=make('div','','funnel-track'),bar=make('div','','funnel-bar');bar.style.width=`${100*count/data.pipeline.active}%`;track.append(bar);item.append(track,make('strong',`${count} · ${Math.round(100*count/data.pipeline.active)}%`));list.append(item);}
@@ -55,13 +55,15 @@ function render(data) {
   const metrics=[
     ['Active roles',data.pipeline.active,`Tracker · ${data.meta.asOf}`],
     ['Confirmed applications',data.pipeline.confirmedApplications,'Subset of active roles'],
-    ['LinkedIn impressions',fmt(data.linkedin.impressions),'Sep 19–25 · repeated displays'],
-    ['Members reached',fmt(data.linkedin.reached),'Sep 19–25 · unique members'],
-    ['Engagement actions',data.linkedin.engagements,'Sum of daily actions'],
-    ['New followers',data.linkedin.newFollowers,'Sep 19–25']
+    ['LinkedIn impressions',fmt(data.linkedin.impressions),'Sep 21–27 · repeated displays'],
+    ['Members reached',fmt(data.linkedin.reached),'Sep 21–27 · unique members'],
+    ['Engagement actions',data.linkedin.engagements,'Sep 21–27 · aggregate actions'],
+    ['Engagement rate',`${(100*data.linkedin.engagements/data.linkedin.impressions).toFixed(2)}%`,'Engagements divided by impressions'],
+    ['New followers',data.linkedin.newFollowers,'Sep 21–27'],
+    ['Total followers',fmt(data.linkedin.totalFollowers),'As of Sep 27']
   ];
   for(const [label,value,note] of metrics){const card=make('article','','metric');card.append(make('span',label,'metric-label'),make('strong',String(value)),make('small',note));$('#metrics').append(card);}
-  const stageOrder=['Applied','Referral requested','Recruiter outreach','Applying','Targeting','Needs confirmation'];
+  const stageOrder=['Applied','Referral requested','Recruiter outreach','Targeting','Needs confirmation'];
   for(const stage of stageOrder){const card=make('div','','stage-card');card.append(make('strong',String(data.pipeline.stages[stage]||0)),make('span',stage));$('#stages').append(card);}
   renderFunnel(data);
   const journeys=data.pipeline.journeys;
@@ -97,4 +99,4 @@ function render(data) {
     const card=make('article','','scenario-card');card.append(make('span',band.name,'forecast-id'),make('strong',band.range),make('small',`2032 index · ${f.scenario.base}`),make('p',band.meaning));$('#scenario-cards').append(card);
   }
 }
-fetch('data/public-snapshot.json?v=15').then(r=>{if(!r.ok)throw Error('Data unavailable');return r.json();}).then(render).catch(error=>{$('#metrics').textContent='The snapshot could not be loaded. Inspect data/public-snapshot.json directly.';console.error(error);});
+fetch('data/public-snapshot.json?v=16').then(r=>{if(!r.ok)throw Error('Data unavailable');return r.json();}).then(render).catch(error=>{$('#metrics').textContent='The snapshot could not be loaded. Inspect data/public-snapshot.json directly.';console.error(error);});
