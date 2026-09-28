@@ -10,7 +10,7 @@
   <meta name="robots" content="noindex,nofollow" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23071019'/%3E%3Cpath d='M12 43h9l7-22 8 29 7-19h9' fill='none' stroke='%235cc8ff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="styles.css?v=4" />
-  <script src="app.js?v=4" defer></script>
+  <script src="app.js?v=5" defer></script>
 </head>
 <body>
   <dialog id="access-dialog" class="access-dialog" aria-labelledby="access-title" aria-describedby="access-summary">
@@ -101,6 +101,13 @@
         </aside>
       </div>
     </header>
+
+    <section id="dm-intelligence" aria-labelledby="dm-intelligence-title" hidden>
+      <div class="container">
+        <div class="section-head compact-head"><div><div class="kicker">Live redacted DM intelligence</div><h2 class="title" id="dm-intelligence-title">What the newest conversation run changed.</h2></div><p class="intro" id="dm-intelligence-freshness"></p></div>
+        <div class="metrics-grid"><article class="metric-card"><div class="micro-label">Runs</div><div class="metric-value" id="dm-runs">0</div></article><article class="metric-card"><div class="micro-label">In-window threads</div><div class="metric-value" id="dm-threads">0</div></article><article class="metric-card"><div class="micro-label">Messages</div><div class="metric-value" id="dm-messages">0</div></article><article class="metric-card"><div class="micro-label">Signals</div><div class="metric-value" id="dm-signals">0</div></article></div>
+      </div>
+    </section>
 
     <section id="advantage" class="advantage-section" aria-labelledby="advantage-title">
       <div class="container">

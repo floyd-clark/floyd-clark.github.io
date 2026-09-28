@@ -728,9 +728,24 @@ function wireTour() {
   });
 }
 
+async function renderDmIntelligence() {
+  try {
+    const response = await fetch(`data/dm-intelligence.json?v=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) return;
+    const data = await response.json();
+    document.querySelector("#dm-runs").textContent = "1";
+    document.querySelector("#dm-threads").textContent = data.in_window_conversations;
+    document.querySelector("#dm-messages").textContent = data.messages_evaluated;
+    document.querySelector("#dm-signals").textContent = data.signals_total;
+    document.querySelector("#dm-intelligence-freshness").textContent = `Latest approved ${data.window_days}-day run · ${data.conversations_evaluated} conversations evaluated · data as of ${new Date(data.data_as_of).toLocaleString()}.`;
+    document.querySelector("#dm-intelligence").hidden = false;
+  } catch {}
+}
+
 async function init() {
   wireAccessGate();
   wireTour();
+  renderDmIntelligence();
   try {
     const response = await fetch(DATA_URL, { cache: "no-store" });
     if (!response.ok) throw new Error(`Data request failed with ${response.status}`);
