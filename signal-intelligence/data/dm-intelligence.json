@@ -1,12 +1,13 @@
 {
-  "conversations_evaluated": 21,
-  "data_as_of": "2026-09-28T02:40:28.253921+00:00",
-  "generated_at": "2026-09-28T02:40:28.253921+00:00",
-  "in_window_conversations": 10,
-  "messages_evaluated": 27,
+  "conversations_evaluated": 72,
+  "data_as_of": "2026-09-28T03:19:54.218231+00:00",
+  "generated_at": "2026-09-28T03:19:54.218231+00:00",
+  "in_window_conversations": 62,
+  "messages_evaluated": 491,
+  "needs_confirmation": 10,
   "processing_status": "complete",
   "schema_version": "1.0",
   "signal_categories": {},
-  "signals_total": 8,
-  "window_days": 3
+  "signals_total": 37,
+  "window_days": 13
 }
