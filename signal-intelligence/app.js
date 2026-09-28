@@ -100,3 +100,4 @@ function render(data) {
   }
 }
 fetch('data/public-snapshot.json?v=16').then(r=>{if(!r.ok)throw Error('Data unavailable');return r.json();}).then(render).catch(error=>{$('#metrics').textContent='The snapshot could not be loaded. Inspect data/public-snapshot.json directly.';console.error(error);});
+fetch('data/dm-intelligence.json?v=1').then(r=>{if(!r.ok)throw Error();return r.json();}).then(data=>{const values={runs:1,threads:data.in_window_conversations,messages:data.messages_evaluated,signals:data.signals_total};for(const [key,value] of Object.entries(values))$(`#dm-${key}`).textContent=String(value);$('#dm-freshness').textContent=`Latest approved ${data.window_days}-day run · ${data.conversations_evaluated} conversations evaluated · data as of ${new Date(data.data_as_of).toLocaleString()}.`;$('#dm-intelligence').hidden=false;}).catch(()=>{});
